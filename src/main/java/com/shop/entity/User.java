@@ -1,4 +1,4 @@
-package entity;
+package com.shop.entity;
 
 public class User {
     private String user_id;

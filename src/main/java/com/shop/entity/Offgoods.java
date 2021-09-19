@@ -1,4 +1,4 @@
-package entity;
+package com.shop.entity;
 
 import java.sql.Date;
 import java.util.Objects;
