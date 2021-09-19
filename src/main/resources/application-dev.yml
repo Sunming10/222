@@ -1,0 +1,19 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    username: xiangwan
+    password: dingwanren
+    #url中database为对应的数据库名称
+    url: jdbc:mysql://47.103.214.177:3306/soft_engineering?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath:mapping/*.xml
+  type-aliases-package: com.shop.entity
+
+#showSql
+logging:
+  level:
+    com.example.demo.mapper: debug
