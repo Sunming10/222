@@ -1,6 +1,4 @@
-package entity;
-
-import java.util.Objects;
+package com.shop.entity;
 
 public class Goods {
     private Long item_id;

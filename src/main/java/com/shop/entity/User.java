@@ -1,9 +1,9 @@
-package entity;
+package com.shop.entity;
 
 public class User {
-    private String user_id;
+    private String username;
     private String password;
-    private String nick_name;
+    private String nickname;
     private int permission;
     private String phonenumber;
     private String address;
@@ -14,10 +14,10 @@ public class User {
         super();
     }
 
-    public User(String user_id, String password, String nick_name, int permission, String phonenumber, String address, String realname, String user_head) {
-        this.user_id = user_id;
+    public User(String username, String password, String nickname, int permission, String phonenumber, String address, String realname, String user_head) {
+        this.username = username;
         this.password = password;
-        this.nick_name = nick_name;
+        this.nickname = nickname;
         this.permission = permission;
         this.phonenumber = phonenumber;
         this.address = address;
@@ -25,12 +25,12 @@ public class User {
         this.user_head = user_head;
     }
 
-    public String getUser_id() {
-        return user_id;
+    public String getUserName() {
+        return username;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setUserName(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -41,12 +41,12 @@ public class User {
         this.password = password;
     }
 
-    public String getNick_name() {
-        return nick_name;
+    public String getNickName() {
+        return nickname;
     }
 
-    public void setNick_name(String nick_name) {
-        this.nick_name = nick_name;
+    public void setNickName(String nick_name) {
+        this.nickname = nick_name;
     }
 
     public int getPermission() {
@@ -81,20 +81,20 @@ public class User {
         this.realname = realname;
     }
 
-    public String getUser_head() {
+    public String getUserHead() {
         return user_head;
     }
 
-    public void setUser_head(String user_head) {
+    public void setUserHead(String user_head) {
         this.user_head = user_head;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "user_id='" + user_id + '\'' +
+                "username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", nick_name='" + nick_name + '\'' +
+                ", nickname='" + nickname + '\'' +
                 ", permission=" + permission +
                 ", phonenumber='" + phonenumber + '\'' +
                 ", address='" + address + '\'' +
