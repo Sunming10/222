@@ -4,7 +4,7 @@
     <div class="login-img">
       <span>
       <i class="iconfont">&#xe600;</i>
-      <router-link to='./welcome' class="font-line">进入购买页面</router-link>
+      <router-link to='./shopping' class="font-line">进入购买页面</router-link>
       </span>
     </div>
     <div class="login_box">

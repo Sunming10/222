@@ -20,7 +20,7 @@ Vue.use(Router)
 const router = new Router({
   routes: [{
       path: '/',
-      redirect: '/shopping'
+      redirect: '/welcome'
     },
     {
       path: '/welcome',
