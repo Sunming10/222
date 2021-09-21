@@ -7,22 +7,41 @@ public class Order {
     private String buyer_id;
     private String buyer_realname;
     private String buyer_phonenumber;
-    private int buyer_buynumber;
-    private String buyer_addres;
+    private int buyer_sum;
+    private String buyer_address;
+    private int state;//int,1表示进行中，2表示交易成功，3表示买家退款，4表示卖家关闭交易，5表示申请中
+    private String create_time;
+    private String finish_time;
 
     public Order() {
         super();
     }
 
-    public Order(String order_id, String item_id, String seller_id, String buyer_id, String buyer_realname, String buyer_phonenumber, int buyer_buynumber, String buyer_addres) {
+    public Order(String order_id, String item_id, String seller_id, String buyer_realname, String buyer_phonenumber, int buyer_sum, String buyer_address, int state, String create_time, String finish_time) {
+        this.order_id = order_id;
+        this.item_id = item_id;
+        this.seller_id = seller_id;
+        this.buyer_realname = buyer_realname;
+        this.buyer_phonenumber = buyer_phonenumber;
+        this.buyer_sum = buyer_sum;
+        this.buyer_address = buyer_address;
+        this.state = state;
+        this.create_time = create_time;
+        this.finish_time = finish_time;
+    }
+
+    public Order(String order_id, String item_id, String seller_id, String buyer_id, String buyer_realname, String buyer_phonenumber, int buyer_sum, String buyer_address, int state, String create_time, String finish_time) {
         this.order_id = order_id;
         this.item_id = item_id;
         this.seller_id = seller_id;
         this.buyer_id = buyer_id;
         this.buyer_realname = buyer_realname;
         this.buyer_phonenumber = buyer_phonenumber;
-        this.buyer_buynumber = buyer_buynumber;
-        this.buyer_addres = buyer_addres;
+        this.buyer_sum = buyer_sum;
+        this.buyer_address = buyer_address;
+        this.state = state;
+        this.create_time = create_time;
+        this.finish_time = finish_time;
     }
 
     public String getOrder_id() {
@@ -73,20 +92,44 @@ public class Order {
         this.buyer_phonenumber = buyer_phonenumber;
     }
 
-    public int getBuyer_buynumber() {
-        return buyer_buynumber;
+    public int getBuyer_sum() {
+        return buyer_sum;
     }
 
-    public void setBuyer_buynumber(int buyer_buynumber) {
-        this.buyer_buynumber = buyer_buynumber;
+    public void setBuyer_sum(int buyer_sum) {
+        this.buyer_sum = buyer_sum;
     }
 
-    public String getBuyer_addres() {
-        return buyer_addres;
+    public String getBuyer_address() {
+        return buyer_address;
     }
 
-    public void setBuyer_addres(String buyer_addres) {
-        this.buyer_addres = buyer_addres;
+    public void setBuyer_address(String buyer_address) {
+        this.buyer_address = buyer_address;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public String getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(String create_time) {
+        this.create_time = create_time;
+    }
+
+    public String getFinish_time() {
+        return finish_time;
+    }
+
+    public void setFinish_time(String finish_time) {
+        this.finish_time = finish_time;
     }
 
     @Override
@@ -98,8 +141,11 @@ public class Order {
                 ", buyer_id='" + buyer_id + '\'' +
                 ", buyer_realname='" + buyer_realname + '\'' +
                 ", buyer_phonenumber='" + buyer_phonenumber + '\'' +
-                ", buyer_buynumber=" + buyer_buynumber +
-                ", buyer_addres='" + buyer_addres + '\'' +
+                ", buyer_sum=" + buyer_sum +
+                ", buyer_address='" + buyer_address + '\'' +
+                ", state=" + state +
+                ", create_time='" + create_time + '\'' +
+                ", finish_time='" + finish_time + '\'' +
                 '}';
     }
 }

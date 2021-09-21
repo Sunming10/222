@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper>
+    <resultMap id="GoodsResultMap" type="com.shop.entity.Goods">
+        <result column="itemId" jdbcType="INTEGER" property="item_id" />
+        <result column="goodsName" jdbcType="VARCHAR" property="goods_name" />
+        <result column="sellerId" jdbcType="VARCHAR" property="seller_id" />
+        <result column="goodsStock" jdbcType="VARCHAR" property="goods_stock" />
+        <result column="goodsImg" jdbcType="VARCHAR" property="goods_img" />
+        <result column="goodsDiscribe" jdbcType="VARCHAR" property="goods_discribe" />
+        <result column="goodsState" jdbcType="INTEGER" property="goods_state" />
+    </resultMap>
+    <!---->
+    <!--添加商品-->
+    <insert id="addGoods" parameterType="com.shop.entity.Goods">
+        insert into goods
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="item_id != null">
+                item_id,
+            </if>
+            <if test="goods_name != null">
+                goods_name,
+            </if>
+            <if test="seller_id != null">
+                seller_id,
+            </if>
+            <if test="goods_stock != null">
+                goods_stock,
+            </if>
+            <if test="goods_img != null">
+                goods_img,
+            </if>
+            <if test="goods_discribe != null">
+                goods_discribe,
+            </if>
+            <if test="goods_state != null">
+                goods_state,
+            </if>
+        </trim>
+
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="item_id != null" >
+                #{item_id,jdbcType=INTEGER},
+            </if>
+            <if test="goods_name != null" >
+                #{goods_name,jdbcType=VARCHAR},
+            </if>
+            <if test="seller_id != null" >
+                #{seller_id,jdbcType=VARCHAR},
+            </if>
+            <if test="goods_stock != null" >
+                #{goods_stock,jdbcType=VARCHAR},
+            </if>
+            <if test="goods_img != null" >
+                #{goods_img,jdbcType=VARCHAR},
+            </if>
+            <if test="goods_discribe != null" >
+                #{goods_discribe,jdbcType=VARCHAR},
+            </if>
+            <if test="goods_state != null" >
+                #{goods_state,jdbcType=INTEGER},
+            </if>
+        </trim>
+</insert>
+
+    <!--根据item_id(商品ID)查询商品-->
+    <select id="searchGoods" resultType="com.shop.entity.Goods">
+        select * from goods where itemId = #{item_id}
+    </select>
+
+    <!--根据item_id(商品ID)修改商品状态-->
+    <update id="updateGoodsState" parameterType="com.shop.entity.Goods">
+        update goods
+        <set >
+            <if test="newstate != null" >
+                goodsState = #{newstate,jdbcType=INTEGER},
+            </if>
+        </set>
+        where itemId = #{item_id,jdbcType=INTEGER}
+    </update>
+
+    <!--查询下架商品-->
+    <select id="searchOffGoods" resultType="com.shop.entity.Goods">
+        select * from goods where sellerId = #{username} and goodsState = 3
+    </select>
+
+    <!--查询正在出售商品-->
+    <select id="searchSellingGoods" resultType="com.shop.entity.Goods">
+        select * from goods where goodsState = 1
+    </select>
+
+</mapper>

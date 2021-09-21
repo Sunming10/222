@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.mapper.UserMapper">
+    <resultMap id="UserResultMap" type="com.shop.entity.User">
+        <result column="orderId" jdbcType="VARCHAR" property="order_id" />
+        <result column="itemId" jdbcType="VARCHAR" property="item_id" />
+        <result column="sellerId" jdbcType="VARCHAR" property="seller_id" />
+        <result column="buyerId" jdbcType="VARCHAR" property="buyer_id" />
+        <result column="buyerRealname" jdbcType="VARCHAR" property="buyer_realname" />
+        <result column="buyerPhonenumber" jdbcType="VARCHAR" property="buyer_phonenumber" />
+        <result column="buyerSum" jdbcType="INTEGER" property="buyer_sum" />
+        <result column="buyerAddress" jdbcType="VARCHAR" property="buyer_address" />
+        <result column="state" jdbcType="INTEGER" property="state" />
+        <result column="createTime" jdbcType="VARCHAR" property="create_time" />
+        <result column="finishTime" jdbcType="INTEGER" property="finish_time" />
+    </resultMap>
+    <!---->
+    <!--查看order表中商品号为item_number的买家列表-->
+    <select id="searchBuyerlist" resultType="com.shop.entity.Order">
+        select * from orderlist where itemId = #{item_id}
+    </select>
+
+    <!--在goods表中修改商品信息-->
+    <update id="updateGoods" parameterType="com.shop.entity.Goods">
+        update goods
+        <set >
+                <if test="goods_name != null" >
+                    goodsName = #{goods_name,jdbcType=VARCHAR},
+                </if>
+                <if test="seller_id != null" >
+                    sellerId = #{seller_id,jdbcType=VARCHAR},
+                </if>
+                <if test="goods_stock != null" >
+                    goodsStock = #{goods_stock,jdbcType=VARCHAR},
+                </if>
+                <if test="goods_img != null" >
+                    goodsImg = #{goods_img,jdbcType=VARCHAR},
+                </if>
+                <if test="goods_discribe != null" >
+                    goodsDiscribe = #{goods_discribe,jdbcType=VARCHAR},
+                </if>
+                <if test="goods_state != null" >
+                    goodsState = #{goods_state,jdbcType=INTEGER},
+                </if>
+        </set>
+        where itemId = #{item_id,jdbcType=INTEGER}
+    </update>
+
+    <!--根据item_id(商品ID)有意向的购买者下单-->
+    <update id="AddToOrderWanted" parameterType="com.shop.entity.Goods">
+        update orderlist
+        <set >
+            <if test="buyer_id != null" >
+                buyerId = #{buyer_id,jdbcType=VARCHAR},
+            </if>
+            <if test="buyer_phonenumber != null" >
+                buyerPhonenumber = #{buyer_phonenumber,jdbcType=VARCHAR},
+            </if>
+            <if test="buyer_address != null" >
+                buyerAddress = #{buyer_address,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where itemId = #{item_id,jdbcType=INTEGER}
+    </update>
+</mapper>
