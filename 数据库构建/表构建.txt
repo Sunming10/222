@@ -1,0 +1,38 @@
+CREATE TABLE `user` (
+`username`  varchar(20) NOT NULL ,
+`password`  varchar(20) NOT NULL ,
+`nickname`  varchar(20) NOT NULL ,
+`permission`  int(1) NOT NULL ,
+`phonenumber`  varchar(11) NULL ,
+`address`  varchar(50) NOT NULL ,
+`realname`  varchar(10) NOT NULL ,
+`userhead` varchar(100) NULL ,
+PRIMARY KEY (`username`)
+)
+;
+CREATE TABLE `order` (
+`order_id` int(10) NOT NULL,
+`item_id`  int(10) NOT NULL ,
+`seller_id`  varchar(10) NOT NULL ,
+`buyer_id`  varchar(10) NULL ,
+`buyer_realname`  varchar(10) NOT NULL ,
+`buyer_phonenumber`  varchar(11) NOT NULL ,
+`buy_sum`  int(1) NOT NULL ,
+`buyer_address`  varchar(50) NOT NULL ,
+`state` int(5) NOT NULL ,
+PRIMARY KEY (`order_id`)
+)
+;
+
+CREATE TABLE `goods` (
+`item_id`  int(50) NOT NULL AUTO_INCREMENT ,
+`goods_name`  varchar(20) NOT NULL ,
+`seller_id`  varchar(20) NOT NULL ,
+`goods_stock`  int(50) NOT NULL ,
+`goods_price`  int(50) NOT NULL ,
+`goods_img`  varchar(100) NOT NULL ,
+`goods_discribe`  varchar(100) NULL ,
+`goods_state`  int(1) NOT NULL ,
+PRIMARY KEY (`item_id`)
+)
+;
