@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.shop.mapper.UserMapper">
+<mapper namespace="com.shop.mapper.OrderMapper">
     <resultMap id="UserResultMap" type="com.shop.entity.User">
-        <result column="orderId" jdbcType="VARCHAR" property="order_id" />
-        <result column="itemId" jdbcType="VARCHAR" property="item_id" />
-        <result column="sellerId" jdbcType="VARCHAR" property="seller_id" />
-        <result column="buyerId" jdbcType="VARCHAR" property="buyer_id" />
+        <result column="orderId" jdbcType="INTEGER" property="order_id" />
+        <result column="itemId" jdbcType="INTEGER" property="item_id" />
+        <result column="sellerUsername" jdbcType="VARCHAR" property="seller_username" />
+        <result column="buyerUsername" jdbcType="VARCHAR" property="buyer_username" />
         <result column="buyerRealname" jdbcType="VARCHAR" property="buyer_realname" />
         <result column="buyerPhonenumber" jdbcType="VARCHAR" property="buyer_phonenumber" />
-        <result column="buyerSum" jdbcType="INTEGER" property="buyer_sum" />
         <result column="buyerAddress" jdbcType="VARCHAR" property="buyer_address" />
+        <result column="buySum" jdbcType="INTEGER" property="buy_sum" />
         <result column="state" jdbcType="INTEGER" property="state" />
         <result column="createTime" jdbcType="VARCHAR" property="create_time" />
         <result column="finishTime" jdbcType="INTEGER" property="finish_time" />
@@ -27,8 +27,8 @@
                 <if test="goods_name != null" >
                     goodsName = #{goods_name,jdbcType=VARCHAR},
                 </if>
-                <if test="seller_id != null" >
-                    sellerId = #{seller_id,jdbcType=VARCHAR},
+                <if test="seller_username != null" >
+                    sellerUsername = #{seller_username,jdbcType=VARCHAR},
                 </if>
                 <if test="goods_stock != null" >
                     goodsStock = #{goods_stock,jdbcType=VARCHAR},
@@ -50,8 +50,8 @@
     <update id="AddToOrderWanted" parameterType="com.shop.entity.Goods">
         update orderlist
         <set >
-            <if test="buyer_id != null" >
-                buyerId = #{buyer_id,jdbcType=VARCHAR},
+            <if test="buyer_realname != null" >
+                buyerRealname = #{buyer_realname,jdbcType=VARCHAR},
             </if>
             <if test="buyer_phonenumber != null" >
                 buyerPhonenumber = #{buyer_phonenumber,jdbcType=VARCHAR},

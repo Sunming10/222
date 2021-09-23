@@ -1,14 +1,14 @@
 package com.shop.entity;
 
 public class Order {
-    private String order_id;
-    private String item_id;
-    private String seller_id;
-    private String buyer_id;
+    private int order_id;
+    private int item_id;
+    private String seller_username ;
+    private String buyer_username ;
     private String buyer_realname;
     private String buyer_phonenumber;
-    private int buyer_sum;
     private String buyer_address;
+    private int buy_sum;
     private int state;//int,1表示进行中，2表示交易成功，3表示买家退款，4表示卖家关闭交易，5表示申请中
     private String create_time;
     private String finish_time;
@@ -17,63 +17,55 @@ public class Order {
         super();
     }
 
-    public Order(String order_id, String item_id, String seller_id, String buyer_realname, String buyer_phonenumber, int buyer_sum, String buyer_address, int state, String create_time, String finish_time) {
+    public Order(int order_id, int item_id, String seller_username, String buyer_username, String buyer_realname, String buyer_phonenumber, String buyer_address, int buy_sum, int state, String create_time, String finish_time) {
         this.order_id = order_id;
         this.item_id = item_id;
-        this.seller_id = seller_id;
+        this.seller_username = seller_username;
+        this.buyer_username = buyer_username;
         this.buyer_realname = buyer_realname;
         this.buyer_phonenumber = buyer_phonenumber;
-        this.buyer_sum = buyer_sum;
         this.buyer_address = buyer_address;
+        this.buy_sum = buy_sum;
         this.state = state;
         this.create_time = create_time;
         this.finish_time = finish_time;
     }
 
-    public Order(String order_id, String item_id, String seller_id, String buyer_id, String buyer_realname, String buyer_phonenumber, int buyer_sum, String buyer_address, int state, String create_time, String finish_time) {
-        this.order_id = order_id;
-        this.item_id = item_id;
-        this.seller_id = seller_id;
-        this.buyer_id = buyer_id;
-        this.buyer_realname = buyer_realname;
-        this.buyer_phonenumber = buyer_phonenumber;
-        this.buyer_sum = buyer_sum;
-        this.buyer_address = buyer_address;
-        this.state = state;
-        this.create_time = create_time;
-        this.finish_time = finish_time;
-    }
-
-    public String getOrder_id() {
+    public int getOrder_id() {
         return order_id;
     }
 
-    public void setOrder_id(String order_id) {
+    public void setOrder_id(int order_id) {
         this.order_id = order_id;
     }
 
-    public String getItem_id() {
+    public int getItem_id() {
         return item_id;
     }
 
-    public void setItem_id(String item_id) {
+    public void setItem_id(int item_id) {
         this.item_id = item_id;
     }
 
-    public String getSeller_id() {
-        return seller_id;
+    public int getBuy_sum() {
+        return buy_sum;
     }
 
-    public void setSeller_id(String seller_id) {
-        this.seller_id = seller_id;
+    public void setBuy_sum(int buy_sum) {
+        this.buy_sum = buy_sum;
     }
 
-    public String getBuyer_id() {
-        return buyer_id;
-    }
-
-    public void setBuyer_id(String buyer_id) {
-        this.buyer_id = buyer_id;
+    public Order(int order_id, int item_id, String seller_username, String buyer_realname, String buyer_phonenumber, String buyer_address, int buy_sum, int state, String create_time, String finish_time) {
+        this.order_id = order_id;
+        this.item_id = item_id;
+        this.seller_username = seller_username;
+        this.buyer_realname = buyer_realname;
+        this.buyer_phonenumber = buyer_phonenumber;
+        this.buyer_address = buyer_address;
+        this.buy_sum = buy_sum;
+        this.state = state;
+        this.create_time = create_time;
+        this.finish_time = finish_time;
     }
 
     public String getBuyer_realname() {
@@ -92,13 +84,6 @@ public class Order {
         this.buyer_phonenumber = buyer_phonenumber;
     }
 
-    public int getBuyer_sum() {
-        return buyer_sum;
-    }
-
-    public void setBuyer_sum(int buyer_sum) {
-        this.buyer_sum = buyer_sum;
-    }
 
     public String getBuyer_address() {
         return buyer_address;
@@ -135,14 +120,14 @@ public class Order {
     @Override
     public String toString() {
         return "Order{" +
-                "order_id='" + order_id + '\'' +
-                ", item_id='" + item_id + '\'' +
-                ", seller_id='" + seller_id + '\'' +
-                ", buyer_id='" + buyer_id + '\'' +
+                "order_id=" + order_id +
+                ", item_id=" + item_id +
+                ", seller_username='" + seller_username + '\'' +
+                ", buyer_username='" + buyer_username + '\'' +
                 ", buyer_realname='" + buyer_realname + '\'' +
                 ", buyer_phonenumber='" + buyer_phonenumber + '\'' +
-                ", buyer_sum=" + buyer_sum +
                 ", buyer_address='" + buyer_address + '\'' +
+                ", buy_sum=" + buy_sum +
                 ", state=" + state +
                 ", create_time='" + create_time + '\'' +
                 ", finish_time='" + finish_time + '\'' +

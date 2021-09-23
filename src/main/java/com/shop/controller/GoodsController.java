@@ -18,8 +18,8 @@ public class GoodsController {
 
     //向Goods表中添加商品
     @RequestMapping(value = "/addGoods",method = RequestMethod.POST)
-    public String addGoods(Goods goods){
-        int result = goodsService.addGoods(goods);
+    public String addGoods(String goods_name,String seller_username,int goods_stock,String goods_img,String goods_describe,int goods_price){
+        int result = goodsService.addGoods( goods_name, seller_username, goods_stock, goods_img, goods_describe, goods_price);
         if (result >= 1) {
             return "添加成功";
         } else {

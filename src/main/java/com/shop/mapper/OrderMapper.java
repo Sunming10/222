@@ -26,10 +26,10 @@ public interface OrderMapper {
     /**
      * 根据item_id(商品ID)有意向的购买者下单
      * @param item_id
-     * @param buyer_id
+     * @param buyer_username
      * @param buyer_phonenumber
      * @param buyer_address
      * @return
      */
-    int AddToOrderWanted(int item_id,String buyer_id,String buyer_phonenumber,String buyer_address);
+    int AddToOrderWanted(int item_id,String buyer_username,String buyer_phonenumber,String buyer_address);
 }

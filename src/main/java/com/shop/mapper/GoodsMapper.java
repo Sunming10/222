@@ -9,10 +9,15 @@ import java.util.List;
 public interface GoodsMapper {
     /**
      * 根据Goods向Goods表中添加信息
-     * @param goods
+     * @param goods_name
+     * @param seller_username
+     * @param goods_stock
+     * @param goods_img
+     * @param goods_describe
+     * @param goods_price
      * @return
      */
-    int addGoods(Goods goods);
+    int addGoods(String goods_name,String seller_username,int goods_stock,String goods_img,String goods_describe,int goods_price);
 
     /**
      * 根据item_id(商品ID)向Godds表中查询详细信息
