@@ -42,9 +42,9 @@ public class UserController {
             result = userService.updatePassword(username,newPassword);
         }
         if(result>=1){
-            return "sucess";
+            return "success";
         }else {
-            return "fail";
+            return "error";
         }
     }
 }

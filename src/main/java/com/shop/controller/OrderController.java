@@ -24,9 +24,9 @@ public class OrderController {
     public String updateGoods(int item_id, Goods newgoods){
         int result = orderService.updateGoods(item_id,newgoods);
         if (result >= 1) {
-            return "修改成功";
-        } else {
-            return "修改失败";
+            return "success";
+        }else {
+            return "error";
         }
     }
 
@@ -34,9 +34,9 @@ public class OrderController {
     public String AddToOrderWanted(int item_id,String name,String phonenumber,String address){
         int result = orderService.AddToOrderWanted(item_id, name, phonenumber, address);
         if (result >= 1) {
-            return "下单成功";
-        } else {
-            return "下单失败";
+            return "success";
+        }else {
+            return "error";
         }
     }
 

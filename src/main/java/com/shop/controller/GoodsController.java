@@ -21,9 +21,9 @@ public class GoodsController {
     public String addGoods(String goods_name,String seller_username,int goods_stock,String goods_img,String goods_describe,int goods_price){
         int result = goodsService.addGoods( goods_name, seller_username, goods_stock, goods_img, goods_describe, goods_price);
         if (result >= 1) {
-            return "添加成功";
-        } else {
-            return "添加失败";
+            return "success";
+        }else {
+            return "error";
         }
     }
 
@@ -39,9 +39,9 @@ public class GoodsController {
     public String updateGoodsState(int item_id,int newstate){
         int result = goodsService.updateGoodsState(item_id, newstate);
         if (result >= 1) {
-            return "修改成功";
-        } else {
-            return "修改失败";
+            return "success";
+        }else {
+            return "error";
         }
     }
 

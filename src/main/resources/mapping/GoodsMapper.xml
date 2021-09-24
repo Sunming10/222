@@ -8,6 +8,7 @@
         <result column="goodsStock" jdbcType="INTEGER" property="goods_stock" />
         <result column="goodsImg" jdbcType="VARCHAR" property="goods_img" />
         <result column="goodsDiscribe" jdbcType="VARCHAR" property="goods_discribe" />
+        <result column="goodsPrice" jdbcType="INTEGER" property="goods_price" />
         <result column="goodsState" jdbcType="INTEGER" property="goods_state" />
     </resultMap>
     <!---->
