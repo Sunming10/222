@@ -2,6 +2,7 @@ package com.shop.controller;
 
 import com.shop.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,8 +16,8 @@ public class UserController {
 
     //登录验证账号密码
     // http://localhost:8080/user/login?username=admin&password=root123
-    @RequestMapping(value = "/login" ,method = RequestMethod.GET)
-    public String loginByPassword(String username, String password){
+    @RequestMapping(value = "/login" ,method = RequestMethod.POST)
+    public String loginByPassword(@RequestBody String username, String password){
         User user = userService.login(username,password);
         if(user!=null){
             return "success";
@@ -26,16 +27,16 @@ public class UserController {
     }
     //获取用户信息
     //http://localhost:8080/user/getUserInfo?username=admin
-    @RequestMapping(value = "/getUserInfo" ,method = RequestMethod.GET)
-    User getUserInfo(String username){
+    @RequestMapping(value = "/getUserInfo" ,method = RequestMethod.POST)
+    User getUserInfo(@RequestBody String username){
         User user = userService.getUserInfo(username);
         return user;
     }
 
     //修改密码
     //http://localhost:8080/user/updatePassword?username=admin&oldPassword=root123&newPassword=root1234
-    @RequestMapping(value = "/updatePassword",method = RequestMethod.GET)
-    String updatePasswordByUsername(String username,String oldPassword,String newPassword){
+    @RequestMapping(value = "/updatePassword",method = RequestMethod.POST)
+    String updatePasswordByUsername(@RequestBody String username,String oldPassword,String newPassword){
         User user = userService.login(username,oldPassword);
         int result = 0;
         if(user!=null){

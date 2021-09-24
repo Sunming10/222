@@ -16,5 +16,5 @@ public class OrderService {
 
     public List<User> searchBuyerlist(int item_id){ return orderMapper.searchBuyerlist(item_id);}
     public int updateGoods(int item_id, Goods newgoods){ return orderMapper.updateGoods(item_id,newgoods);}
-    public int AddToOrderWanted(int item_id,String name,String phonenumber,String address){ return orderMapper.AddToOrderWanted(item_id, name, phonenumber, address);}
+    public int addToOrderWanted(int item_id,String name,String phonenumber,String address){ return orderMapper.addToOrderWanted(item_id, name, phonenumber, address);}
 }

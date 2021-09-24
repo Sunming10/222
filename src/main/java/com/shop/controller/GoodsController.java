@@ -3,6 +3,7 @@ package com.shop.controller;
 import com.shop.entity.Goods;
 import com.shop.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,8 +19,8 @@ public class GoodsController {
 
     //向Goods表中添加商品
     @RequestMapping(value = "/addGoods",method = RequestMethod.POST)
-    public String addGoods(String goods_name,String seller_username,int goods_stock,String goods_img,String goods_describe,int goods_price){
-        int result = goodsService.addGoods( goods_name, seller_username, goods_stock, goods_img, goods_describe, goods_price);
+    public String addGoods(@RequestBody Goods Goods){
+        int result = goodsService.addGoods( Goods);
         if (result >= 1) {
             return "success";
         }else {
@@ -28,15 +29,15 @@ public class GoodsController {
     }
 
     //买家在goods表中查询goods详细信息
-    @RequestMapping(value = "/searchGoods",method = RequestMethod.GET)
-    public Goods searchGoods(int item_id){
+    @RequestMapping(value = "/searchGoods",method = RequestMethod.POST)
+    public Goods searchGoods(@RequestBody int item_id){
         Goods Goods = goodsService.searchGoods(item_id);
         return Goods;
     }
 
     //修改商品状态
     @RequestMapping(value = "/updateGoodsState",method = RequestMethod.POST)
-    public String updateGoodsState(int item_id,int newstate){
+    public String updateGoodsState(@RequestBody int item_id,int newstate){
         int result = goodsService.updateGoodsState(item_id, newstate);
         if (result >= 1) {
             return "success";
@@ -46,14 +47,14 @@ public class GoodsController {
     }
 
     //卖家在goods表中查看下架商品，返回一个List<Goods>
-    @RequestMapping(value = "/searchOffGoods",method = RequestMethod.GET)
-    public List<Goods> searchOffGoods(String username){
+    @RequestMapping(value = "/searchOffGoods",method = RequestMethod.POST)
+    public List<Goods> searchOffGoods(@RequestBody String username){
         return goodsService.searchOffGoods(username);
     }
 
     //在goods表中查找所有正在出售的商品。
     @RequestMapping(value = "/searchSellingGoods",method = RequestMethod.GET)
-    public List<Goods> searchSellingGoods(){
+    public List<Goods> searchSellingGoods( ){
         return goodsService.searchSellingGoods();
     }
 

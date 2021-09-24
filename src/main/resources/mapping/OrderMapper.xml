@@ -47,7 +47,7 @@
     </update>
 
     <!--根据item_id(商品ID)有意向的购买者下单-->
-    <update id="AddToOrderWanted" parameterType="com.shop.entity.Goods">
+    <update id="addToOrderWanted" parameterType="com.shop.entity.Goods">
         update orderlist
         <set >
             <if test="buyer_realname != null" >

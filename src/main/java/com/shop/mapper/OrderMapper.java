@@ -31,5 +31,5 @@ public interface OrderMapper {
      * @param buyer_address
      * @return
      */
-    int AddToOrderWanted(int item_id,String buyer_username,String buyer_phonenumber,String buyer_address);
+    int addToOrderWanted(int item_id,String buyer_username,String buyer_phonenumber,String buyer_address);
 }
