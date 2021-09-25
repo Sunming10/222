@@ -2,10 +2,7 @@ package com.shop.controller;
 
 import com.shop.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.shop.service.UserService;
 
 @RestController
@@ -16,6 +13,7 @@ public class UserController {
 
     //登录验证账号密码
     // http://localhost:8080/user/login?username=admin&password=root123
+    @CrossOrigin
     @RequestMapping(value = "/login" ,method = RequestMethod.POST)
     public String loginByPassword(@RequestBody String username, String password){
         User user = userService.login(username,password);
