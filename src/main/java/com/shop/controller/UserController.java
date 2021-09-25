@@ -7,13 +7,14 @@ import com.shop.service.UserService;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin
 public class UserController {
     @Autowired
     private UserService userService;
 
     //登录验证账号密码
     // http://localhost:8080/user/login?username=admin&password=root123
-    @CrossOrigin
+
     @RequestMapping(value = "/login" ,method = RequestMethod.POST)
     public String loginByPassword(@RequestBody String username, String password){
         User user = userService.login(username,password);
