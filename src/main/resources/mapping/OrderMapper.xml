@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shop.mapper.OrderMapper">
-    <resultMap id="OrderResultMap" type="com.shop.entity.User">
+    <resultMap id="OrderResultMap" type="com.shop.entity.Order">
         <result column="orderId" jdbcType="INTEGER" property="order_id" />
         <result column="itemId" jdbcType="INTEGER" property="item_id" />
         <result column="sellerUsername" jdbcType="VARCHAR" property="seller_username" />
@@ -11,8 +11,8 @@
         <result column="buyerAddress" jdbcType="VARCHAR" property="buyer_address" />
         <result column="buySum" jdbcType="INTEGER" property="buy_sum" />
         <result column="state" jdbcType="INTEGER" property="state" />
-        <result column="createTime" jdbcType="DATETIME" property="create_time" />
-        <result column="finishTime" jdbcType="DATETIME" property="finish_time" />
+        <result column="createTime" jdbcType="TIMESTAMP" property="create_time" />
+        <result column="finishTime" jdbcType="TIMESTAMP" property="finish_time" />
     </resultMap>
     <!---->
     <!--查看order表中商品号为item_number的买家列表-->
@@ -90,10 +90,10 @@
                 #{buy_sum ,jdbcType=INTEGER},
             </if>
             <if test="create_time != null" >
-                #{create_time ,jdbcType=DATETIME},
+                #{create_time ,jdbcType=TIMESTAMP},
             </if>
             5,
-            'admin',
+            "admin",
         </trim>
     </insert>
 </mapper>

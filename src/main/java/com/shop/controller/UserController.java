@@ -15,8 +15,8 @@ public class UserController {
     //登录验证账号密码
     // http://localhost:8080/user/login?username=admin&password=root123
 
-    @RequestMapping(value = "/login" ,method = RequestMethod.POST)
-    public String loginByPassword(@RequestBody String username, String password){
+    @RequestMapping(value = "/login")
+    public String loginByPassword(String username, String password){
         User user = userService.login(username,password);
         if(user!=null){
             return "success";

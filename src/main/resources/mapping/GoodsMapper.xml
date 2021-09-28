@@ -63,7 +63,7 @@
 </insert>
 
     <!--根据item_id(商品ID)查询商品-->
-    <select id="searchGoods" resultMap="GoodsResultMap" resultType="com.shop.entity.Goods">
+    <select id="searchGoods" resultMap="GoodsResultMap">
         select * from goods where itemId = #{item_id}
     </select>
 
@@ -79,12 +79,12 @@
     </update>
 
     <!--查询下架商品-->
-    <select id="searchOffGoods" resultMap="GoodsResultMap" resultType="com.shop.entity.Goods">
+    <select id="searchOffGoods" resultMap="GoodsResultMap">
         select * from goods where sellerUsername = #{username} and goodsState = 3
     </select>
 
     <!--查询正在出售商品-->
-    <select id="searchSellingGoods" resultMap="GoodsResultMap" resultType="com.shop.entity.Goods">
+    <select id="searchSellingGoods" resultMap="GoodsResultMap">
         select * from goods where goodsState = 1
     </select>
 
