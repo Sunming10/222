@@ -14,6 +14,15 @@ public class Goods {
         super();
     }
 
+    public Goods(String goods_name, String seller_username, int goods_stock, String goods_img, String goods_discribe, int goods_price) {
+        this.goods_name = goods_name;
+        this.seller_username = seller_username;
+        this.goods_stock = goods_stock;
+        this.goods_img = goods_img;
+        this.goods_discribe = goods_discribe;
+        this.goods_price = goods_price;
+    }
+
     public Goods(int item_id, String goods_name, String seller_username, int goods_stock, String goods_img, String goods_discribe, int goods_price, int goods_state) {
         this.item_id = item_id;
         this.goods_name = goods_name;

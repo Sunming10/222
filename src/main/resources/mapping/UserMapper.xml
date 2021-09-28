@@ -18,11 +18,11 @@
     </update>
 
     <!--登录功能-->
-    <select id="login" resultType="com.shop.entity.User">
+    <select id="login" resultMap="UserResultMap" resultType="com.shop.entity.User">
         select * from user where username = #{username} and password = #{password}
     </select>
     <!--获取用户信息-->
-    <select id="getUserInfo" resultType="com.shop.entity.User">
+    <select id="getUserInfo" resultMap="UserResultMap" resultType="com.shop.entity.User">
         select * from user where username = #{username}
     </select>
 </mapper>

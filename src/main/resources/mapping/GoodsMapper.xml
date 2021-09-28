@@ -4,7 +4,7 @@
     <resultMap id="GoodsResultMap" type="com.shop.entity.Goods">
         <result column="itemId" jdbcType="INTEGER" property="item_id" />
         <result column="goodsName" jdbcType="VARCHAR" property="goods_name" />
-        <result column="sellerUsername" jdbcType="VARCHAR" property="seller_id" />
+        <result column="sellerUsername" jdbcType="VARCHAR" property="seller_username" />
         <result column="goodsStock" jdbcType="INTEGER" property="goods_stock" />
         <result column="goodsImg" jdbcType="VARCHAR" property="goods_img" />
         <result column="goodsDiscribe" jdbcType="VARCHAR" property="goods_discribe" />
@@ -18,7 +18,7 @@
         <trim prefix="(" suffix=")" suffixOverrides="," >
 
             <if test="goods_name != null">
-                goods_name,
+                goodsName,
             </if>
             <if test="seller_username != null">
                 sellerUsername,
@@ -43,7 +43,7 @@
             <if test="goods_name != null" >
                 #{goods_name,jdbcType=VARCHAR},
             </if>
-            <if test="seller_id != null" >
+            <if test="seller_username != null" >
                 #{seller_username,jdbcType=VARCHAR},
             </if>
             <if test="goods_stock != null" >
@@ -63,7 +63,7 @@
 </insert>
 
     <!--根据item_id(商品ID)查询商品-->
-    <select id="searchGoods" resultType="com.shop.entity.Goods">
+    <select id="searchGoods" resultMap="GoodsResultMap" resultType="com.shop.entity.Goods">
         select * from goods where itemId = #{item_id}
     </select>
 
@@ -79,12 +79,12 @@
     </update>
 
     <!--查询下架商品-->
-    <select id="searchOffGoods" resultType="com.shop.entity.Goods">
-        select * from goods where sellerId = #{username} and goodsState = 3
+    <select id="searchOffGoods" resultMap="GoodsResultMap" resultType="com.shop.entity.Goods">
+        select * from goods where sellerUsername = #{username} and goodsState = 3
     </select>
 
     <!--查询正在出售商品-->
-    <select id="searchSellingGoods" resultType="com.shop.entity.Goods">
+    <select id="searchSellingGoods" resultMap="GoodsResultMap" resultType="com.shop.entity.Goods">
         select * from goods where goodsState = 1
     </select>
 
