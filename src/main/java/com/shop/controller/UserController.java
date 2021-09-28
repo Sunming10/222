@@ -20,7 +20,7 @@ public class UserController {
     // http://localhost:8080/user/login?username=admin&password=root123
 
     @RequestMapping(value = "/login")
-    public String loginByPassword(@RequestParam (name = "username") String username,@RequestParam(name = "password")String password){
+    public String loginByPassword(String username,String password){
         User user = userService.login(username,password);
         if(user!=null){
             return "success";
