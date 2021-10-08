@@ -29,15 +29,15 @@ public class GoodsController {
     }
 
     //买家在goods表中查询goods详细信息
-    @RequestMapping(value = "/searchGoods",method = RequestMethod.POST)
-    public Goods searchGoods(@RequestBody int item_id){
+    @RequestMapping(value = "/searchGoods")
+    public Goods searchGoods( int item_id){
         Goods Goods = goodsService.searchGoods(item_id);
         return Goods;
     }
 
     //修改商品状态
-    @RequestMapping(value = "/updateGoodsState",method = RequestMethod.POST)
-    public String updateGoodsState(@RequestBody int item_id,int newstate){
+    @RequestMapping(value = "/updateGoodsState")
+    public String updateGoodsState( int item_id,int newstate){
         int result = goodsService.updateGoodsState(item_id, newstate);
         if (result >= 1) {
             return "success";
@@ -47,18 +47,30 @@ public class GoodsController {
     }
 
     //卖家在goods表中查看下架商品，返回一个List<Goods>
-    @RequestMapping(value = "/searchOffGoods",method = RequestMethod.POST)
-    public List<Goods> searchOffGoods(@RequestBody String username){
+    @RequestMapping(value = "/searchOffGoods")
+    public List<Goods> searchOffGoods( String username){
         return goodsService.searchOffGoods(username);
     }
 
     //在goods表中查找所有正在出售的商品。
-    @RequestMapping(value = "/searchSellingGoods",method = RequestMethod.GET)
+    @RequestMapping(value = "/searchSellingGoods")
     public List<Goods> searchSellingGoods( ){
         return goodsService.searchSellingGoods();
     }
 
+    //在goods表中查询所有商品
+    public List<Goods> searchsearchAllGoods(){ return goodsService.searchAllGoods();}
 
+    //修改商品信息
+    @RequestMapping(value = "/updateGoods")
+    public String updateGoods(@RequestBody int item_id, Goods newgoods){
+        int result = goodsService.updateGoods(item_id,newgoods);
+        if (result >= 1) {
+            return "success";
+        }else {
+            return "error";
+        }
+    }
 
 
 }

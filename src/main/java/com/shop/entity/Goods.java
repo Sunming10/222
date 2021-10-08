@@ -7,6 +7,7 @@ public class Goods {
     private int goods_stock;
     private String goods_img;
     private String goods_discribe;
+    private String goods_class;
     private int goods_price;
     private int goods_state;//int型 1表示在售，2表示冻结，3表示下架
 

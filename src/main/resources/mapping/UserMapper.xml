@@ -9,7 +9,7 @@
         <result column="phoneNumber" jdbcType="VARCHAR" property="phonenumber" />
         <result column="address" jdbcType="VARCHAR" property="address" />
         <result column="permission" jdbcType="INTEGER" property="permission" />
-        <result column="userHead" jdbcType="VARCHAR" property="user_head" />
+        <result column="userHead" jdbcType="VARCHAR" property="user_head"   />
     </resultMap>
     <!---->
     <!--更改密码-->
@@ -18,11 +18,11 @@
     </update>
 
     <!--登录功能-->
-    <select id="login" resultMap="UserResultMap" resultType="com.shop.entity.User">
+    <select id="login" resultMap="UserResultMap">
         select * from user where username = #{username} and password = #{password}
     </select>
     <!--获取用户信息-->
-    <select id="getUserInfo" resultMap="UserResultMap" resultType="com.shop.entity.User">
+    <select id="getUserInfo" resultMap="UserResultMap">
         select * from user where username = #{username}
     </select>
 </mapper>

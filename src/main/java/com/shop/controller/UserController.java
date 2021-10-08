@@ -1,13 +1,10 @@
 package com.shop.controller;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.shop.entity.User;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.shop.service.UserService;
 
-import javax.websocket.server.PathParam;
 
 @RestController
 @RequestMapping("/user")
@@ -18,37 +15,38 @@ public class UserController {
 
     //登录验证账号密码
     // http://localhost:8080/user/login?username=admin&password=root123
-
     @RequestMapping(value = "/login")
-    public String loginByPassword(String username,String password){
+    public User loginByPassword(String username,String password){
         User user = userService.login(username,password);
         if(user!=null){
-            return "success";
-        }else {
-            return "error";
+            System.out.println("user = "+user);
+            return user;
+        } else{
+            user = new User();
+            return user;
         }
     }
     //获取用户信息
     //http://localhost:8080/user/getUserInfo?username=admin
-    @RequestMapping(value = "/getUserInfo" ,method = RequestMethod.POST)
-    User getUserInfo(@RequestBody String username){
+    @RequestMapping(value = "/getUserInfo")
+    User getUserInfo( String username){
         User user = userService.getUserInfo(username);
         return user;
     }
 
     //修改密码
     //http://localhost:8080/user/updatePassword?username=admin&oldPassword=root123&newPassword=root1234
-    @RequestMapping(value = "/updatePassword",method = RequestMethod.POST)
-    String updatePasswordByUsername(@RequestBody String username,String oldPassword,String newPassword){
+    @RequestMapping(value = "/updatePassword")
+    String updatePasswordByUsername( String username,String oldPassword,String newPassword){
         User user = userService.login(username,oldPassword);
         int result = 0;
         if(user!=null){
             result = userService.updatePassword(username,newPassword);
         }
         if(result>=1){
-            return "success";
+            return newPassword;
         }else {
-            return "error";
+            return oldPassword;
         }
     }
 }

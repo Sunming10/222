@@ -21,4 +21,6 @@ public class GoodsService {
     }
     public List<Goods> searchOffGoods(String username){ return goodsMapper.searchOffGoods(username);}
     public List<Goods> searchSellingGoods(){return goodsMapper.searchSellingGoods();}
+    public List<Goods> searchAllGoods(){ return goodsMapper.searchAllGoods();}
+    public int updateGoods(int item_id, Goods newgoods){ return goodsMapper.updateGoods(item_id,newgoods);}
 }

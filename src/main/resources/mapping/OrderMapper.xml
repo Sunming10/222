@@ -20,31 +20,6 @@
         select * from orders where itemId = #{item_id}
     </select>
 
-    <!--在goods表中修改商品信息-->
-    <update id="updateGoods" parameterType="com.shop.entity.Goods">
-        update goods
-        <set >
-                <if test="goods_name != null" >
-                    goodsName = #{goods_name,jdbcType=VARCHAR},
-                </if>
-                <if test="seller_username != null" >
-                    sellerUsername = #{seller_username,jdbcType=VARCHAR},
-                </if>
-                <if test="goods_stock != null" >
-                    goodsStock = #{goods_stock,jdbcType=VARCHAR},
-                </if>
-                <if test="goods_img != null" >
-                    goodsImg = #{goods_img,jdbcType=VARCHAR},
-                </if>
-                <if test="goods_discribe != null" >
-                    goodsDiscribe = #{goods_discribe,jdbcType=VARCHAR},
-                </if>
-                <if test="goods_state != null" >
-                    goodsState = #{goods_state,jdbcType=INTEGER},
-                </if>
-        </set>
-        where itemId = #{item_id,jdbcType=INTEGER}
-    </update>
 
     <!--根据item_id(商品ID)有意向的购买者下单-->
     <insert id="addToOrderWanted" parameterType="com.shop.entity.Order">
@@ -54,6 +29,7 @@
             <if test="item_id != null" >
                 itemId,
             </if>
+            sellerUsername,
             <if test="buyer_realname != null" >
                 buyerRealname,
             </if>
@@ -66,17 +42,17 @@
             <if test="buy_sum != null" >
                 buySum,
             </if>
+            state,
             <if test="create_time != null">
                 createTime,
             </if>
-                state,
-                sellerUsername,
         </trim>
 
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="item_id != null" >
                 #{item_id,jdbcType=INTEGER},
             </if>
+            "admin",
             <if test="buyer_realname != null" >
                 #{buyer_realname,jdbcType=VARCHAR},
             </if>
@@ -89,11 +65,10 @@
             <if test="buy_sum != null" >
                 #{buy_sum ,jdbcType=INTEGER},
             </if>
+            5,
             <if test="create_time != null" >
                 #{create_time ,jdbcType=TIMESTAMP},
             </if>
-            5,
-            "admin",
         </trim>
     </insert>
 </mapper>

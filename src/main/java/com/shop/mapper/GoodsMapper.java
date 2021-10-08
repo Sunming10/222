@@ -42,4 +42,18 @@ public interface GoodsMapper {
      */
     List<Goods> searchSellingGoods();
 
+    /**
+     * 在Goods表中查找所有商品
+     * @return
+     */
+    List<Goods> searchAllGoods();
+
+    /**
+     * 在goods表中修改商品信息
+     * @param item_id
+     * @param newgoods
+     * @return
+     */
+    int updateGoods(int item_id,Goods newgoods);
+
 }
