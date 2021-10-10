@@ -1,8 +1,8 @@
-  <template>
+<template>
   <el-container>
 
   <div>
-    <h3 class="text">XX线上购物欢迎您!</h3>
+    <h3 class="text">线上购物欢迎您!</h3>
     </div>
   <div >
         <img  class="img1" src="https://iconfont.alicdn.com/t/992dee67-ae7d-4812-a294-b2dcf0abb623.png" alt=""></div>
@@ -29,13 +29,15 @@
       <el-card class="box-card">
   <div class="text-dis item-dis">
     <span>
-      <p>商品描述</p>
+      <p>{{describe_title}}</p>
+      <p>{{describe_contain}}</p>
+      <!-- <p>商品描述</p>
       <p> 双AI慧眼，一体式桌面设计。
         前置1300万智能升降摄像头和800万交互摄像头
         ，双摄像头各司其职，辅助孩子解决学习难题。
         配有18W独立音箱，
         支持4麦克风降噪，拾音清晰，
-        上网课更方便。</p>
+        上网课更方便。</p> -->
     </span>
   </div>
 </el-card>
@@ -68,7 +70,7 @@
   </div>
     </div>
     </el-container>
-  </template>
+</template>
 <script>
   export default {
     data() {
@@ -94,6 +96,8 @@
       },
         dialogFormVisible: false,
         formLabelWidth: '120px',
+        describe_title:"商品描述",
+        describe_contain:"双AI慧眼，一体式桌面设计。前置1300万智能升降摄像头和800万交互摄像头，双摄像头各司其职，辅助孩子解决学习难题。配有18W独立音箱，支持4麦克风降噪，拾音清晰，上网课更方便。"
       };
     },
       methods: {

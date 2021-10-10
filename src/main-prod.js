@@ -5,51 +5,30 @@ import router from './router'
 import './assets/fonts/iconfont.css'
 // 导入全局样式表
 import './assets/css/global.css'
-import TreeTable from 'vue-table-with-tree-grid'
-
-// 导入富文本编辑器
-import VueQuillEditor from 'vue-quill-editor'
-
-// 导入 NProgress 包对应的JS和CSS
-import NProgress from 'nprogress'
 
 import axios from 'axios'
-// 配置请求的跟路径
-axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
-// 在 request 拦截器中，展示进度条 NProgress.start()
-axios.interceptors.request.use(config => {
-  // console.log(config)
-  NProgress.start()
-  config.headers.Authorization = window.sessionStorage.getItem('token')
-  // 在最后必须 return config
+import qs from 'qs'
+// axios配置
+axios.defaults.timeout = 5000 // 响应时间
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8' // 配置post请求头
+axios.defaults.headers.get['Content-Type'] = 'application/json;charset=UTF-8' // 配置get请求头
+axios.defaults.baseURL = 'http://127.0.0.1:8082/' // 配置接口地址
+// POST传参序列化(添加请求拦截器)
+axios.interceptors.request.use((config) => {
+  // 在发送请求之前做某件事
+  if (config.method === 'post') {
+    // 这里使用qs对数据进行处理，防止后台$_POST接收不到
+    config.data = qs.stringify(config.data)
+  }
   return config
+}, (error) => {
+  console.log('错误的传参', 'fail')
+  return Promise.reject(error)
 })
-// 在 response 拦截器中，隐藏进度条 NProgress.done()
-axios.interceptors.response.use(config => {
-  NProgress.done()
-  return config
-})
+
 Vue.prototype.$http = axios
 
 Vue.config.productionTip = false
-
-Vue.component('tree-table', TreeTable)
-// 将富文本编辑器，注册为全局可用的组件
-Vue.use(VueQuillEditor)
-
-Vue.filter('dateFormat', function (originVal) {
-  const dt = new Date(originVal)
-
-  const y = dt.getFullYear()
-  const m = (dt.getMonth() + 1 + '').padStart(2, '0')
-  const d = (dt.getDate() + '').padStart(2, '0')
-
-  const hh = (dt.getHours() + '').padStart(2, '0')
-  const mm = (dt.getMinutes() + '').padStart(2, '0')
-  const ss = (dt.getSeconds() + '').padStart(2, '0')
-
-  return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
-})
 
 new Vue({
   router,

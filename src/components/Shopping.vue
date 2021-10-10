@@ -1,4 +1,4 @@
-  <template>
+<template>
   <el-container>
     <el-header>
       <div>
@@ -58,7 +58,7 @@
   </div>
     </el-main>
   </el-container>
-  </template>
+</template>
 <script>
   export default {
     data() {
