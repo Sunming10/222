@@ -10,40 +10,33 @@
         <img  class="img2" src="https://iconfont.alicdn.com/t/40e02adb-c782-431d-b37a-ed8997eb7b52.png" alt=""></div>
     <div >
       <div>
-    <el-button class="btn_1" type="warning" round><router-link to='login' class='line'>登录</router-link></el-button>
+    <el-button class="btn_1" type="warning" round icon="el-icon-user"><router-link to='login' class='line'>登&nbsp;录</router-link></el-button>
 </div>
 
         <img  class="img3" src="https://iconfont.alicdn.com/t/4fe848e1-4785-46ad-93c5-8296efd2484f.png" alt=""></div>
 <div id="item-list">
       <div class="backpicture">
-        <img  class="img4" src="https://mr.baidu.com/r/trstE61dxS?f=cp&u=ed17994c0faa15e7" alt=""></div>
-  <div class="front">
-    <div><h1 class="text1">商品列表</h1></div>
+        <!-- <img  class="img4" src="https://mr.baidu.com/r/trstE61dxS?f=cp&u=ed17994c0faa15e7.png" alt=""> --></div>
+      <div class="front">
+    <div><h1 class="text1">{{itemList.title}}</h1></div>
     <div>
-        <img  class="img5" src="https://iconfont.alicdn.com/t/5d5f7473-d557-4dd3-b497-7c25bca1eb13.png" alt="">
+        <img  class="img5" src="https://iconfont.alicdn.com/t/9faef207-9cd1-41fd-8065-6a2f45fe24c0.png" alt="">
          </div>
-  <div><h3 class="text2">华为双AI慧眼学习智慧屏</h3></div>
-    <div><h4 class="text3">价格</h4></div>
-    <div><h4 class="text4">￥2199.00</h4></div>
+  <div><h3 class="text2">{{itemList.name}}</h3></div>
+    <div><h4 class="text3">{{itemList.priceTitle}}</h4></div>
+    <div><h4 class="text4">{{itemList.price}}</h4></div>
     <div>
       <el-card class="box-card">
   <div class="text-dis item-dis">
     <span>
-      <p>{{describe_title}}</p>
-      <p>{{describe_contain}}</p>
-      <!-- <p>商品描述</p>
-      <p> 双AI慧眼，一体式桌面设计。
-        前置1300万智能升降摄像头和800万交互摄像头
-        ，双摄像头各司其职，辅助孩子解决学习难题。
-        配有18W独立音箱，
-        支持4麦克风降噪，拾音清晰，
-        上网课更方便。</p> -->
+      <p>{{describe.title}}</p>
+      <p>{{describe.contain}}</p>
     </span>
   </div>
 </el-card>
     </div>
     <div>
- <el-button class="btn" type="text" @click="dialogFormVisible = true" round>加入购物车</el-button>
+ <el-button class="btn" type="warning" @click="dialogFormVisible = true" round>加入购物车</el-button>
     </div>
   </div>
   <div>
@@ -96,8 +89,17 @@
       },
         dialogFormVisible: false,
         formLabelWidth: '120px',
-        describe_title:"商品描述",
-        describe_contain:"双AI慧眼，一体式桌面设计。前置1300万智能升降摄像头和800万交互摄像头，双摄像头各司其职，辅助孩子解决学习难题。配有18W独立音箱，支持4麦克风降噪，拾音清晰，上网课更方便。"
+        describe:{
+          title:"商品描述",
+          contain:"双AI慧眼，一体式桌面设计。前置1300万智能升降摄像头和800万交互摄像头，双摄像头各司其职，辅助孩子解决学习难题。配有18W独立音箱，支持4麦克风降噪，拾音清晰，上网课更方便。"
+
+        },
+        itemList:{
+          title:"商品列表",
+          name:"华为双AI慧眼学习智慧屏",
+          priceTitle:"价格：",
+          price:"￥2199.00"
+        }
       };
     },
       methods: {
@@ -202,16 +204,8 @@ div{
 }
 #item-list{
   .backpicture{
-    z-index: -1;
-    border-width: 0px;
-    position: absolute;
-      left: 0px;
-        top: 0px;
-        float: left;
-      width: 50%;
-      height: 100%;
-      margin-top: 740px;
-      margin-left:-35px;
+    background-color: #eed7c0;
+
   }
   .front{
     z-index: 1;
@@ -285,12 +279,7 @@ div{
     .btn{
   margin-top:-20px;
   margin-left: -1280px;
-  background-color: rgb(238, 137, 54);
-  border-radius: 4px;
-  border: 1px solid rgb(221, 221, 238);
-  padding: 8px 9px;
-  color: rgb(68, 63, 63);
-  font-family: 'Arial Normal','Arial';
+  padding: 12px 23px;
 }
 
       }

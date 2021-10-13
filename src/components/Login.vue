@@ -16,18 +16,15 @@
       <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules" label-width="0px" class="login_form">
         <!-- 用户名 -->
         <el-form-item prop="username" >
-          <!-- <i class="iconfont">&#xe633;</i> -->
-          <el-input v-model="loginForm.username" placeholder="账  号" id='msg_login' ></el-input>
+          <el-input v-model="loginForm.username" placeholder="账  号" id='msg_login' auto-complete="off" ></el-input>
         </el-form-item>
         <!-- 密码 -->
         <el-form-item prop="password">
-          <el-input placeholder="密  码" v-model="loginForm.password" show-password type="password"></el-input>
+          <el-input placeholder="密  码" v-model="loginForm.password" show-password type="password" auto-complete="off"></el-input>
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item class="btns">
-          <el-button type="warning" @click="login" round size="medium" ><router-link to="selling" class="line">登录</router-link></el-button>
-          <!-- <el-button type="primary" @click="login">登录</el-button> -->
-          <!-- <el-button type="info" @click="resetLoginForm">重置</el-button> -->
+          <el-button type="warning" @click="login" round size="medium" >登录</el-button>
            <el-button type="warning" @click="resetLoginForm" round size="medium">重置</el-button>
         </el-form-item>
       </el-form>
@@ -41,9 +38,10 @@ export default {
     return {
       // 这是登录表单的数据绑定对象
       loginForm: {
-        username: 'admin',
-        password: 'root1234'
+        username: '',
+        password: ''
       },
+
       // 这是表单的验证规则对象
       loginFormRules: {
         // 验证用户名是否合法
@@ -62,29 +60,27 @@ export default {
   methods: {
     // 点击重置按钮，重置登录表单
     resetLoginForm() {
-      // console.log(this);
       this.$refs.loginFormRef.resetFields()
     },
-
-
-
-    login(){
-      this.$http.post('/user/login', this.loginForm).then(
-        response => {
-          console.log(response)
-          // this.$router.push('home')
-
-        },
-        err => {
-          console.log(err)
-        }).catch((error) => {
-        console.log(error)
-        // window.log("密码或用户名错误！");
-        }
-        )
-
-    }
-
+    // 登陆逻辑判断
+       login(){
+       this.$refs.loginFormRef.validate(async valid => {
+        this.$http.post('/user/login', this.loginForm).then(response=>{
+            if(this.loginForm.username!=''&&this.loginForm.password!=''){
+              if((this.loginForm.username==response.data.userName)&&(this.loginForm.password==response.data.password)){
+                console.log(response.data);
+                this.$message('尊敬的'+response.data.userName+'用户，恭喜你登录成功！');
+                this.$router.push('home');
+              }else{
+                console.log();
+                     this.$message.error('用户名或密码错误，请重新登录！');
+              }
+            }else{
+               this.$message.error('用户名和密码不能为空，请重新登录！');
+            }
+})
+      })
+    }
  }
 }
 </script>

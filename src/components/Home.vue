@@ -6,8 +6,8 @@
         <img src="https://iconfont.alicdn.com/t/be0fa091-076f-47da-8d04-9cf81d8252ad.png" alt="网上商城">
         <!-- <span>网上商城</span> -->
       </div>
-      <i class="iconfont">&#xe634;</i>
-      <el-button type="warning" round @click="logout"><router-link to='./login' class="font-line">退出登陆</router-link></el-button>
+      <!-- <i class="iconfont">&#xe634;</i> -->
+      <el-button type="warning" round @click="logout" icon="el-icon-user"><router-link to='login' class="font-line" >退出登陆</router-link></el-button>
     </el-header>
     <!-- 页面主体区域 -->
     <el-container>
@@ -27,9 +27,9 @@
                 </template>
                 <el-menu-item-group>
                   <template slot="title"></template>
-                  <el-menu-item index="1-1"><router-link to='selling'  class="line">正在出售商品</router-link></el-menu-item>
+                  <el-menu-item index="1-1"><router-link to='selling'  class="line">出售商品</router-link></el-menu-item>
                   <el-menu-item index="1-2" ><router-link to="icing" class="line">冻结商品</router-link></el-menu-item>
-                  <el-menu-item index="1-3" ><router-link to="history" class="line">已出售商品</router-link></el-menu-item>
+                  <el-menu-item index="1-3" ><router-link to="history" class="line">历史商品</router-link></el-menu-item>
                 </el-menu-item-group>
 
               </el-submenu>
@@ -39,19 +39,19 @@
                   <span slot="title"><router-link to="modify" class="line">信息修改</router-link> </span>
                 </template>
                 <el-menu-item-group>
-                  <el-submenu index="2-1">
+                  <!-- <el-submenu index="2-1">
                     <template slot="title">
                         <span slot="title"><router-link  to="modify" class="line">商品信息修改</router-link></span>
                     </template>
                     <el-menu-item index="2-1-1"><router-link to="add" class="line">增加商品</router-link></el-menu-item>
-                  <el-menu-item index="2-1-2"><router-link to="modify" class="line">修改商品信息</router-link></el-menu-item>
+                  <el-menu-item index="2-1-2"><router-link to="modify" class="line">修改商品信息</router-link></el-menu-item> -->
 
-                  </el-submenu>
-                  <el-submenu index="2-2">
+                  <!-- </el-submenu> -->
+                  <el-submenu index="2-1">
                     <template slot="title">
                         <span slot="title"><router-link to="self_info" class="line">个人信息修改</router-link></span>
                     </template>
-                    <el-menu-item index="2-1-1"><router-link to="self_info" class="line">修改个人信息</router-link></el-menu-item>
+                    <el-menu-item index="2-1-1"><router-link to="self_info" class="line">修改密码</router-link></el-menu-item>
 
                   </el-submenu>
                 </el-menu-item-group>
@@ -118,7 +118,8 @@ export default {
 @import url('../assets/css/font.css');
 .font-line{
         text-decoration: none;
-        color: #8D7D6B;
+        // color: #8D7D6B;
+        color: #fff;
       }
 .home-container {
   height: 100%;

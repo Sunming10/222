@@ -1,17 +1,13 @@
 <template>
-  <el-container>
+<el-container>
 
+            <span class="font-style">密码修改</span>
+            <!-- 按钮 -->
               <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm" >
-              <el-form-item label="卖家姓名" prop="seller_name">
-                <el-input type="text" v-model="ruleForm.seller_name" autocomplete="off"></el-input>
-              </el-form-item>
-              <el-form-item label="卖家联系方式" prop="seller_tel">
-                <el-input type="text" v-model="ruleForm.seller_tel" autocomplete="off"></el-input>
-              </el-form-item>
-              <el-form-item label="旧密码" prop="old_passward">
-                <el-input type="password" v-model="ruleForm.old_passward" autocomplete="off"></el-input>
-              </el-form-item>
-              <el-form-item label="密码" prop="pass">
+              <!-- <el-form-item label="旧密码" prop="old_passward">
+                <el-input type="password" v-model="ruleForm.oldpassward" autocomplete="off"></el-input>
+              </el-form-item> -->
+              <el-form-item label="新密码" prop="pass">
                 <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
               </el-form-item>
               <el-form-item label="确认密码" prop="checkPass">
@@ -39,7 +35,7 @@ export default {
           // if (!Number.isInteger(value)) {
           //   callback(new Error('请输入正确的密码！'));
           // } else {
-            if (value!='123456') {
+            if (value!='root1234') {
               callback(new Error('密码错误！'));
             } else {
               callback();
@@ -70,7 +66,7 @@ export default {
         ruleForm: {
           seller_name:'金智妮',
           seller_tel:'18375289147',
-          oldpass:'1234567',
+          oldpassward:'root1234',
           pass: '',
           checkPass: '',
         },
@@ -116,4 +112,11 @@ export default {
 .btn-position{
   text-align: center;
 }
+.font-style{
+    font-size: 24px;
+    font-family: 'Arial Normal','Arial';
+    color: #999;
+    font-weight: bold;
+
+  }
 </style>
