@@ -8,7 +8,7 @@
         <result column="goodsStock" jdbcType="INTEGER" property="goods_stock" />
         <result column="goodsImg" jdbcType="VARCHAR" property="goods_img" />
         <result column="goodsDiscribe" jdbcType="VARCHAR" property="goods_discribe" />
-        <result column="goodsPrice" jdbcType="INTEGER" property="goods_price" />
+        <result column="goodsPrice" jdbcType="REAL" property="goods_price" />
         <result column="goodsState" jdbcType="INTEGER" property="goods_state" />
     </resultMap>
     <!---->
@@ -56,7 +56,7 @@
                 #{goods_discribe,jdbcType=VARCHAR},
             </if>
             <if test="goods_price != null" >
-                #{goods_price,jdbcType=INTEGER},
+                #{goods_price,jdbcType=REAL},
             </if>
             1,
         </trim>
@@ -85,6 +85,9 @@
             </if>
             <if test="goods_discribe != null" >
                 goodsDiscribe = #{goods_discribe,jdbcType=VARCHAR},
+            </if>
+            <if test="goods_price != null" >
+                goods_price = #{goods_price,jdbcType=REAL},
             </if>
             <if test="goods_state != null" >
                 goodsState = #{goods_state,jdbcType=INTEGER},

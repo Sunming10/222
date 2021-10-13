@@ -8,14 +8,14 @@ public class Goods {
     private String goods_img;
     private String goods_discribe;
     private String goods_class;
-    private int goods_price;
+    private float goods_price;
     private int goods_state;//int型 1表示在售，2表示冻结，3表示下架
 
     public Goods() {
         super();
     }
 
-    public Goods(String goods_name, String seller_username, int goods_stock, String goods_img, String goods_discribe, int goods_price) {
+    public Goods(String goods_name, String seller_username, int goods_stock, String goods_img, String goods_discribe, float goods_price) {
         this.goods_name = goods_name;
         this.seller_username = seller_username;
         this.goods_stock = goods_stock;
@@ -24,7 +24,7 @@ public class Goods {
         this.goods_price = goods_price;
     }
 
-    public Goods(int item_id, String goods_name, String seller_username, int goods_stock, String goods_img, String goods_discribe, int goods_price, int goods_state) {
+    public Goods(int item_id, String goods_name, String seller_username, int goods_stock, String goods_img, String goods_discribe, float goods_price, int goods_state) {
         this.item_id = item_id;
         this.goods_name = goods_name;
         this.seller_username = seller_username;
@@ -35,11 +35,11 @@ public class Goods {
         this.goods_state = goods_state;
     }
 
-    public int getGoods_price() {
+    public float getGoods_price() {
         return goods_price;
     }
 
-    public void setGoods_price(int goods_price) {
+    public void setGoods_price(float goods_price) {
         this.goods_price = goods_price;
     }
 
