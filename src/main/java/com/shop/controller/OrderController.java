@@ -24,9 +24,6 @@ public class OrderController {
     @RequestMapping(value = "/searchBuyerlist")
     public List<Goods> searchBuyerlist( int item_id){ return orderService.searchBuyerlist(item_id);}
 
-
-
-
     //意向购买者下单
     @RequestMapping(value = "/addToOrderWanted")
     public String addToOrderWanted(int item_id, String buyer_realname, String buyer_phonenumber, String buyer_address, int buy_sum,@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") Date create_time){

@@ -87,7 +87,7 @@
                 goodsDiscribe = #{goods_discribe,jdbcType=VARCHAR},
             </if>
             <if test="goods_price != null" >
-                goods_price = #{goods_price,jdbcType=REAL},
+                goodsPrice = #{goods_price,jdbcType=REAL},
             </if>
             <if test="goods_state != null" >
                 goodsState = #{goods_state,jdbcType=INTEGER},

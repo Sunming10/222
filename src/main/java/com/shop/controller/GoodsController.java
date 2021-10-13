@@ -59,12 +59,13 @@ public class GoodsController {
     }
 
     //在goods表中查询所有商品
+    @RequestMapping(value = "/searchsearchAllGoods")
     public List<Goods> searchsearchAllGoods(){ return goodsService.searchAllGoods();}
 
     //修改商品信息
     @RequestMapping(value = "/updateGoods")
-    public String updateGoods(@RequestBody int item_id, Goods newgoods){
-        int result = goodsService.updateGoods(item_id,newgoods);
+    public String updateGoods(@RequestBody Goods newgoods){
+        int result = goodsService.updateGoods(newgoods);
         if (result >= 1) {
             return "success";
         }else {

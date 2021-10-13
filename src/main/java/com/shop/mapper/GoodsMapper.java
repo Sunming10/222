@@ -50,10 +50,10 @@ public interface GoodsMapper {
 
     /**
      * 在goods表中修改商品信息
-     * @param item_id
+     * @param
      * @param newgoods
      * @return
      */
-    int updateGoods(int item_id,Goods newgoods);
+    int updateGoods(Goods newgoods);
 
 }
