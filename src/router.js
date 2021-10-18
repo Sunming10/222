@@ -13,6 +13,7 @@ const Modify = () => import('./components/sellers/Modify.vue')
 const Add = () => import('./components/sellers/Add.vue')
 const Self_info = () => import('./components/sellers/Self_info.vue')
 const Shopping = () => import('./components/Shopping.vue')
+const Detail = () => import('./components/contain/Detail.vue')
 
 
 Vue.use(Router)
@@ -20,7 +21,7 @@ Vue.use(Router)
 const router = new Router({
   routes: [{
       path: '/',
-      redirect: '/selling'
+      redirect: '/welcome'
     },
     {
       path: '/welcome',
@@ -37,6 +38,10 @@ const router = new Router({
     {
       path: '/login',
       component: Login
+    },
+    {
+      path: '/detail',
+      component: Detail
     },
     {
       path: '/home',
@@ -70,12 +75,31 @@ const router = new Router({
           path: '/self_info',
           component: Self_info
         },
+        {
+          path: '/detail',
+          component: Detail
+        },
 
 
       ]
     }
   ]
-})
+});
+// 导航守卫
+// 使用 router.beforeEach 注册一个全局前置守卫，判断用户是否登陆
+// router.beforeEach((to, from, next) => {
+//   if (to.path === '/login') {
+//     next();
+//   } else {
+//     let token = localStorage.getItem('Authorization');
+
+//     if (token === null || token === '') {
+//       next('/home');
+//     } else {
+//       next();
+//     }
+//   }
+// });
 
 
 export default router

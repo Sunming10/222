@@ -68,9 +68,15 @@ export default {
         this.$http.post('/user/login', this.loginForm).then(response=>{
             if(this.loginForm.username!=''&&this.loginForm.password!=''){
               if((this.loginForm.username==response.data.userName)&&(this.loginForm.password==response.data.password)){
+                window.sessionStorage.setItem('token', response.data)
+                console.log(response);
                 console.log(response.data);
+                // console.log(token);
+
                 this.$message('尊敬的'+response.data.userName+'用户，恭喜你登录成功！');
+
                 this.$router.push('home');
+                //  console.log(response.data.token);
               }else{
                 console.log();
                      this.$message.error('用户名或密码错误，请重新登录！');
