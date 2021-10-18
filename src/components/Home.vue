@@ -37,7 +37,7 @@
                <el-submenu index="2">
                 <template slot="title">
                   <i class="iconfont">&#xe613;</i>
-                  <span slot="title"><router-link to="modify" class="line">信息修改</router-link> </span>
+                  <span slot="title"><router-link to="self_info" class="line">信息修改</router-link> </span>
                 </template>
                 <el-menu-item-group>
                   <!-- <el-submenu index="2-1">

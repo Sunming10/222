@@ -16,7 +16,7 @@
                     <el-input type="password" v-model="sellerdata.password2"></el-input>
                 </el-form-item>
                     <el-form-item>
-                    <el-button>取消</el-button>
+                    <el-button>取消</el-button>&nbsp;&nbsp;&nbsp;&nbsp;
                     <el-button type="warning" @click="onSubmit">立即修改</el-button>
                 </el-form-item>
               </el-form>
