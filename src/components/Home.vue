@@ -30,6 +30,7 @@
                   <el-menu-item index="1-1"><router-link to='selling'  class="line">出售商品</router-link></el-menu-item>
                   <el-menu-item index="1-2" ><router-link to="icing" class="line">冻结商品</router-link></el-menu-item>
                   <el-menu-item index="1-3" ><router-link to="history" class="line">历史商品</router-link></el-menu-item>
+                  <el-menu-item index="1-4" ><router-link to="add" class="line">增加商品</router-link></el-menu-item>
                 </el-menu-item-group>
 
               </el-submenu>

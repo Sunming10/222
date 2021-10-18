@@ -2,7 +2,8 @@
 
   <el-container>
     <el-header>
-      商品列表
+      <span style="font-size:18px;color:gray;font-weight:bold;">商品列表</span>
+      <el-button type="warning" style="margin-left:80%" @click="goto">添加商品</el-button>
 </el-header>
     <el-row>
   <el-col :span="6" v-for="(o, index) in 1" :key="o" :offset="index > 0 ? 1 : 0">
@@ -32,6 +33,9 @@ export default {
   }, methods: {
       change(){
          this.$router.push('detail');
+      },
+      goto(){
+        this.$router.push('add')
       }
     }
 }
@@ -58,6 +62,7 @@ export default {
     color: rgb(255, 255, 255);
     height: 50px;
     /* border-radius: 4px; */
+
 
 
 
@@ -94,5 +99,6 @@ export default {
     color: #ffffff;
     border-color: transparent;
     background-color: transparent;
+    /* font-w; */
 }
 </style>

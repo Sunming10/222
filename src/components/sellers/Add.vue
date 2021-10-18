@@ -13,20 +13,48 @@
                   <el-input v-model="ruleForm.item_price" type="text"></el-input>
                 </el-form-item>
                 <el-form-item label="商品图片">
-                    <el-upload
-                    class="upload-demo"
-                    drag
-                    action="https://jsonplaceholder.typicode.com/posts/"
-                    multiple>
-                    <i class="el-icon-upload"></i>
-                    <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-                    <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
-                  </el-upload>
+                   <el-upload
+                      action="#"
+                      list-type="picture-card"
+                      :auto-upload="false">
+                        <i slot="default" class="el-icon-plus"></i>
+                        <div slot="file" slot-scope="{file}">
+                          <img
+                            class="el-upload-list__item-thumbnail"
+                            :src="file.url" alt=""
+                          >
+                          <span class="el-upload-list__item-actions">
+                            <span
+                              class="el-upload-list__item-preview"
+                              @click="handlePictureCardPreview(file)"
+                            >
+                              <i class="el-icon-zoom-in"></i>
+                            </span>
+                            <span
+                              v-if="!disabled"
+                              class="el-upload-list__item-delete"
+                              @click="handleDownload(file)"
+                            >
+                              <i class="el-icon-download"></i>
+                            </span>
+                            <span
+                              v-if="!disabled"
+                              class="el-upload-list__item-delete"
+                              @click="handleRemove(file)"
+                            >
+                              <i class="el-icon-delete"></i>
+                            </span>
+                          </span>
+                        </div>
+                    </el-upload>
+                    <el-dialog :visible.sync="dialogVisible">
+                      <img width="100%" :src="dialogImageUrl" alt="">
+                    </el-dialog>
           </el-form-item>
                 <el-form-item class="btn-position">
-                  <el-button type="warning" @click="submitForm('ruleForm')" round >上传</el-button>
-                  <el-button type="warning" @click="resetForm('ruleForm')" round>重置</el-button>
-                  <el-button type="warning" round>取消</el-button>
+                  <el-button type="warning" @click="submitForm('ruleForm')" >保存</el-button>
+                  <el-button type="warning" @click="resetForm('ruleForm')" >重置</el-button>
+                  <!-- <el-button type="warning" round>取消</el-button> -->
                 </el-form-item>
               </el-form>
       </div>
@@ -39,6 +67,9 @@
 export default {
      data() {
       return {
+       dialogImageUrl: '',
+        dialogVisible: false,
+        disabled: false,
         ruleForm: {
           item_name: '',
           item_describe: '',
@@ -75,6 +106,16 @@ export default {
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
+      },
+      handleRemove(file) {
+        console.log(file);
+      },
+      handlePictureCardPreview(file) {
+        this.dialogImageUrl = file.url;
+        this.dialogVisible = true;
+      },
+      handleDownload(file) {
+        console.log(file);
       }
     }
   }
