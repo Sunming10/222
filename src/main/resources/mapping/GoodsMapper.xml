@@ -121,5 +121,8 @@
     <select id="searchAllGoods" resultMap="GoodsResultMap">
         select * from goods
     </select>
+    <select id="isHaveSellingGoods" resultType="com.shop.entity.Goods">
+        select * from goods where sellerUsername = #{username} and goodsState = 1
+    </select>
 
 </mapper>

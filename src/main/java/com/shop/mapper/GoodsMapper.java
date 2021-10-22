@@ -37,6 +37,12 @@ public interface GoodsMapper {
     List<Goods> searchOffGoods(String username);
 
     /**
+     *根据username查找此用户是否有正在出售的商品
+     * @param username
+     * @return
+     */
+    Goods isHaveSellingGoods(String username);
+    /**
      * 在Goods表中查找所有正在出售的商品
      * @return
      */

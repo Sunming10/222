@@ -61,7 +61,9 @@ public class GoodsController {
     //在goods表中查询所有商品
     @RequestMapping(value = "/searchsearchAllGoods")
     public List<Goods> searchsearchAllGoods(){ return goodsService.searchAllGoods();}
-
+    //查询此用户是否有正在出售的商品
+    @RequestMapping(value = "/isHaveSellingGoods")
+    public boolean isHaveSellingGoods(String username){return goodsService.isHaveSellingGoods(username);}
     //修改商品信息
     @RequestMapping(value = "/updateGoods")
     public String updateGoods(@RequestBody Goods newgoods){

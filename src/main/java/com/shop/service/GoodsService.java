@@ -23,4 +23,11 @@ public class GoodsService {
     public List<Goods> searchSellingGoods(){return goodsMapper.searchSellingGoods();}
     public List<Goods> searchAllGoods(){ return goodsMapper.searchAllGoods();}
     public int updateGoods(Goods newgoods){ return goodsMapper.updateGoods(newgoods);}
+    public boolean isHaveSellingGoods(String username){
+        if(goodsMapper.isHaveSellingGoods(username)==null){
+            return false;
+        }else {
+            return true;
+        }
+        }
 }
