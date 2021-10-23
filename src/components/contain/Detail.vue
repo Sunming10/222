@@ -4,8 +4,8 @@
       <el-container>
       <el-header>
         <div class="back-size">
-          <span class="seller-info">卖家信息</span>
-          <el-button type="warning" class="button-position" plain>撤销</el-button>
+          <span class="seller-info">买家信息</span>
+          <el-button type="warning" class="button-position" plain disabled>撤销</el-button>
         </div>
       </el-header>
         <el-main>
@@ -56,7 +56,7 @@
            <el-row style="text-align:center;margin-left:12%">
             <el-col :span="20" v-for="(o, index) in 1" :key="o" :offset="index > 0 ? 1 : 0">
               <el-card :body-style="{ padding: '25px 0 20px 0' }">
-                <img  src="https://2c.zol-img.com.cn/product/214_120x90/588/cerBdmwpBi0E.jpg" class="image">
+                <img  src="https://2c.zol-img.com.cn/product/214_120x90/588/cerBdmwpBi0E.jpg" class="image1">
                 <div style="text-align: center;">
                   <span class="font-style">华为智慧屏</span>
                   <div class="word"><span class="price">￥2199.00</span></div>
@@ -112,10 +112,11 @@
 .button-position{
   margin-left: 75%;
 }
-.image{
+.image1{
   width: 300px;
   height: 150px;
-  text-align: center;
+  // text-align: center;
+  // margin-left: 20%;
 }
 .position{
   margin-top:10px;
@@ -254,7 +255,7 @@ export default {
   },
   methods: {
     returnBack(){
-        this.$routerrouter.push('selling');
+        this.$router.push('selling');
     }
   }
 }

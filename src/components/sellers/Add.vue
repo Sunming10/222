@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <template>
-      <div>
+      <div class="position">
                       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-form-item label="商品名称" prop="name">
                   <el-input v-model="ruleForm.item_name" type="text"></el-input>
@@ -16,7 +16,12 @@
                    <el-upload
                       action="#"
                       list-type="picture-card"
-                      :auto-upload="false">
+                      :auto-upload="false"
+                      :before-remove="beforeRemove"
+                      :on-exceed="handleExceed"
+                      :limit="1"
+                      :on-success="handleAvatarSuccess"
+                      :before-upload="beforeAvatarUpload">
                         <i slot="default" class="el-icon-plus"></i>
                         <div slot="file" slot-scope="{file}">
                           <img
@@ -94,6 +99,15 @@ export default {
       };
     },
     methods: {
+      beforeRemove(file, fileList) {
+        return this.$confirm(`确定移除 ${ file.name }？`);
+      },
+      handleExceed(files, fileList) {
+        this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+      },
+       handleAvatarSuccess(res, file) {
+        this.imageUrl = URL.createObjectURL(file.raw);
+      },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -116,7 +130,20 @@ export default {
       },
       handleDownload(file) {
         console.log(file);
-      }
+      },
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isJPG) {
+          this.$message.error('上传图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
+      },
+
     }
   }
 
@@ -125,5 +152,12 @@ export default {
 <style lang="less" scoped>
 .btn-position{
   text-align: center;
+}
+.position{
+  // text-align: center;
+  margin-left: 18%;
+  margin-top: 20px;
+  width: 700px;
+
 }
 </style>

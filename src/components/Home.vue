@@ -162,6 +162,10 @@ export default {
   text-decoration: none;
   color: #fff;
 }
+.el-col-4 {
+    // width: 16.66667%;
+    background-color: rgb(239, 216, 170);
+}
 
 .el-main {
   background-color: #F7F0DF;

@@ -1,16 +1,7 @@
 <template>
   <el-container>
     <el-header>
-      <!-- <div>
-          <el-input placeholder="请输入商品名进行搜索，可以直接回车搜索..." prefix-icon="el-icon-search"
-                    clearable
-                    @clear="initEmps"
-                    style="width: 350px;margin-right: 10px" v-model="keyword"
-                    @keydown.enter.native="initEmps" :disabled="showAdvanceSearchView"></el-input>
-          <el-button icon="el-icon-search" type="warning" @click="initEmps" :disabled="showAdvanceSearchView">
-              搜索
-          </el-button>
-          </div> -->
+      <el-button type="warning" style="margin-left:80%" @click="goto">添加商品</el-button>
     </el-header>
     <el-main class="weizhi">
       <el-table
@@ -134,19 +125,7 @@ export default {
         buyer_name: 'Jennie',
         buyer_tel: '18375289147',
         buyer_address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        buyer_name: 'Jennie',
-        buyer_tel: '18375289147',
-        buyer_address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        buyer_name: 'Jennie',
-        buyer_tel: '18375289147',
-        buyer_address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        buyer_name: 'Jennie',
-        buyer_tel: '18375289147',
-        buyer_address: '上海市普陀区金沙江路 1518 弄'
-      }],
+      },],
       gridData: [{
         item_id: '007',
         item_name: '小天才电话手表',
@@ -244,7 +223,10 @@ export default {
       },
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
-      }
+      },
+      goto(){
+        this.$router.push('add')
+      },
     },
   }
 
