@@ -76,7 +76,7 @@
       rules: {
               buyer_name: [
               { required: true, message: '请输入姓名', trigger: 'blur' },
-              { min: 2,max:10,message: '姓名在1~10个字符之间', trigger: 'blur' }
+              { min: 2,max:10,message: '姓名在2~10个字之间', trigger: 'blur' }
                 ],
               buyer_tel: [
               { required: true, message: '请输入联系电话', trigger: 'blur' },
@@ -84,7 +84,7 @@
                 ],
                 buyer_address: [
               { required: true, message: '请输入收货地址', trigger: 'blur' },
-              { min: 2,max:50,message: '收货地址长度在2~50个字符之间', trigger: 'blur' }
+              { min: 2,max:50,message: '收货地址长度在2~50个字之间', trigger: 'blur' }
                 ],
       },
         dialogFormVisible: false,
