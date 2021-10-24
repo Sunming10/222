@@ -63,7 +63,9 @@
             <if test="item_id != null" >
                 itemId,
             </if>
-            sellerUsername,
+            <if test="seller_username != null" >
+                sellerUsername,
+            </if>
             <if test="buyer_realname != null" >
                 buyerRealname,
             </if>
@@ -86,7 +88,9 @@
             <if test="item_id != null" >
                 #{item_id,jdbcType=INTEGER},
             </if>
-            "admin",
+            <if test="seller_username != null" >
+                #{seller_username,jdbcType=VARCHAR},
+            </if>
             <if test="buyer_realname != null" >
                 #{buyer_realname,jdbcType=VARCHAR},
             </if>
@@ -101,7 +105,7 @@
             </if>
             5,
             <if test="create_time != null" >
-                #{create_time ,jdbcType=TIMESTAMP},
+                #{create_time ,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>

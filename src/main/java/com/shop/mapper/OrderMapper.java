@@ -72,10 +72,11 @@ public interface OrderMapper {
     /**
      * 根据item_id(商品ID)有意向的购买者下单
      * @param item_id
+     * @param seller_username
      * @param buyer_realname
      * @param buyer_phonenumber
      * @param buyer_address
      * @return
      */
-    int addToOrderWanted(int item_id,String buyer_realname,String buyer_phonenumber,String buyer_address,int buy_sum,@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") Date create_time);
+    int addToOrderWanted(int item_id,String seller_username, String buyer_realname,String buyer_phonenumber,String buyer_address,int buy_sum,String create_time);
 }

@@ -19,8 +19,6 @@ public interface UserMapper {
      * @return
      */
     User getUserInfo(String username);
-     User getUserById(Integer user_id);
-
 
     /**
      *
