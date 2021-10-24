@@ -3,14 +3,15 @@ import App from './App.vue'
 import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-Vue.use(VueAxios, axios)
+
 import './plugins/element.js'
+import 'element-ui/lib/theme-chalk/index.css'
 // 导入字体图标
 import './assets/fonts/iconfont.css'
 // 导入全局样式表
 import './assets/css/global.css'
 import qs from 'qs'
-
+Vue.use(VueAxios, axios)
 // axios配置
 axios.defaults.timeout = 5000 // 响应时间
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8' // 配置post请求头

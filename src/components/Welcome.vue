@@ -46,7 +46,7 @@
             <img :src="itemList.image" class="img_size">
             </div>
             <div>
-            <el-button type="warning" @click="dialogFormVisible = true" icon="el-icon-shopping-cart-1">加入购物车</el-button>
+            <el-button type="warning"  icon="el-icon-shopping-cart-1" @click="dialogFormVisible = true">加入购物车</el-button>
             </div>
           </div>
           <div class="item_list">
