@@ -73,15 +73,12 @@ public class GoodsController {
         String username = request.getParameter("username");
         int page = Integer.parseInt(request.getParameter("page"));
         page = (page-1)*10;
-        System.out.println(page);
         JSONObject jsonObject = new JSONObject();
         List<Goods> goodsList = goodsService.searchHistoryGoods(username,page);
         List<Order> orderList = orderService.searchFinishOrder(username,page);
-        System.out.println(goodsList);
         List<Order_Goods> list = new ArrayList<Order_Goods>();
         for (int i=0;i < goodsList.size();i++){
             Goods goods = (Goods) goodsList.get(i);
-            System.out.println("Good:"+goods);
             Order order = (Order) orderList.get(i);
             Order_Goods order_goods = new Order_Goods(
                     order.getOrder_id(),
@@ -94,7 +91,6 @@ public class GoodsController {
                     goods.getGoods_price(),
                     goods.getGoods_img(),
                     goods.getGoods_discribe());
-            System.out.println("order_goods:"+order_goods);
             list.add(order_goods);
         }
 
@@ -102,7 +98,6 @@ public class GoodsController {
         Map<String,Object> map=new HashMap<>();
 //        map.put("goods",goodsList);
 //        map.put("orders",orderList);
-        System.out.println(list);
         map.put("list",list);
         OutputStream outputStreamam = response.getOutputStream();
         outputStreamam.write(JSONObject.toJSONString(map).getBytes());
