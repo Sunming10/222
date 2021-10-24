@@ -112,6 +112,11 @@
         select * from goods where goodsState = 1 limit 10 offset #{page}
     </select>
 
+    <!--查询正在出售商品(welcome)-->
+    <select id="searchWelcomeGoods" resultMap="GoodsResultMap">
+        select * from goods where goodsState = 1
+    </select>
+
     <!--查看历史商品-->
     <select id="searchHistoryGoods" resultMap="GoodsResultMap">
         select * from goods where sellerUsername = #{username} and goodsState = 3 limit 10 offset #{page}

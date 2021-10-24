@@ -67,6 +67,15 @@ public class GoodsController {
         return goodsService.searchSellingGoods(page);
     }
 
+    //在goods表中查找所有正在出售的商品。
+    @RequestMapping(value = "/searchWelcomeGoods")
+    public Object searchWelcomeGoods(){
+        JSONObject jsonObject = new JSONObject();
+        List<Goods> goods = goodsService.searchWelcomeGoods();
+        jsonObject.put("goods",goods);
+        return jsonObject;
+    }
+
     //在goods表中查询所有商品
     @RequestMapping(value = "/searchHistoryGoods")
     public void searchHistoryGoods(HttpServletRequest request, HttpServletResponse response) throws IOException {

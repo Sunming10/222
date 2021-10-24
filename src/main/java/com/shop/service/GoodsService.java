@@ -23,6 +23,7 @@ public class GoodsService {
     public List<Goods> searchFreezingGoods(String username,int page){return goodsMapper.searchFreezingGoods(username,page);}//一页10条
     public List<Goods> searchHistoryGoods(String username, int page){ return goodsMapper.searchHistoryGoods(username,page);}//一页10条
     public int updateGoods(Goods newgoods){ return goodsMapper.updateGoods(newgoods);}
+    public List<Goods> searchWelcomeGoods(){return  goodsMapper.searchWelcomeGoods();}
     public boolean isHaveSellingGoods(String username){
         if(goodsMapper.isHaveSellingGoods(username)==null){
             return false;

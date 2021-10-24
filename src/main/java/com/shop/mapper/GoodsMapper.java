@@ -49,6 +49,12 @@ public interface GoodsMapper {
     List<Goods> searchHistoryGoods(String username,int page);
 
     /**
+     * 在Goods表中查找所有商品(welcome)
+     * @return
+     */
+    List<Goods> searchWelcomeGoods();
+
+    /**
      * 在goods表中修改商品信息
      * @param
      * @param newgoods
