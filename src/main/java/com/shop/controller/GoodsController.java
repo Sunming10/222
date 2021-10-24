@@ -2,6 +2,7 @@ package com.shop.controller;
 
 import com.shop.entity.Goods;
 import com.shop.entity.Order;
+import com.shop.entity.Order_Goods;
 import com.shop.service.GoodsService;
 import com.shop.service.OrderService;
 import net.minidev.json.JSONObject;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,11 +77,33 @@ public class GoodsController {
         JSONObject jsonObject = new JSONObject();
         List<Goods> goodsList = goodsService.searchHistoryGoods(username,page);
         List<Order> orderList = orderService.searchFinishOrder(username,page);
+        System.out.println(goodsList);
+        List<Order_Goods> list = new ArrayList<Order_Goods>();
+        for (int i=0;i < goodsList.size();i++){
+            Goods goods = (Goods) goodsList.get(i);
+            System.out.println("Good:"+goods);
+            Order order = (Order) orderList.get(i);
+            Order_Goods order_goods = new Order_Goods(
+                    order.getOrder_id(),
+                    order.getBuyer_realname(),
+                    order.getBuyer_phonenumber(),
+                    order.getBuyer_address(),
+                    order.getFinish_time(),
+                    goods.getItem_id(),
+                    goods.getGoods_name(),
+                    goods.getGoods_price(),
+                    goods.getGoods_img(),
+                    goods.getGoods_discribe());
+            System.out.println("order_goods:"+order_goods);
+            list.add(order_goods);
+        }
 
 //        response.getOutputStream().write(jsonObject.toJSONString().getBytes());
         Map<String,Object> map=new HashMap<>();
-        map.put("goods",goodsList);
-        map.put("orders",orderList);
+//        map.put("goods",goodsList);
+//        map.put("orders",orderList);
+        System.out.println(list);
+        map.put("list",list);
         OutputStream outputStreamam = response.getOutputStream();
         outputStreamam.write(JSONObject.toJSONString(map).getBytes());
         outputStreamam.flush();
