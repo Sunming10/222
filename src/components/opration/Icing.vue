@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-header>
-      <el-button type="warning" style="margin-left:80%" @click="goto">添加商品</el-button>
+      <el-button type="warning" style="margin-left:80%" @click="goto" disabled>添加商品</el-button>
     </el-header>
     <el-main class="weizhi">
       <el-table

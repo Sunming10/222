@@ -1,66 +1,71 @@
 <template>
   <el-container>
     <el-header>
-      <div>
-            <i class="iconfont">&#xe607;</i>
-            <el-button class="btn" type="warning"  round><router-link to='login' class='line'>登录</router-link></el-button>
-      </div>
+      <el-button type="warning" class="position"> <router-link to="login" class="line">登&nbsp;录</router-link></el-button>
     </el-header>
     <el-main>
-      <div>
-        <h3 class="text">商品列表</h3>
-      </div>
-      <div>
-          <img  class="img1" src="https://iconfont.alicdn.com/t/5d5f7473-d557-4dd3-b497-7c25bca1eb13.png" alt="">
-          <el-button class="btn-1" type="text" @click="dialogFormVisible = true" round>加入购物车</el-button>
-      </div>
-      <div>
-          <h3 class="text1">华为双AI慧眼学习智慧屏</h3>
-          <h4 class="text2">价格</h4>
-          <h4 class="text3">￥2199.00</h4>
+       <el-card class="box-card">
+        <div class="text item">
           <div>
-      <el-card class="box-card">
-  <div class="text-dis item-dis">
-    <span>
-      <p>商品描述</p>
-      <p> 双AI慧眼，一体式桌面设计。
-        前置1300万智能升降摄像头和800万交互摄像头
-        ，双摄像头各司其职，辅助孩子解决学习难题。
-        配有18W独立音箱，
-        支持4麦克风降噪，拾音清晰，
-        上网课更方便。</p>
-    </span>
-  </div>
-</el-card>
-    </div>
-      </div>
-       <div>
-    <div>
+            <span class="item_title">
+              {{itemList.title}}
+            </span>
+          </div>
+          <div class="item_size">
+            <div>
+            <img :src="itemList.image" class="img_size">
+            </div>
+            <div>
+            <el-button type="warning" @click="dialogFormVisible = true" icon="el-icon-shopping-cart-1">加入购物车</el-button>
+            </div>
+          </div>
+          <div class="item_list">
+              <div>
+                <span class="title1">
+                  {{itemList.name}}
+              </span>
+              </div>
+             <div>
+                <span class="price">
+                  {{itemList.priceTitle}}{{itemList.price}}
+              </span>
+             </div>
+              <div>
+                <span class="describe">
+                    {{describe.title}}
+              </span>
+              </div>
+              <div class="contain">
+                  {{describe.contain}}
+              </div>
+        </div>
 
-<el-dialog title="个人信息填写" :visible.sync="dialogFormVisible">
-  <el-form :model="form"  :rules="rules" ref="form" label-width="100px" class="demo-ruleForm">
-    <el-form-item label="真实姓名" :label-width="formLabelWidth" prop="buyer_name">
-      <el-input v-model="form.buyer_name" autocomplete="off"></el-input>
-    </el-form-item>
-    <el-form-item label="联系电话" :label-width="formLabelWidth" prop="buyer_tel">
-      <el-input v-model="form.buyer_tel" autocomplete="off"></el-input>
-    </el-form-item>
-    <el-form-item label="收货地址" :label-width="formLabelWidth"  prop="buyer_address">
-      <el-input v-model="form.buyer_address" autocomplete="off"></el-input>
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="submitForm('form')">确定</el-button>
-                  <el-button @click="resetForm('form')">重置</el-button>
-    </el-form-item>
-  </el-form>
-</el-dialog>
-    </div>
-  </div>
+
+        </div>
+
+      </el-card>
     </el-main>
+    <el-dialog title="个人信息填写" :visible.sync="dialogFormVisible">
+        <el-form :model="form"  :rules="rules" ref="form" label-width="100px" class="demo-ruleForm">
+        <el-form-item label="真实姓名" :label-width="formLabelWidth" prop="buyer_name">
+          <el-input v-model="form.buyer_name" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="联系电话" :label-width="formLabelWidth" prop="buyer_tel">
+          <el-input v-model="form.buyer_tel" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="收货地址" :label-width="formLabelWidth"  prop="buyer_address">
+          <el-input v-model="form.buyer_address" autocomplete="off" type="textarea"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="warning" @click="submitForm('form')">确定</el-button>
+                      <el-button @click="resetForm('form')">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </el-container>
 </template>
 <script>
-  export default {
+ export default {
     data() {
       return {
       form: {
@@ -71,7 +76,7 @@
       rules: {
               buyer_name: [
               { required: true, message: '请输入姓名', trigger: 'blur' },
-              { min: 1,message: '最小长度为1', trigger: 'blur' }
+              { min: 2,max:10,message: '姓名在1~10个字符之间', trigger: 'blur' }
                 ],
               buyer_tel: [
               { required: true, message: '请输入联系电话', trigger: 'blur' },
@@ -79,11 +84,23 @@
                 ],
                 buyer_address: [
               { required: true, message: '请输入收货地址', trigger: 'blur' },
-              { min: 1,message: '请输入正确的收货地址', trigger: 'blur' }
+              { min: 2,max:50,message: '收货地址长度在2~50个字符之间', trigger: 'blur' }
                 ],
       },
         dialogFormVisible: false,
-        formLabelWidth: '120px',
+        formLabelWidth: '100px',
+        describe:{
+          title:"商品描述",
+          contain:"双AI慧眼，一体式桌面设计。前置1300万智能升降摄像头和800万交互摄像头，双摄像头各司其职，辅助孩子解决学习难题。配有18W独立音箱，支持4麦克风降噪，拾音清晰，上网课更方便。"
+
+        },
+        itemList:{
+          title:"商品列表",
+          name:"华为双AI慧眼学习智慧屏",
+          priceTitle:"价格：￥",
+          price:"2199.00",
+          image:'https://iconfont.alicdn.com/t/e89430ee-42ed-4d98-8ea2-6987122dc98a.png'
+        }
       };
     },
       methods: {
@@ -120,119 +137,110 @@
 </script>
 
 <style lang="less" scoped>
-  @import url('../assets/css/font.css');
-  .line{
-        text-decoration: none;
-        color: #ffff;
-      }
+.el-container{
+  background-color: rgb(247, 240, 223);
+}
+.el-header{
+  height: 60px;
+  background-color: rgb(239, 216, 170);
+  line-height: 60px;
+  // float: right;
+}
+.line{
+  text-decoration: none;
+  color: white;
+  // float: left;
 
-.el-container {
-  background-color: #F7F0DF;
-  height: 100%;
 }
-.el-header {
-  background-color: #EFD8AA;
-  display: flex;
-  justify-content: space-between;
-  padding-left: 0;
-  align-items: center;
-  color: #fff;
-  font-size: 20px;
-  i{
-    margin-left: 80%;
+.position{
+  float: right;
+  // margin-top: 9px;
+  margin: 9px 50px 0 0;
+}
+ .title{
+    line-height: 400px;
+    color: #99a9bf;
+    font-size: 48px;
+    font-weight: bold;
+    margin-left: 100px;
   }
-  div {
-    display: flex;
-    align-items: center;
-}
-}
-.btn{
-    margin-left: 0%;
+  .img_position{
+    margin-left: 45%;
   }
-div{
-  .iconfont{
-  margin-left: 1370px;
-}
-}
-div{
-.text{
-    border-width: 10px;
-    left: 0px;
-    margin-top: -10px;
-    width: 649px;
-    height: 341px;
-    display: flex;
-    font-family: 'Arial Normal','Arial';
-    font-size: 25px;
-    text-align: center;
-    color:#464343;
-}
-.img1{
-      border-width: 0px;
-      left: 0px;
-      top: 0px;
-      float: left;
-      margin-top: -300px;
-      margin-left: 50px;
-      width: 300px;
-      height: 350px;
-      text-align: left;
-    }
-    .btn-1{
-  margin-top: 80px;
-  margin-left: -210px;
-  background-color: rgb(238, 137, 54);
-  border-radius: 4px;
-  border: 1px solid rgb(221, 221, 238);
-  padding: 8px 9px;
-  color: rgb(68, 63, 63);
-  font-family: 'Arial Normal','Arial';
-    }
-}
-div{
-  .text1{
-     margin-top: -420px;
-      margin-left:420px;
-      display: flex;
-    font-family: 'Arial Normal','Arial';
-    font-size: 18px;
-    text-align: center;
-    color:#1a1818;
-  }
-  .text2{
-      margin-top: 50px;
-      margin-left: 420px;
-      display: flex;
-    font-family: 'Arial Normal','Arial';
-    font-size: 18px;
-    text-align: center;
-    color:#2c2929;
-    }
-    .text3{
-      margin-top: -47px;
-      margin-left: 490px;
-      display: flex;
-    font-family: 'Arial Normal','Arial';
-    font-size: 18px;
-    text-align: center;
-    color:#f51a1a;
-    }
-}
-div{
-
-    .text-dis {
+  .text {
     font-size: 14px;
   }
 
-  .item-dis {
+  .item {
     padding: 18px 0;
+    // float: left;
+
   }
 
   .box-card {
-      margin-left: 400px;
-    margin-top: 70px;
-    width: 300px;
-    background-color: #eed7c0;
+    width: 100%;
+    background-color: rgb(247, 240, 223);
   }
-    }
+  .el-card{
+    box-shadow: 0 -1px 8px rgb(0 0 0 37%) !important;
+    height: 600px;
+    // float: right;
+    // -webkit-box-shadow: 0 -1px 8px rgb(0 0 0 / 40%) !important;
+  }
+  .item_title{
+    line-height: 50px;
+    font-size: 20px;
+    font-weight: bold;
+    color: gray;
+
+  }
+  .item_size{
+    width: 400px;
+    height:400px;
+    text-align: center;
+    // background-color: aqua;
+    float: left;
+
+  }
+  .img_size{
+    width: 300px;
+    height: 300px;
+  }
+  .item_list{
+    // background-color: aliceblue;
+    width: 400px;
+    height: 400px;
+    float: left;
+    text-align: left;
+  }
+  .title1{
+    // font-family: ;
+    font-size: 25px;
+    font-weight: bold;
+    color: gray;
+    line-height: 100px;
+
+  }
+  .price{
+    font-size: 20px;
+    font-weight: bold;
+    color: red;
+    // line-height: 100px;
+  }
+  .describe{
+     font-size: 20px;
+    font-weight: bold;
+    color: gray;
+    line-height: 60px;
+  }
+  .contain{
+    width: 300px;
+    height: 200px;
+    border-radius: 4px;
+    background-color: rgb(239, 216, 170);
+    font-size: 16px;
+    color: #99a9bf;
+    text-align: left;
+    padding: 20px 10px;
+  }
 </style>

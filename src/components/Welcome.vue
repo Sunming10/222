@@ -1,68 +1,98 @@
 <template>
   <el-container>
-
-  <div>
-    <h3 class="text">线上购物欢迎您!</h3>
-    </div>
-  <div >
-        <img  class="img1" src="https://iconfont.alicdn.com/t/992dee67-ae7d-4812-a294-b2dcf0abb623.png" alt=""></div>
-      <div >
-        <img  class="img2" src="https://iconfont.alicdn.com/t/40e02adb-c782-431d-b37a-ed8997eb7b52.png" alt=""></div>
-    <div >
-      <div>
-    <el-button class="btn_1" type="warning" round icon="el-icon-user"><router-link to='login' class='line'>登&nbsp;录</router-link></el-button>
-</div>
-
-        <img  class="img3" src="https://iconfont.alicdn.com/t/4fe848e1-4785-46ad-93c5-8296efd2484f.png" alt=""></div>
-<div id="item-list">
-      <div class="backpicture">
-        <!-- <img  class="img4" src="https://mr.baidu.com/r/trstE61dxS?f=cp&u=ed17994c0faa15e7.png" alt=""> --></div>
-      <div class="front">
-    <div><h1 class="text1">{{itemList.title}}</h1></div>
-    <div>
-        <img  class="img5" src="https://iconfont.alicdn.com/t/9faef207-9cd1-41fd-8065-6a2f45fe24c0.png" alt="">
-         </div>
-  <div><h3 class="text2">{{itemList.name}}</h3></div>
-    <div><h4 class="text3">{{itemList.priceTitle}}</h4></div>
-    <div><h4 class="text4">{{itemList.price}}</h4></div>
-    <div>
+    <el-header>
+      <el-button type="warning" class="position"> <router-link to="login" class="line">登&nbsp;录</router-link></el-button>
+    </el-header>
+    <el-main>
+      <el-row :gutter="30">
+          <el-col :span="6">
+            <div class="grid-content bg-purple">
+            <img src="https://iconfont.alicdn.com/t/992dee67-ae7d-4812-a294-b2dcf0abb623.png" class="img_size">
+            </div>
+            </el-col>
+          <el-col :span="10">
+            <div class="grid-content bg-purple">
+              <span class="title">欢迎来到网上购物平台!</span>
+            </div>
+            </el-col>
+          <el-col :span="6">
+            <div class="grid-content bg-purple">
+                <img src="https://iconfont.alicdn.com/t/40e02adb-c782-431d-b37a-ed8997eb7b52.png" class="img_size">
+            </div>
+              </el-col>
+          <!-- <el-col :span="6"><div class="grid-content bg-purple"></div></el-col> -->
+      </el-row>
+      <el-row>
+          <el-col :span="8">
+            <div class="grid-content bg-purple img_position">
+              <img src="https://iconfont.alicdn.com/t/4fe848e1-4785-46ad-93c5-8296efd2484f.png" class="img_size">
+            </div>
+            </el-col>
+          <el-col :span="8">
+            <div class="grid-content bg-purple-light img_position">
+              <img src="https://iconfont.alicdn.com/t/93d0a257-e045-4e98-90e0-cea8e01deac9.png" class="img_size">
+            </div>
+              </el-col>
+      </el-row>
       <el-card class="box-card">
-  <div class="text-dis item-dis">
-    <span>
-      <p>{{describe.title}}</p>
-      <p>{{describe.contain}}</p>
-    </span>
-  </div>
-</el-card>
-    </div>
-    <div>
- <el-button class="btn" type="warning" @click="dialogFormVisible = true" round>加入购物车</el-button>
-    </div>
-  </div>
-  <div>
-    <div>
+        <div class="text item">
+          <div>
+            <span class="item_title">
+              {{itemList.title}}
+            </span>
+          </div>
+          <div class="item_size">
+            <div>
+            <img :src="itemList.image" class="img_size">
+            </div>
+            <div>
+            <el-button type="warning" @click="dialogFormVisible = true" icon="el-icon-shopping-cart-1">加入购物车</el-button>
+            </div>
+          </div>
+          <div class="item_list">
+              <div>
+                <span class="title1">
+                  {{itemList.name}}
+              </span>
+              </div>
+             <div>
+                <span class="price">
+                  {{itemList.priceTitle}}{{itemList.price}}
+              </span>
+             </div>
+              <div>
+                <span class="describe">
+                    {{describe.title}}
+              </span>
+              </div>
+              <div class="contain">
+                  {{describe.contain}}
+              </div>
+        </div>
 
-<el-dialog title="个人信息填写" :visible.sync="dialogFormVisible">
-  <el-form :model="form"  :rules="rules" ref="form" label-width="100px" class="demo-ruleForm">
-    <el-form-item label="真实姓名" :label-width="formLabelWidth" prop="buyer_name">
-      <el-input v-model="form.buyer_name" autocomplete="off"></el-input>
-    </el-form-item>
-    <el-form-item label="联系电话" :label-width="formLabelWidth" prop="buyer_tel">
-      <el-input v-model="form.buyer_tel" autocomplete="off"></el-input>
-    </el-form-item>
-    <el-form-item label="收货地址" :label-width="formLabelWidth"  prop="buyer_address">
-      <el-input v-model="form.buyer_address" autocomplete="off"></el-input>
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="submitForm('form')">确定</el-button>
-                  <el-button @click="resetForm('form')">重置</el-button>
-    </el-form-item>
-  </el-form>
-</el-dialog>
-    </div>
-  </div>
-    </div>
-    </el-container>
+
+        </div>
+
+      </el-card>
+    </el-main>
+        <el-dialog title="个人信息填写" :visible.sync="dialogFormVisible">
+        <el-form :model="form"  :rules="rules" ref="form" label-width="100px" class="demo-ruleForm">
+        <el-form-item label="真实姓名" :label-width="formLabelWidth" prop="buyer_name">
+          <el-input v-model="form.buyer_name" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="联系电话" :label-width="formLabelWidth" prop="buyer_tel">
+          <el-input v-model="form.buyer_tel" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="收货地址" :label-width="formLabelWidth"  prop="buyer_address">
+          <el-input v-model="form.buyer_address" autocomplete="off" type="textarea"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="warning" @click="submitForm('form')">确定</el-button>
+                      <el-button @click="resetForm('form')">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
+  </el-container>
 </template>
 <script>
   export default {
@@ -76,7 +106,7 @@
       rules: {
               buyer_name: [
               { required: true, message: '请输入姓名', trigger: 'blur' },
-              { min: 1,message: '最小长度为1', trigger: 'blur' }
+              { min: 2,max:10,message: '姓名在2~10个字之间', trigger: 'blur' }
                 ],
               buyer_tel: [
               { required: true, message: '请输入联系电话', trigger: 'blur' },
@@ -84,11 +114,11 @@
                 ],
                 buyer_address: [
               { required: true, message: '请输入收货地址', trigger: 'blur' },
-              { min: 1,message: '请输入正确的收货地址', trigger: 'blur' }
+              { min: 2,max:50,message: '收货地址长度在2~50个字之间', trigger: 'blur' }
                 ],
       },
         dialogFormVisible: false,
-        formLabelWidth: '120px',
+        formLabelWidth: '100px',
         describe:{
           title:"商品描述",
           contain:"双AI慧眼，一体式桌面设计。前置1300万智能升降摄像头和800万交互摄像头，双摄像头各司其职，辅助孩子解决学习难题。配有18W独立音箱，支持4麦克风降噪，拾音清晰，上网课更方便。"
@@ -97,8 +127,9 @@
         itemList:{
           title:"商品列表",
           name:"华为双AI慧眼学习智慧屏",
-          priceTitle:"价格：",
-          price:"￥2199.00"
+          priceTitle:"价格：￥",
+          price:"2199.00",
+          image:'https://iconfont.alicdn.com/t/e89430ee-42ed-4d98-8ea2-6987122dc98a.png'
         }
       };
     },
@@ -136,153 +167,131 @@
 </script>
 
 <style lang="less" scoped>
-  .line{
-        text-decoration: none;
-        color: #ffff;
-      }
-  .el-container{
-  background-color: #F7F0DF;
-    height: 200%;
-  }
-  div{
-    .btn_1{
-      margin-top: 10px;
-      margin-left: 200px;
-    }
-  }
-div{
-    .text{
-    border-width: 10px;
-    left: 462px;
-    margin-top: 200px;
-    margin-left: 550px;
-    width: 649px;
-    height: 341px;
-    display: flex;
-    font-family: 'Arial Normal','Arial';
-    font-size: 50px;
-    text-align: center;
-    color:#464343;
-  }
-    .img1{
-        border-width: 0px;
-      position: absolute;
-      left: 0px;
-      top: 0px;
-      float: left;
-      margin-top: 200px;
-      margin-left: 100px;
-      width: 300px;
-        height: 350px;
-      text-align: left;
-
-    }
-      .img2{
-          position: absolute;
-        border-width: 0px;
-        left: 0px;
-        top: 0px;
-        margin-top: 200px;
-        margin-left: 1100px;
-        float: left;
-        width: 300px;
-        height: 350px;
-        text-align: left;
-        }
-        .img3{
-        border-width: 0px;
-      position: absolute;
-      left: 0px;
-      top: 0px;
-      float: left;
-      margin-top: 500px;
-      margin-left: 600px;
-      width: 250px;
-        height: 300px;
-      text-align: left;
-        }
+.el-container{
+  background-color: rgb(247, 240, 223);
 }
-#item-list{
-  .backpicture{
-    background-color: #eed7c0;
+.el-header{
+  height: 60px;
+  background-color: rgb(239, 216, 170);
+  line-height: 60px;
+  // float: right;
+}
+.line{
+  text-decoration: none;
+  color: white;
+  // float: left;
 
+}
+.position{
+  float: right;
+  // margin-top: 9px;
+  margin: 9px 50px 0 0;
+}
+.el-row {
+    margin-bottom: 20px;
+    // margin-left: 9%;
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
-  .front{
-    z-index: 1;
-    position: absolute;
+  .el-col {
+    border-radius: 4px;
+  }
 
-    }
-    div{
-
-.text1{
-      margin-top: 780px;
-      margin-left: -1400px;
-      display: flex;
-    font-family: 'Arial Normal','Arial';
-    font-size: 30px;
+  .grid-content {
+    border-radius: 4px;
+    min-height: 300px;
     text-align: center;
-    color:#746d6d;
-    }
-    .img5{
-      float: left;
-      margin-top: 10px;
-      margin-left: -1350px;
-      width: 250px;
-        height: 300px;
-      text-align: left;
-    }
-    .text2{
-      margin-top: 30px;
-      margin-left: -1050px;
-      display: flex;
-    font-family: 'Arial Normal','Arial';
-    font-size: 20px;
-    text-align: center;
-    color:#1a1818;
-    }
-    .text3{
-      margin-top: 30px;
-      margin-left: -1050px;
-      display: flex;
-    font-family: 'Arial Normal','Arial';
-    font-size: 18px;
-    text-align: center;
-    color:#585454;
-    }
-    .text4{
-      margin-top: -47px;
-      margin-left: -1000px;
-      display: flex;
-    font-family: 'Arial Normal','Arial';
-    font-size: 18px;
-    text-align: center;
-    color:#f51a1a;
-    }
-    }
-    div{
-
-    .text-dis {
+  }
+  .row-bg {
+    padding: 10px 0;
+    // background-color: #f9fafc;
+  }
+  .title{
+    line-height: 400px;
+    color: #99a9bf;
+    font-size: 48px;
+    font-weight: bold;
+    margin-left: 100px;
+  }
+  .img_position{
+    margin-left: 45%;
+  }
+  .text {
     font-size: 14px;
   }
 
-  .item-dis {
+  .item {
     padding: 18px 0;
+    // float: left;
+
   }
 
   .box-card {
-      margin-left: -1050px;
-    width: 300px;
-    background-color: #eed7c0;
+    width: 100%;
+    background-color: rgb(247, 240, 223);
   }
-    }
-    div{
-    .btn{
-  margin-top:-20px;
-  margin-left: -1280px;
-  padding: 12px 23px;
-}
+  .el-card{
+    box-shadow: 0 -1px 8px rgb(0 0 0 37%) !important;
+    height: 600px;
+    // float: right;
+    // -webkit-box-shadow: 0 -1px 8px rgb(0 0 0 / 40%) !important;
+  }
+  .item_title{
+    line-height: 50px;
+    font-size: 20px;
+    font-weight: bold;
+    color: gray;
 
-      }
-    }
+  }
+  .item_size{
+    width: 400px;
+    height:400px;
+    text-align: center;
+    // background-color: aqua;
+    float: left;
+
+  }
+  .img_size{
+    width: 300px;
+    height: 300px;
+  }
+  .item_list{
+    // background-color: aliceblue;
+    width: 400px;
+    height: 400px;
+    float: left;
+    text-align: left;
+  }
+  .title1{
+    // font-family: ;
+    font-size: 25px;
+    font-weight: bold;
+    color: gray;
+    line-height: 100px;
+
+  }
+  .price{
+    font-size: 20px;
+    font-weight: bold;
+    color: red;
+    // line-height: 100px;
+  }
+  .describe{
+     font-size: 20px;
+    font-weight: bold;
+    color: gray;
+    line-height: 60px;
+  }
+  .contain{
+    width: 300px;
+    height: 200px;
+    border-radius: 4px;
+    background-color: rgb(239, 216, 170);
+    font-size: 16px;
+    color: #99a9bf;
+    text-align: left;
+    padding: 20px 10px;
+  }
 
 </style>
