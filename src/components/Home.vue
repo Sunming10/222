@@ -86,31 +86,31 @@ export default {
       activePath: ''
     }
   },
-  created() {
-    this.getMenuList()
-    this.activePath = window.sessionStorage.getItem('activePath')
-  },
+  // created() {
+  //   this.getMenuList()
+  //   this.activePath = window.sessionStorage.getItem('activePath')
+  // },
   methods: {
     logout() {
       window.sessionStorage.clear()
       this.$router.push('/login')
     },
     // 获取所有的菜单
-    async getMenuList() {
-      const { data: res } = await this.$http.get('menus')
-      if (res.meta.status !== 200) return this.$message.error(res.meta.msg)
-      this.menulist = res.data
-      console.log(res)
-    },
+    // async getMenuList() {
+    //   const { data: res } = await this.$http.get('menus')
+    //   if (res.meta.status !== 200) return this.$message.error(res.meta.msg)
+    //   this.menulist = res.data
+    //   console.log(res)
+    // },
     // 点击按钮，切换菜单的折叠与展开
-    toggleCollapse() {
-      this.isCollapse = !this.isCollapse
-    },
+    // toggleCollapse() {
+    //   this.isCollapse = !this.isCollapse
+    // },
     // 保存链接的激活状态
-    saveNavState(activePath) {
-      window.sessionStorage.setItem('activePath', activePath)
-      this.activePath = activePath
-    }
+    // saveNavState(activePath) {
+    //   window.sessionStorage.setItem('activePath', activePath)
+    //   this.activePath = activePath
+    // }
   }
 }
 </script>

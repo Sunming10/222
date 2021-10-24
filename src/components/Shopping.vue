@@ -4,7 +4,7 @@
       <el-button type="warning" class="position"> <router-link to="login" class="line">登&nbsp;录</router-link></el-button>
     </el-header>
     <el-main>
-       <el-card class="box-card">
+       <el-card class="box-card" style="box-shadow: 0 -1px 8px rgb(0 0 0 37%) !important;">
         <div class="text item">
           <div>
             <span class="item_title">
