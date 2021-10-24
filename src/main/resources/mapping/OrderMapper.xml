@@ -20,6 +20,35 @@
         select * from orders where itemId = #{item_id}
     </select>
 
+    <!--查看order表中商品号为item_number且正在交易中的的订单信息-->
+    <select id="searchFreezeGoodsBuyer" resultMap="OrderResultMap">
+        select * from orders where itemId = #{item_id,jdbcType=INTEGER} and state = 2
+    </select>
+
+    <!--同意意向买家-->
+    <update id="agreeOrderwanted" parameterType="com.shop.entity.Order">
+        update orders set state = 1 where orderId = #{order_id}
+    </update>
+
+    <!--修改其余订单状态为关闭交易-->
+    <update id="updateOtherOrders" parameterType="com.shop.entity.Order">
+        update orders set state = 4 where itemId = #{item_id} and state = 5
+    </update>
+
+    <!--交易成功(下架)-->
+    <update id="finishOrder" parameterType="com.shop.entity.Order">
+        update orders set state = 4 where itemId = #{item_id}
+    </update>
+
+    <!--交易失败(恢复)-->
+    <update id="cancelOrder" parameterType="com.shop.entity.Order">
+        update orders set state = 4 where itemId = #{item_id}
+    </update>
+
+    <!--通过订单id查询订单-->
+    <select id="searchOrderByOrderId" resultMap="OrderResultMap">
+        select * from orders where orderId = #{order_id}
+    </select>
 
     <!--根据item_id(商品ID)有意向的购买者下单-->
     <insert id="addToOrderWanted" parameterType="com.shop.entity.Order">

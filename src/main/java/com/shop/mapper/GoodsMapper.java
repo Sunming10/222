@@ -44,15 +44,16 @@ public interface GoodsMapper {
     Goods isHaveSellingGoods(String username);
     /**
      * 在Goods表中查找所有正在出售的商品
+     * @param page
      * @return
      */
-    List<Goods> searchSellingGoods();
+    List<Goods> searchSellingGoods(int page);
 
     /**
      * 在Goods表中查找所有商品
      * @return
      */
-    List<Goods> searchAllGoods();
+    List<Goods> searchHistoryGoods(int page);
 
     /**
      * 在goods表中修改商品信息
@@ -61,5 +62,16 @@ public interface GoodsMapper {
      * @return
      */
     int updateGoods(Goods newgoods);
+
+    /**
+     * 查询冻结商品
+     * @param
+     * @param username
+     * @return
+     */
+
+    List<Goods> searchFreezingGoods(String username,int page);
+
+
 
 }

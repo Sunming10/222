@@ -114,15 +114,22 @@
 
     <!--查询正在出售商品-->
     <select id="searchSellingGoods" resultMap="GoodsResultMap">
-        select * from goods where goodsState = 1
+        select * from goods where goodsState = 1 limit 8 offset #{page}
     </select>
 
     <!--查看历史商品-->
-    <select id="searchAllGoods" resultMap="GoodsResultMap">
-        select * from goods
+    <select id="searchHistoryGoods" resultMap="GoodsResultMap">
+        select * from goods limit 10 offset #{page}
     </select>
+
+    <!--查看是否有商品正在出售 -->
     <select id="isHaveSellingGoods" resultType="com.shop.entity.Goods">
         select * from goods where sellerUsername = #{username} and goodsState = 1
+    </select>
+
+    <!--查看冻结商品 -->
+    <select id="searchFreezingGoods" resultMap="GoodsResultMap">
+        select * from goods where sellerUsername = #{username} and goodsState = 2 limit 10 offset #{page}
     </select>
 
 </mapper>

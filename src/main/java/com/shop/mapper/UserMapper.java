@@ -11,7 +11,7 @@ public interface UserMapper {
      * @param password
      * @return
      */
-    User login(String username, String password);
+    User login( String username, String password);
 
     /**
      *
@@ -19,6 +19,8 @@ public interface UserMapper {
      * @return
      */
     User getUserInfo(String username);
+     User getUserById(Integer user_id);
+
 
     /**
      *

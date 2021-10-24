@@ -16,6 +16,10 @@ public class UserService {
     public User getUserInfo(String username){
         return userMapper.getUserInfo(username);
     }
+    public User getUserById(Integer user_id){
+        return userMapper.getUserById(user_id);
+    }
+
     public int updatePassword(String username,String newPassword){
         return userMapper.updatePassword(username,newPassword);
     }
