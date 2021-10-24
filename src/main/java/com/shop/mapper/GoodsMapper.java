@@ -30,13 +30,6 @@ public interface GoodsMapper {
     int updateGoodsState(int item_id,int newstate);
 
     /**
-     * 根据username向Goods表中查看下架商品信息
-     * @param username
-     * @return
-     */
-    List<Goods> searchOffGoods(String username);
-
-    /**
      *根据username查找此用户是否有正在出售的商品
      * @param username
      * @return
@@ -53,7 +46,7 @@ public interface GoodsMapper {
      * 在Goods表中查找所有商品
      * @return
      */
-    List<Goods> searchHistoryGoods(int page);
+    List<Goods> searchHistoryGoods(String username,int page);
 
     /**
      * 在goods表中修改商品信息

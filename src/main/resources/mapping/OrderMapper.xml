@@ -37,17 +37,22 @@
 
     <!--交易成功(下架)-->
     <update id="finishOrder" parameterType="com.shop.entity.Order">
-        update orders set state = 4 where itemId = #{item_id}
+        update orders set state = 2 where itemId = #{item_id} and state = 1
     </update>
 
     <!--交易失败(恢复)-->
     <update id="cancelOrder" parameterType="com.shop.entity.Order">
-        update orders set state = 4 where itemId = #{item_id}
+        update orders set state = 4 where itemId = #{item_id} and state = 1
     </update>
 
     <!--通过订单id查询订单-->
     <select id="searchOrderByOrderId" resultMap="OrderResultMap">
         select * from orders where orderId = #{order_id}
+    </select>
+
+    <!--通过seller_username查询已完成订单-->
+    <select id="searchFinishOrder" resultMap="OrderResultMap">
+        select * from orders where sellerUsername = #{seller_username} and state = 2 limit 10 offset #{page}
     </select>
 
     <!--根据item_id(商品ID)有意向的购买者下单-->

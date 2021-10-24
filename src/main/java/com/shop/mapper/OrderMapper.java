@@ -48,6 +48,13 @@ public interface OrderMapper {
     int finishOrder(int item_id);
 
     /**
+     * 查询完成订单
+     * @param seller_username
+     * @return
+     */
+    List<Order> searchFinishOrder(String seller_username,int page);
+
+    /**
      * 取消交易(恢复)
      * @param item_id
      * @return

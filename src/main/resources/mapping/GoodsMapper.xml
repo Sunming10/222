@@ -107,19 +107,14 @@
         where itemId = #{item_id,jdbcType=INTEGER}
     </update>
 
-    <!--查询下架商品-->
-    <select id="searchOffGoods" resultMap="GoodsResultMap">
-        select * from goods where sellerUsername = #{username} and goodsState = 3
-    </select>
-
     <!--查询正在出售商品-->
     <select id="searchSellingGoods" resultMap="GoodsResultMap">
-        select * from goods where goodsState = 1 limit 8 offset #{page}
+        select * from goods where goodsState = 1 limit 10 offset #{page}
     </select>
 
     <!--查看历史商品-->
     <select id="searchHistoryGoods" resultMap="GoodsResultMap">
-        select * from goods limit 10 offset #{page}
+        select * from goods where sellerUsername = #{username} and goodsState = 3 limit 10 offset #{page}
     </select>
 
     <!--查看是否有商品正在出售 -->

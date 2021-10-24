@@ -34,6 +34,7 @@ public class OrderService {
         goodsMapper.updateGoodsState(item_id,3);
         return result;
     }
+    public  List<Order> searchFinishOrder(String seller_username,int page){return orderMapper.searchFinishOrder(seller_username,page);}
     public int cancelOrder(int item_id){
         int result =orderMapper.cancelOrder(item_id);
         goodsMapper.updateGoodsState(item_id,1);
