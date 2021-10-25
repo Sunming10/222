@@ -32,8 +32,8 @@ axios.defaults.baseURL = 'http://localhost:8082' // 配置接口地址
 // })
 axios.interceptors.request.use(
   config => {
-    if (localStorage.getItem('Authorization')) {
-      config.headers.Authorization = localStorage.getItem('Authorization');
+    if (sessionStorage.getItem('Authorization')) {
+      config.headers.Authorization = sessionStorage.getItem('Authorization');
     }
 
     return config;

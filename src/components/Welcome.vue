@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-header>
-      <el-button type="warning" class="position"> <router-link to="login" class="line">登&nbsp;录</router-link></el-button>
+      <el-button type="warning" class="position" @click="next">登&nbsp;录</el-button>
     </el-header>
     <el-main>
       <el-row :gutter="30">
@@ -134,6 +134,9 @@
       };
     },
       methods: {
+        next(){
+            this.$router.push('login');
+        },
       submitForm(form){
         this.$refs[form].validate((valid) => {
           if (valid) {
