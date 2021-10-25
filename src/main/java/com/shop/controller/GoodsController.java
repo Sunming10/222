@@ -5,13 +5,20 @@ import com.shop.entity.Order;
 import com.shop.entity.Order_Goods;
 import com.shop.service.GoodsService;
 import com.shop.service.OrderService;
+import com.shop.service.UploadImageService;
+import com.shop.utils.StringUtil;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,13 +34,17 @@ public class GoodsController {
     @Autowired
     private OrderService orderService;
 
+    @Resource
+    UploadImageService uploadImageService;
+
     //向Goods表中添加商品
     @RequestMapping(value = "/addGoods")
-    public Object addGoods(HttpServletRequest request, HttpServletResponse response){
+    public Object addGoods(@RequestParam("file") MultipartFile file,HttpServletRequest request, HttpServletResponse response) throws IOException {
         String goods_name = request.getParameter("goods_name");
         String seller_username = "admin";
         int goods_stock = 1;
-        String goods_img = request.getParameter("goods_img");
+        String goods_img = uploadImageService.uploadQNImg((FileInputStream) file.getInputStream(), StringUtil.getRandomImgName(file.getOriginalFilename()));
+//        String goods_img = request.getParameter("goods_img");
         String goods_discribe = request.getParameter("goods_discribe");
         float goods_price = Float.parseFloat(request.getParameter("goods_price"));
         JSONObject jsonObject = new JSONObject();
@@ -142,11 +153,12 @@ public class GoodsController {
 
     //修改商品信息
     @RequestMapping(value = "/updateGoods")
-    public Object updateGoods(HttpServletRequest request, HttpServletResponse response){
+    public Object updateGoods(@RequestParam("file") MultipartFile file,HttpServletRequest request, HttpServletResponse response) throws IOException {
         int item_id = Integer.parseInt(request.getParameter("item_id"));
         String goods_name = request.getParameter("goods_name");
         String seller_username = "admin";
-        String goods_img = request.getParameter("goods_img");
+        String goods_img = uploadImageService.uploadQNImg((FileInputStream) file.getInputStream(), StringUtil.getRandomImgName(file.getOriginalFilename()));
+//        String goods_img = request.getParameter("goods_img");
         String goods_discribe = request.getParameter("goods_discribe");
         float goods_price = Float.parseFloat(request.getParameter("goods_price"));
         JSONObject jsonObject = new JSONObject();
