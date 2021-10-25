@@ -17,3 +17,11 @@ mybatis:
 logging:
   level:
     com.example.demo.mapper: debug
+
+# 七牛云存储
+oss:
+  qiniu:
+    domain: http://cdn.souldays.top # 访问域名(默认使用七牛云测试域名)
+    accessKey: KJb6ZIW_mplRncSOOFRDf5efUF_EY6LMwdD09uMb # 公钥
+    secretKey: _3ZryKtRPL3X66byb5evv7OC4X6ddgpdwpQRLJfI # 私钥
+    bucketName: shop-software  #存储空间名称
