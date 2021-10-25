@@ -68,8 +68,9 @@ export default {
         this.$http.post('/user/login', this.loginForm).then(response=>{
               console.log(response);
             if(this.loginForm.username!=''&&this.loginForm.password!=''){
-              if(response.data.message=="login success!"){
+              if(response.data.message=="success"){
                 window.sessionStorage.setItem('token', response.data.token)
+                console.log("token:"+response.data.token);
                 console.log(response);
                 console.log(response.data);
                 // console.log(token);
@@ -78,7 +79,7 @@ export default {
 
                 this.$router.push('home');
                 //  console.log(response.data.token);
-              }else if(response.data.message=="login error!"){
+              }else if(response.data.message=="error"){
                 console.log();
                      this.$message.error('用户名或密码错误，请重新登录！');
               }

@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
+import {
+  Message,
+} from 'element-ui'
 
 
 const Login = () => import('./components/Login.vue')
@@ -17,6 +19,7 @@ const Detail = () => import('./components/contain/Detail.vue')
 
 
 Vue.use(Router)
+Vue.prototype.$message = Message
 
 const router = new Router({
   routes: [{
@@ -89,19 +92,21 @@ const router = new Router({
 // 挂载路由导航守卫
 
 router.beforeEach((to, from, next) => {
-  // to 将要访问的路径
-  // from 代表从哪个路径跳转而来
-  // next 是一个函数，表示放行
-  //     next()  放行    next('/login')  强制跳转
   console.log(from.path);
 
   if ((to.path === '/login') || (to.path === '/welcome') || (to.path === '/shopping')) return next()
 
   const tokenStr = window.sessionStorage.getItem('token')
-  if (!tokenStr) return next('/login')
-  next()
+  if (!tokenStr) {
+    Message({
+      message: '您暂未登陆，请先登录！',
+      type: 'error'
+    });
 
-  // 获取token
+    next('/login');
+
+  } else next()
+
 
 })
 

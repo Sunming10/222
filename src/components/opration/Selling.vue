@@ -6,16 +6,17 @@
 
 </el-header>
 
-    <el-row>
-  <el-col :span="6" v-for="(o, index) in 1" :key="o" :offset="index > 0 ? 1 : 0">
+    <el-main>
+      <el-row>
+  <el-col :span="6" v-for="(item,index) in form" :key="item" :offset="index > 0 ? 1 : 0">
 
-      <el-card :body-style="{ padding: '0px' }" style="text-align: center;text-decoration:none">
-         <router-link to="detail">
-      <img  src="https://2c.zol-img.com.cn/product/214_120x90/588/cerBdmwpBi0E.jpg" class="image">
-       </router-link>
+      <el-card :body-style="{ padding: '0px' }" style="text-align: center;text-decoration:none" >
+
+      <img  :src="item.goods_img" class="image" @click="toDetail">
+
       <div style="text-align: center;">
-        <span class="font-style">华为智慧屏</span>
-        <div class="word"><span class="price">￥2199.00</span></div>
+        <span class="font-style">{{item.goods_name}}</span>
+        <div class="word"><span class="price">￥{{item.goods_price}}</span></div>
         <div class="bottom clearfix ">
           <!-- <time class="time">{{ currentDate }}</time> -->
           <el-button type="text" class="button"  @click="dialogFormVisible = true">编辑商品</el-button>
@@ -25,16 +26,28 @@
 
   </el-col>
 </el-row>
+    </el-main>
+    <el-footer style="margin-left: 57%;margin-top: 14%;">
+      <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage"
+      :page-sizes="[10]"
+       :page-size="pagesize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="this.form.length">
+    </el-pagination>
+    </el-footer>
 <el-dialog title="编辑商品" :visible.sync="dialogFormVisible">
   <el-form :model="form">
     <el-form-item label="商品名称" :label-width="formLabelWidth">
-      <el-input v-model="form.item_name" autocomplete="off"></el-input>
+      <el-input v-model="form.goods_name" autocomplete="off"></el-input>
     </el-form-item>
     <el-form-item label="商品价格" :label-width="formLabelWidth">
-      <el-input v-model="form.item_price" autocomplete="off"></el-input>
+      <el-input v-model="form.goods_price" autocomplete="off"></el-input>
     </el-form-item>
     <el-form-item label="商品描述" :label-width="formLabelWidth">
-      <el-input v-model="form.item_describe" type="textarea" autocomplete="off"></el-input>
+      <el-input v-model="form.goods_discribe" type="textarea" autocomplete="off"></el-input>
     </el-form-item>
     <el-form-item label="商品图片" :label-width="formLabelWidth">
       <!-- <el-input v-model="form.name" autocomplete="off"></el-input> -->
@@ -43,7 +56,7 @@
         action="#"
         list-type="picture-card"
         :auto-upload="false"
-        :file-list="form.item_img"
+        :file-list="form.goods_img"
         :limit="1"
         :on-exceed="handleExceed"
         :before-remove="beforeRemove">
@@ -95,26 +108,61 @@
 export default {
   data() {
     return {
+      dialogImageUrl: '',
+      dialogVisible: false,
+      disabled: false,
+      formLabelWidth: '100px',
+      currentPage: 1,
       currentDate: new Date(),
       dialogFormVisible: false,
-       form: {
-          item_name: '华为智慧屏',
-          item_price: '2199.00',
-          item_describe: '这是电脑这是电脑这是电脑这是电脑这是电脑这是电脑这是电脑这是电脑这是电脑这是电脑这是电脑这是电脑这是电脑这是电脑这是电脑这是电脑',
-          item_img:[{
-            name:'computer.jpg',
-            url:"https://iconfont.alicdn.com/t/e89430ee-42ed-4d98-8ea2-6987122dc98a.png"}],
+      pagesize:5,
+       form:[],
 
-        },
-        dialogImageUrl: '',
-        dialogVisible: false,
-        disabled: false,
-        formLabelWidth: '100px'
     };
 
-  }, methods: {
-      change(){
-         this.$router.push('detail');
+  },
+   created() {
+        this.handleGoodList();
+        console.log(this.$route)
+        this.form=this.$route.query.form,
+        this.form.item_id=this.$route.query.form.item_id
+    },
+  methods: {
+      handleSizeChange(size) {
+        this.pagesize=size;
+        console.log(`每页 ${size} 条`);
+      },
+      handleCurrentChange(currentPage) {
+        this.currentPage=currentPage;
+        console.log(`当前页: ${currentPage}`);
+      },
+      handleGoodList(){
+
+        this.$http.post('/goods/searchSellingGoods', {'page': this.currentPage 
+        }).then(res=>{
+          var ListData=JSON.stringify(res.data.goods);
+          // console.log(ListData);
+          this.form=JSON.parse(ListData)
+          // console.log(this.form);
+        })
+      },
+      toDetail(){
+         this.$http.post('/goods/searchSellingGoods', {'page': this.currentPage 
+        }).then(res=>{
+          var ListData=JSON.stringify(res.data.goods);
+          // console.log(ListData);
+          this.form=JSON.parse(ListData)
+          // console.log(this.form);
+          this.$router.push({
+
+            path: 'detail',
+            query:{
+              item_id:this.form.item_id,
+             itemDetail:this.form
+            }
+         });
+        })
+
       },
       handleRemove(file) {
         console.log(file);

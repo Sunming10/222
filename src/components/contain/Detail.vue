@@ -54,21 +54,18 @@
         </el-header>
         <el-main>
            <el-row style="text-align:center;margin-left:12%">
-            <el-col :span="20" v-for="(o, index) in 1" :key="o" :offset="index > 0 ? 1 : 0">
+            <el-col :span="20" v-for="(item, index) in form" :key="item" :offset="index > 0 ? 1 : 0">
               <el-card :body-style="{ padding: '25px 0 20px 0' }">
-                <img  src="https://2c.zol-img.com.cn/product/214_120x90/588/cerBdmwpBi0E.jpg" class="image1">
+                <img  :src="item.goods_img" class="image1">
                 <div style="text-align: center;">
-                  <span class="font-style">华为智慧屏</span>
-                  <div class="word"><span class="price">￥2199.00</span></div>
+                  <span class="font-style">{{item.goods_name}}</span>
+                  <div class="word"><span class="price">￥{{item.goods_price}}</span></div>
                   <div class="bottom clearfix ">
                     <!-- <time class="time">{{ currentDate }}</time> -->
                     <!-- <el-button type="text" class="button" @click="change">编辑商品</el-button> -->
                     <span style="line-height:50px">商品描述</span>
                     <div style="padding:10px;line-height:30px">
-                      这是电脑这是电脑这是电脑这是电脑这是电脑这是
-                      电脑这是电脑这是电脑这是电脑这是电脑这是电脑
-                      这是电脑这是电脑这是电脑这是电脑这是电脑这是
-                      电脑这是电脑
+                      {{item.goods_discribe}}
                     </div>
 
                   </div>
@@ -249,14 +246,29 @@ export default {
           tel:'18375289147',
           address: '上海市普陀区金沙江路 1518 弄'
         },],
+        form:[]
 
     }
 
   },
+  created() {
+        this.handleGoodList();
+    },
   methods: {
     returnBack(){
         this.$router.push('selling');
-    }
+    },
+
+    handleGoodList(){
+
+        this.$http.post('/goods/searchSellingGoods', {'page': this.currentPage 
+        }).then(res=>{
+          var ListData=JSON.stringify(res.data.goods);
+          console.log(ListData);
+          this.form=JSON.parse(ListData)
+          console.log(this.form);
+        })
+      },
   }
 }
 </script>
