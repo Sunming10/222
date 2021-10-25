@@ -36,6 +36,15 @@ public class Goods {
         this.goods_state = goods_state;
     }
 
+    public Goods(int item_id, String goods_name, String seller_username, String goods_img, String goods_discribe, float goods_price) {
+        this.item_id = item_id;
+        this.goods_name = goods_name;
+        this.seller_username = seller_username;
+        this.goods_img = goods_img;
+        this.goods_discribe = goods_discribe;
+        this.goods_price = goods_price;
+    }
+
     public float getGoods_price() {
         return goods_price;
     }

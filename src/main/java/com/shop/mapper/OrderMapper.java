@@ -32,6 +32,19 @@ public interface OrderMapper {
      */
     int agreeOrderwanted(int order_id);
 
+    /**
+     * 完成交易(下架)
+     * @param item_id
+     * @return
+     */
+    int finishOrder(int item_id);
+
+    /**
+     * 取消交易(恢复)
+     * @param item_id
+     * @return
+     */
+    int cancelOrder(int item_id);
 
     /**
      * 通过订单id查询订单
@@ -41,25 +54,11 @@ public interface OrderMapper {
     Order searchOrderByOrderId(int order_id);
 
     /**
-     * 完成交易(下架)
-     * @param item_id
-     * @return
-     */
-    int finishOrder(int item_id);
-
-    /**
      * 查询完成订单
      * @param seller_username
      * @return
      */
     List<Order> searchFinishOrder(String seller_username,int page);
-
-    /**
-     * 取消交易(恢复)
-     * @param item_id
-     * @return
-     */
-    int cancelOrder(int item_id);
 
     /**
      * 修改其余订单状态为关闭交易

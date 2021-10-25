@@ -78,8 +78,8 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 //                    httpServletResponse.getWriter().append(json.toJSONString());
 //                    System.out.println("认证失败，未通过拦截器");
                     Map<String,Object> map=new HashMap<>();
-                    map.put("msg","token is null");
-                    map.put("code","50000");
+//                    map.put("msg","token is null");
+                    map.put("code","660");
                     OutputStream outputStreamam = httpServletResponse.getOutputStream();
                     outputStreamam.write(JSONObject.toJSONString(map).getBytes());
                     outputStreamam.flush();
@@ -99,8 +99,8 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 //                    httpServletResponse.getWriter().append(json.toJSONString());
 //                    System.out.println("认证失败，未通过拦截器");
                     Map<String,Object> map=new HashMap<>();
-                    map.put("msg","user is null");
-                    map.put("code","50001");
+//                    map.put("message","error");
+                    map.put("code","661");
                     OutputStream outputStreamam = httpServletResponse.getOutputStream();
                     outputStreamam.write(JSONObject.toJSONString(map).getBytes());
                     outputStreamam.flush();
@@ -118,7 +118,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 //                json.put("expiresAt",jwt.getExpiresAt());
 //                httpServletResponse.getWriter().append(json.toJSONString());
                 Map<String,Object> map=new HashMap<>();
-                map.put("msg","success");
+//                map.put("msg","success");
                 map.put("code","666");
                 map.put("username",jwt.getClaim("username").asString());
                 map.put("expiresAt",jwt.getExpiresAt());

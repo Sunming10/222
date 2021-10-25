@@ -77,9 +77,6 @@
             <if test="seller_username != null" >
                 sellerUsername = #{seller_username,jdbcType=VARCHAR},
             </if>
-            <if test="goods_stock != null" >
-                goodsStock = #{goods_stock,jdbcType=VARCHAR},
-            </if>
             <if test="goods_img != null" >
                 goodsImg = #{goods_img,jdbcType=VARCHAR},
             </if>
@@ -88,9 +85,6 @@
             </if>
             <if test="goods_price != null" >
                 goodsPrice = #{goods_price,jdbcType=REAL},
-            </if>
-            <if test="goods_state != null" >
-                goodsState = #{goods_state,jdbcType=INTEGER},
             </if>
         </set>
         where itemId = #{item_id,jdbcType=INTEGER}

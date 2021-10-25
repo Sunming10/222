@@ -36,12 +36,10 @@ public class OrderService {
     }
     public  List<Order> searchFinishOrder(String seller_username,int page){return orderMapper.searchFinishOrder(seller_username,page);}
     public int cancelOrder(int item_id){
-        int result =orderMapper.cancelOrder(item_id);
+        int result = orderMapper.cancelOrder(item_id);
         goodsMapper.updateGoodsState(item_id,1);
         return result;
     }
-    public int updateOtherOrders(int item_id){return orderMapper.updateOtherOrders(item_id);}
-    public Order searchOrderByOrderId(int order_id){return orderMapper.searchOrderByOrderId(order_id);};
     public int addToOrderWanted(int item_id,String seller_username ,String buyer_realname,String buyer_phonenumber,String buyer_address,int buy_sum,String create_time){
         return orderMapper.addToOrderWanted(item_id, seller_username,buyer_realname, buyer_phonenumber, buyer_address,buy_sum,create_time);
     }

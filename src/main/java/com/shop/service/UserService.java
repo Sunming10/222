@@ -10,14 +10,7 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
-    public User login(String username, String password){
-        return userMapper.login(username,password);
-    }
-    public User getUserInfo(String username){
-        return userMapper.getUserInfo(username);
-    }
-
-    public int updatePassword(String username,String newPassword){
-        return userMapper.updatePassword(username,newPassword);
-    }
+    public User login(String username, String password){ return userMapper.login(username,password); }
+    public User getUserInfo(String username){ return userMapper.getUserInfo(username); }
+    public int updatePassword(String username,String newPassword){ return userMapper.updatePassword(username,newPassword); }
 }

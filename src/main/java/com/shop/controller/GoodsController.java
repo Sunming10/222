@@ -7,23 +7,20 @@ import com.shop.service.GoodsService;
 import com.shop.service.OrderService;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/goods")
 public class GoodsController {
+
+    private String message = "error";
 
     @Autowired
     private GoodsService goodsService;
@@ -32,39 +29,68 @@ public class GoodsController {
     private OrderService orderService;
 
     //向Goods表中添加商品
-    @RequestMapping(value = "/addGoods",method = RequestMethod.POST)
-    public String addGoods(@RequestBody Goods Goods){
-        int result = goodsService.addGoods( Goods);
+    @RequestMapping(value = "/addGoods")
+    public Object addGoods(HttpServletRequest request, HttpServletResponse response){
+        String goods_name = request.getParameter("goods_name");
+        String seller_username = "admin";
+        int goods_stock = 1;
+        String goods_img = request.getParameter("goods_img");
+        String goods_discribe = request.getParameter("goods_discribe");
+        float goods_price = Float.parseFloat(request.getParameter("goods_price"));
+        JSONObject jsonObject = new JSONObject();
+        Goods goods = new Goods(goods_name,seller_username,goods_stock,goods_img,goods_discribe,goods_price);
+        int result = goodsService.addGoods( goods);
         if (result >= 1) {
-            return "success";
+            message = "success";
         }else {
-            return "error";
+            message = "error";
         }
+        jsonObject.put("message",message);
+        return jsonObject;
     }
 
     //买家在goods表中查询goods详细信息
     @RequestMapping(value = "/searchGoods")
-    public Goods searchGoods( int item_id){
-        Goods goods = goodsService.searchGoods(item_id);
-        return goods;
+    public Object searchGoods(HttpServletRequest request, HttpServletResponse response){
+        int item_id = Integer.parseInt(request.getParameter("item_id"));
+        JSONObject jsonObject = new JSONObject();
+        Goods good = goodsService.searchGoods(item_id);
+        if (good != null){
+            message = "success";
+            jsonObject.put("good",good);
+        }else {
+            message = "error";
+        }
+        jsonObject.put("message",message);
+        return jsonObject;
     }
 
     //修改商品状态
     @RequestMapping(value = "/updateGoodsState")
-    public String updateGoodsState( int item_id,int newstate){
+    public Object updateGoodsState(HttpServletRequest request, HttpServletResponse response){
+        int item_id = Integer.parseInt(request.getParameter("item_id"));
+        int newstate = Integer.parseInt(request.getParameter("newstate"));
+        JSONObject jsonObject = new JSONObject();
         int result = goodsService.updateGoodsState(item_id, newstate);
         if (result >= 1) {
-            return "success";
+            message = "success";
         }else {
-            return "error";
+            message = "error";
         }
+        jsonObject.put("message",message);
+        return jsonObject;
     }
 
     //在goods表中查找所有正在出售的商品。
     @RequestMapping(value = "/searchSellingGoods")
-    public List<Goods> searchSellingGoods(int page){
-        page = (page-1)*10;
-        return goodsService.searchSellingGoods(page);
+    public Object searchSellingGoods(HttpServletRequest request, HttpServletResponse response){
+        int page = (Integer.parseInt(request.getParameter("page"))-1)*10;
+        JSONObject jsonObject = new JSONObject();
+        List<Goods> goods= goodsService.searchSellingGoods(page);
+        message = "success";
+        jsonObject.put("message",message);
+        jsonObject.put("goods",goods);
+        return jsonObject;
     }
 
     //在goods表中查找所有正在出售的商品。
@@ -78,7 +104,7 @@ public class GoodsController {
 
     //在goods表中查询所有商品
     @RequestMapping(value = "/searchHistoryGoods")
-    public void searchHistoryGoods(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public Object searchHistoryGoods(HttpServletRequest request, HttpServletResponse response){
         String username = request.getParameter("username");
         int page = Integer.parseInt(request.getParameter("page"));
         page = (page-1)*10;
@@ -102,16 +128,10 @@ public class GoodsController {
                     goods.getGoods_discribe());
             list.add(order_goods);
         }
-
-//        response.getOutputStream().write(jsonObject.toJSONString().getBytes());
-        Map<String,Object> map=new HashMap<>();
-//        map.put("goods",goodsList);
-//        map.put("orders",orderList);
-        map.put("list",list);
-        OutputStream outputStreamam = response.getOutputStream();
-        outputStreamam.write(JSONObject.toJSONString(map).getBytes());
-        outputStreamam.flush();
-        outputStreamam.close();
+        message = "success";
+        jsonObject.put("message",message);
+        jsonObject.put("list",list);
+        return jsonObject;
     }
 
     //查询此用户是否有正在出售的商品
@@ -120,21 +140,35 @@ public class GoodsController {
 
     //修改商品信息
     @RequestMapping(value = "/updateGoods")
-    public String updateGoods(@RequestBody Goods newgoods){
+    public Object updateGoods(HttpServletRequest request, HttpServletResponse response){
+        int item_id = Integer.parseInt(request.getParameter("item_id"));
+        String goods_name = request.getParameter("goods_name");
+        String seller_username = "admin";
+        String goods_img = request.getParameter("goods_img");
+        String goods_discribe = request.getParameter("goods_discribe");
+        float goods_price = Float.parseFloat(request.getParameter("goods_price"));
+        JSONObject jsonObject = new JSONObject();
+        Goods newgoods = new Goods(item_id,goods_name,seller_username,goods_img,goods_discribe,goods_price);
         int result = goodsService.updateGoods(newgoods);
         if (result >= 1) {
-            return "success";
+            message =  "success";
         }else {
-            return "error";
+            message = "error";
         }
+        jsonObject.put("message",message);
+        return  jsonObject;
     }
 
     //查看冻结商品
     @RequestMapping(value = "/searchFreezingGoods")
-    public List<Goods> searchFreezingGoods(String username , int page){
-        page = (page-1)*10;
-        return goodsService.searchFreezingGoods(username,page);
+    public Object searchFreezingGoods(HttpServletRequest request, HttpServletResponse response){
+        String username = request.getParameter("username");
+        int page = (Integer.parseInt(request.getParameter("page"))-1)*10;
+        JSONObject jsonObject = new JSONObject();
+        List<Goods> goods = goodsService.searchFreezingGoods(username,page);
+        message = "success";
+        jsonObject.put("message",message);
+        jsonObject.put("goods",goods);
+        return jsonObject;
     }
-
-
 }
