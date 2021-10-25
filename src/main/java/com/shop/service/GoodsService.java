@@ -16,8 +16,8 @@ public class GoodsService {
         return goodsMapper.addGoods(Goods);
     }
     public Goods searchGoods(int item_id){ return goodsMapper.searchGoods(item_id); }
-    public int updateGoodsState(int item_id,int newstate){
-        return goodsMapper.updateGoodsState(item_id, newstate);
+    public int updateGoodsState(String seller_username,int item_id,int newstate){
+        return goodsMapper.updateGoodsState(seller_username,item_id, newstate);
     }
     public List<Goods> searchSellingGoods(int page){return goodsMapper.searchSellingGoods(page);}//一页8条
     public List<Goods> searchFreezingGoods(String username,int page){return goodsMapper.searchFreezingGoods(username,page);}//一页10条

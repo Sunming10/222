@@ -8,7 +8,6 @@ import com.shop.service.OrderService;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -68,10 +67,11 @@ public class GoodsController {
     //修改商品状态
     @RequestMapping(value = "/updateGoodsState")
     public Object updateGoodsState(HttpServletRequest request, HttpServletResponse response){
+        String seller_username = request.getParameter("seller_username");
         int item_id = Integer.parseInt(request.getParameter("item_id"));
         int newstate = Integer.parseInt(request.getParameter("newstate"));
         JSONObject jsonObject = new JSONObject();
-        int result = goodsService.updateGoodsState(item_id, newstate);
+        int result = goodsService.updateGoodsState(seller_username,item_id, newstate);
         if (result >= 1) {
             message = "success";
         }else {
@@ -98,7 +98,9 @@ public class GoodsController {
     public Object searchWelcomeGoods(){
         JSONObject jsonObject = new JSONObject();
         List<Goods> goods = goodsService.searchWelcomeGoods();
+        message = "success";
         jsonObject.put("goods",goods);
+        jsonObject.put("message",message);
         return jsonObject;
     }
 

@@ -27,7 +27,7 @@ public interface GoodsMapper {
      * @param newstate
      * @return
      */
-    int updateGoodsState(int item_id,int newstate);
+    int updateGoodsState(String seller_username,int item_id,int newstate);
 
     /**
      *根据username查找此用户是否有正在出售的商品

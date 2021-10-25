@@ -1,6 +1,8 @@
 package com.shop.controller;
 
+import com.shop.entity.Goods;
 import com.shop.entity.Order;
+import com.shop.service.GoodsService;
 import com.shop.service.OrderService;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +26,16 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private GoodsService goodsService;
+
     //查看商品意向购买买家
     @RequestMapping(value = "/searchBuyerlist")
     public Object earchBuyerlist(HttpServletRequest request, HttpServletResponse response){
+        String seller_username = request.getParameter("seller_username");
         int item_id = Integer.parseInt(request.getParameter("item_id"));
         JSONObject jsonObject = new JSONObject();
-        List<Order> orderList = orderService.searchBuyerlist(item_id);
+        List<Order> orderList = orderService.searchBuyerlist(seller_username,item_id);
         message = "success";
         jsonObject.put("orders",orderList);
         jsonObject.put("message",message);
@@ -39,9 +45,10 @@ public class OrderController {
     //查看交易中的某商品对应的订单信息
     @RequestMapping(value = "/searchFreezeGoodsBuyer")
     public Object searchFreezeGoodsBuyer(HttpServletRequest request, HttpServletResponse response){
+        String seller_username = request.getParameter("seller_username");
         int item_id = Integer.parseInt(request.getParameter("item_id"));
         JSONObject jsonObject = new JSONObject();
-        Order order = orderService.searchFreezeGoodsBuyer(item_id);
+        Order order = orderService.searchFreezeGoodsBuyer(seller_username,item_id);
         if (order != null){
             message = "success";
             jsonObject.put("order",order);
@@ -55,9 +62,10 @@ public class OrderController {
     //同意意向买家
     @RequestMapping(value = "/agreeOrderwanted")
     public Object agreeOrderwanted(HttpServletRequest request, HttpServletResponse response) {
+        String seller_username = request.getParameter("seller_username");
         int order_id = Integer.parseInt(request.getParameter("order_id"));
         JSONObject jsonObject = new JSONObject();
-        Order order = orderService.agreeOrderwanted(order_id);
+        Order order = orderService.agreeOrderwanted(seller_username,order_id);
         if (order != null){
             message = "success";
             jsonObject.put("order",order);
@@ -71,9 +79,10 @@ public class OrderController {
     //完成交易(下架)
     @RequestMapping(value = "/finishOrder")
     public Object finishOrder(HttpServletRequest request, HttpServletResponse response){
+        String seller_username = request.getParameter("seller_username");
         int item_id = Integer.parseInt(request.getParameter("item_id"));
         JSONObject jsonObject = new JSONObject();
-        int result = orderService.finishOrder(item_id);
+        int result = orderService.finishOrder(seller_username,item_id);
         if (result >=1){
             message = "success";
         }else {
@@ -86,9 +95,10 @@ public class OrderController {
     //取消交易(恢复)
     @RequestMapping(value = "/cancelOrder")
     public Object cancelOrder(HttpServletRequest request, HttpServletResponse response){
+        String seller_username = request.getParameter("seller_username");
         int item_id = Integer.parseInt(request.getParameter("item_id"));
         JSONObject jsonObject = new JSONObject();
-        int result = orderService.cancelOrder(item_id);
+        int result = orderService.cancelOrder(seller_username,item_id);
         if (result >=1){
             message = "success";
         }else {
@@ -103,7 +113,8 @@ public class OrderController {
     @RequestMapping(value = "/addToOrderWanted")
     public Object addToOrderWanted(HttpServletRequest request, HttpServletResponse response) throws IOException, ParseException {
         int item_id = Integer.parseInt(request.getParameter("item_id"));
-        String seller_username = "admin";
+        Goods good = goodsService.searchGoods(item_id);
+        String seller_username = good.getSeller_username();
         String buyer_realname = request.getParameter("buyer_realname");
         String buyer_phonenumber = request.getParameter("buyer_phonenumber");
         String buyer_address = request.getParameter("buyer_address");

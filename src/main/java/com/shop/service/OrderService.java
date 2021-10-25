@@ -20,24 +20,24 @@ public class OrderService {
     @Autowired
     private GoodsMapper goodsMapper;
 
-    public List<Order> searchBuyerlist(int item_id){ return orderMapper.searchBuyerlist(item_id);}
-    public Order searchFreezeGoodsBuyer(int item_id){ return orderMapper.searchFreezeGoodsBuyer(item_id);}
-    public Order agreeOrderwanted(int order_id){
-        int result = orderMapper.agreeOrderwanted(order_id);
-        Order order = orderMapper.searchOrderByOrderId(order_id);
-        orderMapper.updateOtherOrders(order.getItem_id());
-        goodsMapper.updateGoodsState(order.getItem_id(),2);
+    public List<Order> searchBuyerlist(String seller_username,int item_id){ return orderMapper.searchBuyerlist(seller_username,item_id);}
+    public Order searchFreezeGoodsBuyer(String seller_username,int item_id){ return orderMapper.searchFreezeGoodsBuyer(seller_username,item_id);}
+    public Order agreeOrderwanted(String seller_username,int order_id){
+        int result = orderMapper.agreeOrderwanted(seller_username,order_id);
+        Order order = orderMapper.searchOrderByOrderId(seller_username,order_id);
+        orderMapper.updateOtherOrders(seller_username,order.getItem_id());
+        goodsMapper.updateGoodsState(seller_username,order.getItem_id(),2);
         return order;
     }
-    public int finishOrder(int item_id){
-        int result = orderMapper.finishOrder(item_id);
-        goodsMapper.updateGoodsState(item_id,3);
+    public int finishOrder(String seller_username,int item_id){
+        int result = orderMapper.finishOrder(seller_username,item_id);
+        goodsMapper.updateGoodsState(seller_username,item_id,3);
         return result;
     }
     public  List<Order> searchFinishOrder(String seller_username,int page){return orderMapper.searchFinishOrder(seller_username,page);}
-    public int cancelOrder(int item_id){
-        int result = orderMapper.cancelOrder(item_id);
-        goodsMapper.updateGoodsState(item_id,1);
+    public int cancelOrder(String seller_username,int item_id){
+        int result = orderMapper.cancelOrder(seller_username,item_id);
+        goodsMapper.updateGoodsState(seller_username,item_id,1);
         return result;
     }
     public int addToOrderWanted(int item_id,String seller_username ,String buyer_realname,String buyer_phonenumber,String buyer_address,int buy_sum,String create_time){

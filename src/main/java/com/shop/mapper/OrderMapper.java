@@ -16,42 +16,42 @@ public interface OrderMapper {
      * @param item_id
      * @return
      */
-    List<Order> searchBuyerlist(int item_id);
+    List<Order> searchBuyerlist(String seller_username,int item_id);
 
     /**
      * 查看order表中商品号为item_number且正在交易中的的订单信息
      * @param item_id
      * @return
      */
-    Order searchFreezeGoodsBuyer(int item_id);
+    Order searchFreezeGoodsBuyer(String seller_username,int item_id);
 
     /**
      * 同意意向买家
      * @param order_id
      * @return
      */
-    int agreeOrderwanted(int order_id);
+    int agreeOrderwanted(String seller_username,int order_id);
 
     /**
      * 完成交易(下架)
      * @param item_id
      * @return
      */
-    int finishOrder(int item_id);
+    int finishOrder(String seller_username,int item_id);
 
     /**
      * 取消交易(恢复)
      * @param item_id
      * @return
      */
-    int cancelOrder(int item_id);
+    int cancelOrder(String seller_username,int item_id);
 
     /**
      * 通过订单id查询订单
      * @param order_id
      * @return
      */
-    Order searchOrderByOrderId(int order_id);
+    Order searchOrderByOrderId(String seller_username,int order_id);
 
     /**
      * 查询完成订单
@@ -65,7 +65,7 @@ public interface OrderMapper {
      * @param item_id
      * @return
      */
-    int updateOtherOrders(int item_id);
+    int updateOtherOrders(String seller_username,int item_id);
 
 
     /**

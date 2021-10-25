@@ -87,7 +87,7 @@
                 goodsPrice = #{goods_price,jdbcType=REAL},
             </if>
         </set>
-        where itemId = #{item_id,jdbcType=INTEGER}
+        where itemId = #{item_id,jdbcType=INTEGER} and sellerUsername = #{seller_username}
     </update>
 
     <!--根据item_id(商品ID)修改商品状态-->
