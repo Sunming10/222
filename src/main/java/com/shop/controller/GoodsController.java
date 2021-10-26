@@ -39,7 +39,7 @@ public class GoodsController {
 
     //向Goods表中添加商品
     @RequestMapping(value = "/addGoods")
-    public Object addGoods(@RequestParam("file") MultipartFile file,HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public Object addGoods(@RequestParam("goods_img") MultipartFile file,HttpServletRequest request, HttpServletResponse response) throws IOException {
         String goods_name = request.getParameter("goods_name");
         String seller_username = "admin";
         int goods_stock = 1;
@@ -153,7 +153,7 @@ public class GoodsController {
 
     //修改商品信息
     @RequestMapping(value = "/updateGoods")
-    public Object updateGoods(@RequestParam("file") MultipartFile file,HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public Object updateGoods(@RequestParam("goods_img") MultipartFile file,HttpServletRequest request, HttpServletResponse response) throws IOException {
         int item_id = Integer.parseInt(request.getParameter("item_id"));
         String goods_name = request.getParameter("goods_name");
         String seller_username = "admin";
@@ -176,10 +176,10 @@ public class GoodsController {
     //查看冻结商品
     @RequestMapping(value = "/searchFreezingGoods")
     public Object searchFreezingGoods(HttpServletRequest request, HttpServletResponse response){
-        String username = request.getParameter("username");
+        String seller_username = request.getParameter("seller_username");
         int page = (Integer.parseInt(request.getParameter("page"))-1)*10;
         JSONObject jsonObject = new JSONObject();
-        List<Goods> goods = goodsService.searchFreezingGoods(username,page);
+        List<Goods> goods = goodsService.searchFreezingGoods(seller_username,page);
         message = "success";
         jsonObject.put("message",message);
         jsonObject.put("goods",goods);

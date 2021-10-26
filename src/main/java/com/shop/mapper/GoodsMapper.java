@@ -46,7 +46,7 @@ public interface GoodsMapper {
      * 在Goods表中查找所有商品
      * @return
      */
-    List<Goods> searchHistoryGoods(String username,int page);
+    List<Goods> searchHistoryGoods(String seller_username,int page);
 
     /**
      * 在Goods表中查找所有商品(welcome)
@@ -65,11 +65,11 @@ public interface GoodsMapper {
     /**
      * 查询冻结商品
      * @param
-     * @param username
+     * @param seller_username
      * @return
      */
 
-    List<Goods> searchFreezingGoods(String username,int page);
+    List<Goods> searchFreezingGoods(String seller_username,int page);
 
 
 

@@ -20,8 +20,8 @@ public class GoodsService {
         return goodsMapper.updateGoodsState(seller_username,item_id, newstate);
     }
     public List<Goods> searchSellingGoods(int page){return goodsMapper.searchSellingGoods(page);}//一页8条
-    public List<Goods> searchFreezingGoods(String username,int page){return goodsMapper.searchFreezingGoods(username,page);}//一页10条
-    public List<Goods> searchHistoryGoods(String username, int page){ return goodsMapper.searchHistoryGoods(username,page);}//一页10条
+    public List<Goods> searchFreezingGoods(String seller_username,int page){return goodsMapper.searchFreezingGoods(seller_username,page);}//一页10条
+    public List<Goods> searchHistoryGoods(String seller_username, int page){ return goodsMapper.searchHistoryGoods(seller_username,page);}//一页10条
     public int updateGoods(Goods newgoods){ return goodsMapper.updateGoods(newgoods);}
     public List<Goods> searchWelcomeGoods(){return  goodsMapper.searchWelcomeGoods();}
     public boolean isHaveSellingGoods(String username){

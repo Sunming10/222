@@ -113,7 +113,7 @@
 
     <!--查看历史商品-->
     <select id="searchHistoryGoods" resultMap="GoodsResultMap">
-        select * from goods where sellerUsername = #{username} and goodsState = 3 limit 10 offset #{page}
+        select * from goods where sellerUsername = #{seller_username} and goodsState = 3 limit 10 offset #{page}
     </select>
 
     <!--查看是否有商品正在出售 -->
@@ -123,7 +123,7 @@
 
     <!--查看冻结商品 -->
     <select id="searchFreezingGoods" resultMap="GoodsResultMap">
-        select * from goods where sellerUsername = #{username} and goodsState = 2 limit 10 offset #{page}
+        select * from goods where sellerUsername = #{seller_username} and goodsState = 2 limit 10 offset #{page}
     </select>
 
 </mapper>
