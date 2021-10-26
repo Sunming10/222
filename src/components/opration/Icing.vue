@@ -97,11 +97,11 @@
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page="currentPage4"
-      :page-sizes="[20, 40, 60, 80]"
-      :page-size="20"
+      :current-page="currentPage"
+      :page-sizes="[5]"
+      :page-size="pagesize"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="100">
+      :total="this.List.length">
     </el-pagination>
   </div>
     </el-footer>
@@ -126,44 +126,39 @@ export default {
         buyer_tel: '18375289147',
         buyer_address: '上海市普陀区金沙江路 1518 弄'
       },],
-      gridData: [{
-        item_id: '007',
-        item_name: '小天才电话手表',
-        item_price: '￥399.00',
-        item_describe:'儿童电话手表智能GPS定位电信版多功能防水4g全网通咪咪兔男女孩小学生初高中生可插卡视频通话',
-        item_img:'https://2c.zol-img.com.cn/product/214_120x90/588/cerBdmwpBi0E.jpg'
-}],
+      gridData: [],
       dialogTableVisible: false,
       dialogVisible: false,
       visible: false,
-      currentPage1: 5,
-      currentPage2: 5,
-      currentPage3: 5,
-      currentPage4: 4
+      currentPage:1,
+      pagesize:5,
+      List:[],
     }
   },
+  created () {
+    // this.handleGoodList()
+    this.fetchData()
+  },
   methods: {
-    handleEdit(index, row) {
-      console.log(index, row)
-    },
-    handleDelete(index, row) {
-      console.log(index, row)
-    },
-    // 获取信息
-    // data:$http.post('/goods/searchOffGoods').then(response=>{
-    //     console.log(response);
-    // })
-    // ,
+    handleSizeChange(size) {
+        this.pagesize=size;
+        console.log(`每页 ${size} 条`);
+      },
+      handleCurrentChange(currentPage) {
+        this.currentPage=currentPage;
+        console.log(`当前页: ${currentPage}`);
+      },
     fetchData(){
-        $http.post('/goods/searchOffGoods',this.gridData).then(response=>{
+        $http.post('/goods/searchFreezingGoods',{'username':"wxy10",'page':this.currentPage}).then(response=>{
               console.log(response);
-              this.gridData=response.data
+              this.gridData=response.data.goods
+              console.log(this.gridData);
         })
     },
-    async getGoodList(){
-      const{data:res}=await this.$http.post('/goodssearchOffGoods')
-      console.log(res);
-    },
+    // async getGoodList(){
+    //   const{data:res}=await this.$http.post('/goodssearchOffGoods')
+    //   console.log(res);
+    // },
     // 恢复
    recover() {
         this.$confirm('是否将商品恢复上架？', '提示', {

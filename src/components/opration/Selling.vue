@@ -19,7 +19,7 @@
         <div class="word"><span class="price">￥{{item.goods_price}}</span></div>
         <div class="bottom clearfix ">
           <!-- <time class="time">{{ currentDate }}</time> -->
-          <el-button type="text" class="button"  @click="dialogFormVisible = true">编辑商品</el-button>
+          <el-button type="text" class="button"  @click="editItem">编辑商品</el-button>
         </div>
       </div>
     </el-card>
@@ -41,13 +41,13 @@
 <el-dialog title="编辑商品" :visible.sync="dialogFormVisible">
   <el-form :model="form">
     <el-form-item label="商品名称" :label-width="formLabelWidth">
-      <el-input v-model="form.goods_name" autocomplete="off"></el-input>
+      <el-input v-model="itemName" autocomplete="off"></el-input>
     </el-form-item>
     <el-form-item label="商品价格" :label-width="formLabelWidth">
-      <el-input v-model="form.goods_price" autocomplete="off"></el-input>
+      <el-input v-model="itemPrice" autocomplete="off"></el-input>
     </el-form-item>
     <el-form-item label="商品描述" :label-width="formLabelWidth">
-      <el-input v-model="form.goods_discribe" type="textarea" autocomplete="off"></el-input>
+      <el-input v-model="itemDiscribe" type="textarea" autocomplete="off"></el-input>
     </el-form-item>
     <el-form-item label="商品图片" :label-width="formLabelWidth">
       <!-- <el-input v-model="form.name" autocomplete="off"></el-input> -->
@@ -56,7 +56,7 @@
         action="#"
         list-type="picture-card"
         :auto-upload="false"
-        :file-list="form.goods_img"
+        :file-list="itemImg"
         :limit="1"
         :on-exceed="handleExceed"
         :before-remove="beforeRemove">
@@ -117,6 +117,11 @@ export default {
       dialogFormVisible: false,
       pagesize:5,
        form:[],
+       itemId:[],
+       itemName:[],
+       itemImg:[],
+       itemDiscribe:[],
+       itemGoods:[]
 
     };
 
@@ -124,8 +129,8 @@ export default {
    created() {
         this.handleGoodList();
         console.log(this.$route)
-        this.form=this.$route.query.form,
-        this.form.item_id=this.$route.query.form.item_id
+        // this.form=this.$route.query.form,
+        // this.form.item_id=this.$route.query.form.item_id
     },
   methods: {
       handleSizeChange(size) {
@@ -140,24 +145,31 @@ export default {
 
         this.$http.post('/goods/searchSellingGoods', {'page': this.currentPage 
         }).then(res=>{
-          var ListData=JSON.stringify(res.data.goods);
+          // var ListData=JSON.stringify(res.data.goods);
           // console.log(ListData);
-          this.form=JSON.parse(ListData)
+          //this.form=JSON.parse(ListData)
           // console.log(this.form);
+          this.form = res.data.goods
+          console.log(res);
+          //console.log("res:",res.data.goods[0]);
         })
       },
+
+
+
       toDetail(){
          this.$http.post('/goods/searchSellingGoods', {'page': this.currentPage 
         }).then(res=>{
-          var ListData=JSON.stringify(res.data.goods);
+
+          // var ListData=JSON.stringify(res.data.goods);
           // console.log(ListData);
-          this.form=JSON.parse(ListData)
+          this.form=res.data.goods
           // console.log(this.form);
           this.$router.push({
 
             path: 'detail',
             query:{
-              item_id:this.form.item_id,
+             item_id:this.form.item_id,
              itemDetail:this.form
             }
          });
@@ -179,6 +191,58 @@ export default {
       },
       beforeRemove(file, fileList) {
         return this.$confirm(`确定移除 ${ file.name }？`);
+      },
+      editItem(){
+         this.dialogFormVisible = true;
+
+        this.form.forEach((item)=>{
+          this.itemId=item.item_id
+            console.log("id:"+this.itemId);
+
+            this.itemName=item.goods_name
+          console.log("name:"+this.itemName);
+
+            this.itemImg.push({name: "",url: item.goods_img})
+          console.log("img:"+this.itemImg.url);
+
+            this.itemDiscribe=item.goods_discribe
+          console.log("discribe:"+this.itemDiscribe);
+
+            this.itemPrice=item.goods_price
+
+          console.log("price:"+this.itemPrice);
+
+        })
+        let goods_name=this.itemName
+        let goods_img=this.itemImg
+        let goods_discribe=this.itemDiscribe
+        let goods_price=this.itemPrice
+
+        if(this.itemName==''||this.itemImg==''||this.itemDiscribe==''||this.itemPrice==''){
+          this.$message.error("修改内容不能为空！")
+        }else{
+          this.$http.post('/goods/updateGoods', {'item_id': this.itemId ,'goods_name':this.itemName,'goods_img':this.itemImg,'goods_discribe':this.itemDiscribe,'goods_price':this.itemPrice
+        }).then(res=>{
+          console.log("res:"+res);
+          // var ListData=JSON.stringify(res.data.goods);
+          // console.log(ListData);
+          // this.form=JSON.parse(ListData)
+          // console.log(this.form);
+          // this.$router.push({
+
+          //   path: 'detail',
+          //   query:{
+          //     item_id:this.form.item_id,
+          //    itemDetail:this.form
+          //   }
+        //  });
+        })
+
+        }
+
+
+
+
       }
     }
 }

@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-header>
-      <el-button type="warning" class="position" @click="next">登&nbsp;录</el-button>
+      <el-button type="warning"  icon="el-icon-user" class="position"> <router-link to="login" class="line">登&nbsp;录</router-link></el-button>
     </el-header>
     <el-main>
       <el-row :gutter="30">
@@ -34,8 +34,11 @@
             </div>
               </el-col>
       </el-row>
-      <el-card class="box-card">
-        <div class="text item">
+
+       <el-row>
+  <el-col  v-for="(item, index) in itemLists" :key="item" :offset="index > 0 ? 1 : 0">
+      <el-card class="box-card" >
+        <div     class="text item">
           <div>
             <span class="item_title">
               {{itemList.title}}
@@ -43,21 +46,21 @@
           </div>
           <div class="item_size">
             <div>
-            <img :src="itemList.image" class="img_size">
+            <img :src="item.goods_img" class="img_size">
             </div>
             <div>
-            <el-button type="warning"  icon="el-icon-shopping-cart-1" @click="dialogFormVisible = true">加入购物车</el-button>
+            <el-button type="warning" @click="item.item_id;dialogFormVisible = true;" icon="el-icon-shopping-cart-1">加入购物车</el-button>
             </div>
           </div>
-          <div class="item_list">
+          <div  class="item_list">
               <div>
                 <span class="title1">
-                  {{itemList.name}}
+                 {{itemList.name}}&nbsp;&nbsp;&nbsp;{{item.goods_name}}
               </span>
               </div>
              <div>
                 <span class="price">
-                  {{itemList.priceTitle}}{{itemList.price}}
+                  {{itemList.priceTitle}}{{item.goods_price}}
               </span>
              </div>
               <div>
@@ -66,7 +69,7 @@
               </span>
               </div>
               <div class="contain">
-                  {{describe.contain}}
+                  {{item.goods_discribe}}
               </div>
         </div>
 
@@ -74,6 +77,9 @@
         </div>
 
       </el-card>
+      </el-col>
+      </el-row>
+
     </el-main>
         <el-dialog title="个人信息填写" :visible.sync="dialogFormVisible">
         <el-form :model="form"  :rules="rules" ref="form" label-width="100px" class="demo-ruleForm">
@@ -87,7 +93,7 @@
           <el-input v-model="form.buyer_address" autocomplete="off" type="textarea"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="warning" @click="submitForm('form')">确定</el-button>
+          <el-button type="warning" @click="submitForm()">确定</el-button>
                       <el-button @click="resetForm('form')">重置</el-button>
         </el-form-item>
       </el-form>
@@ -98,11 +104,15 @@
   export default {
     data() {
       return {
+      itemLists:[],
+      ListData:[],
+      buyerData:[],
       form: {
           buyer_name:'',
           buyer_tel:'',
           buyer_address:'',
         },
+
       rules: {
               buyer_name: [
               { required: true, message: '请输入姓名', trigger: 'blur' },
@@ -119,48 +129,54 @@
       },
         dialogFormVisible: false,
         formLabelWidth: '100px',
-        describe:{
+         describe:{
           title:"商品描述",
-          contain:"双AI慧眼，一体式桌面设计。前置1300万智能升降摄像头和800万交互摄像头，双摄像头各司其职，辅助孩子解决学习难题。配有18W独立音箱，支持4麦克风降噪，拾音清晰，上网课更方便。"
-
-        },
-        itemList:{
-          title:"商品列表",
-          name:"华为双AI慧眼学习智慧屏",
-          priceTitle:"价格：￥",
-          price:"2199.00",
-          image:'https://iconfont.alicdn.com/t/e89430ee-42ed-4d98-8ea2-6987122dc98a.png'
+        //   contain:"双AI慧眼，一体式桌面设计。前置1300万智能升降摄像头和800万交互摄像头，双摄像头各司其职，辅助孩子解决学习难题。配有18W独立音箱，支持4麦克风降噪，拾音清晰，上网课更方便。"
+         },
+         itemList:{
+         title:"商品列表",
+         name:"商品名字:",
+        //   name:"华为双AI慧眼学习智慧屏",
+           priceTitle:"价格：￥",
+        //   price:"2199.00",
+        //   image:'https://iconfont.alicdn.com/t/e89430ee-42ed-4d98-8ea2-6987122dc98a.png'
         }
       };
     },
+    created(){
+      this.getGoods();
+    },
       methods: {
-        next(){
-            this.$router.push('login');
+        getGoods(){
+          this.$http.post('/goods/searchWelcomeGoods',this.itemLists).then(res=>{
+            var ListData=JSON.stringify(res.data.goods);
+            console.log(ListData);
+            this.itemLists=JSON.parse(ListData);
+            console.log(this.itemLists);
+             for(var i=0; i< this.itemLists.length;i++){
+              this.item_id = this.itemLists[i].item_id;
+            }
+          })
         },
-      submitForm(form){
-        this.$refs[form].validate((valid) => {
-          if (valid) {
-            this.$confirm('请确认个人信息是否填写正确', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning',
-          center: true
-        }).then(() => {
-          this.$message({
-            type: 'success',
-            message: '个人信息保存成功!'
-          });
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消保存'
-          });
-        });
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
+      submitForm(){
+            if(this.form.buyer_name==''|| this.form.buyer_tel==''||this.form.buyer_address==''){
+               this.$message({
+                    type: 'error',
+                    message: '个人信息不能为空!'});
+            }
+            else{
+            this.$http.post('/order/addToOrderWanted',{'item_id':this.item_id,'buyer_realname':this.form.buyer_name,
+            'buyer_phonenumber': this.form.buyer_tel,'buyer_address':this.form.buyer_address}).then(response=>{
+              console.log(this.form.buyer_name);
+              console.log(response);
+               if(response.data.message=="success"){
+                    this.$message({
+                    type: 'success',
+                    message: '个人信息保存成功!'});
+               }
+
+            })
+            }
       },
     resetForm(form){
         this.$refs[form].resetFields();

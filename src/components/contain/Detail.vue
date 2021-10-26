@@ -5,7 +5,7 @@
       <el-header>
         <div class="back-size">
           <span class="seller-info">买家信息</span>
-          <el-button type="warning" class="button-position" plain disabled>撤销</el-button>
+          <el-button type="warning" class="button-position" plain @click="revoke">撤销</el-button>
         </div>
       </el-header>
         <el-main>
@@ -18,25 +18,29 @@
                height="600">
               <!-- 买家姓名 -->
               <el-table-column
-                prop="name"
+                prop="buyer_realname"
                 label="买家姓名"
                 width="180">
               </el-table-column>
               <!-- 联系电话 -->
               <el-table-column
-                prop="tel"
+                prop="buyer_phonenumber"
                 label="联系电话"
                 width="180">
               </el-table-column>
               <!-- 收货地址 -->
               <el-table-column
-                prop="address"
+                prop="buyer_address"
                 label="收货地址">
               </el-table-column>
               <!-- 操作 -->
               <el-table-column
                 label="操作">
-                <el-button type="warning" >同意</el-button>
+                <template slot-scope="scope">
+                 <el-button type="warning" @click="agree" :disabled="scope.row.state!='5'">同意</el-button>
+                </template>
+                <!-- :disabled="scope.row.tableData1[0].status==-1" -->
+                <!-- <el-button type="warning" @click="agree" :disabled="scope.">同意</el-button> -->
               </el-table-column>
             </el-table>
       </el-main>
@@ -54,18 +58,18 @@
         </el-header>
         <el-main>
            <el-row style="text-align:center;margin-left:12%">
-            <el-col :span="20" v-for="(item, index) in form" :key="item" :offset="index > 0 ? 1 : 0">
+            <el-col :span="20" >
               <el-card :body-style="{ padding: '25px 0 20px 0' }">
-                <img  :src="item.goods_img" class="image1">
+                <img  :src="form.goods_img" class="image1">
                 <div style="text-align: center;">
-                  <span class="font-style">{{item.goods_name}}</span>
-                  <div class="word"><span class="price">￥{{item.goods_price}}</span></div>
+                  <span class="font-style">{{form.goods_name}}</span>
+                  <div class="word"><span class="price">￥{{form.goods_price}}</span></div>
                   <div class="bottom clearfix ">
                     <!-- <time class="time">{{ currentDate }}</time> -->
                     <!-- <el-button type="text" class="button" @click="change">编辑商品</el-button> -->
                     <span style="line-height:50px">商品描述</span>
                     <div style="padding:10px;line-height:30px">
-                      {{item.goods_discribe}}
+                      {{form.goods_discribe}}
                     </div>
 
                   </div>
@@ -168,107 +172,61 @@
 export default {
   data() {
     return{
-       tableData: [{
-          name: '王小虎',
-          tel:'18375289147',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          name: '王小虎',
-          tel:'18375289147',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          name: '王小虎',
-          tel:'18375289147',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          name: '王小虎',
-          tel:'18375289147',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          name: '王小虎',
-          tel:'18375289147',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          name: '王小虎',
-          tel:'18375289147',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          name: '王小虎',
-          tel:'18375289147',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          name: '王小虎',
-          tel:'18375289147',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          name: '王小虎',
-          tel:'18375289147',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          name: '王小虎',
-          tel:'18375289147',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          name: '王小虎',
-          tel:'18375289147',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          name: '王小虎',
-          tel:'18375289147',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          name: '王小虎',
-          tel:'18375289147',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          name: '王小虎',
-          tel:'18375289147',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          name: '王小虎',
-          tel:'18375289147',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          name: '王小虎',
-          tel:'18375289147',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },],
-        form:[]
+       tableData: [],
+       tableData1:[],
+        form:{},
+       item_id:'',
 
     }
 
   },
   created() {
-        this.handleGoodList();
-    },
+        // this.handleGoodList();
+         this.form= this.$route.query.itemDetail[0]
+        //  console.log(this.$route.query.itemDetail[0])
+        //  console.log(this.form);
+          this.prospectiveBuyer()
+
+        },
   methods: {
     returnBack(){
         this.$router.push('selling');
+
     },
-
-    handleGoodList(){
-
-        this.$http.post('/goods/searchSellingGoods', {'page': this.currentPage 
+    prospectiveBuyer(){///searchBuyerlist
+        this.$http.post('/order/searchBuyerlist', {'seller_username': 'admin','item_id':this.form.item_id 
         }).then(res=>{
-          var ListData=JSON.stringify(res.data.goods);
-          console.log(ListData);
-          this.form=JSON.parse(ListData)
-          console.log(this.form);
-        })
-      },
+          console.log(res);
+          // if(res.data.orders.state==5){
+              this.tableData=res.data.orders
+          // console.log(this.tableData1[0].tableData);
+          console.log(this.tableData);
+          // }else{
+          //   reutrn
+          // }
+
+
+       })
+    },
+    agree(){
+        // if()
+    },
+    revoke(){
+
+    },
+    // handleGoodList(){
+
+    //     this.$http.post('/goods/searchSellingGoods', {'page': this.currentPage 
+    //     }).then(res=>{
+    //       // var ListData=JSON.stringify(res.data.goods);
+    //       // console.log(ListData);
+    //       //this.form=JSON.parse(ListData)
+    //       // console.log(this.form);
+    //       this.form = res.data.goods
+    //       console.log(res);
+    //       //console.log("res:",res.data.goods[0]);
+    //     })
+    //   },
   }
 }
 </script>
