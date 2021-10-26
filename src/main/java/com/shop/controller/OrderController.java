@@ -69,7 +69,7 @@ public class OrderController {
         String seller_username = request.getParameter("seller_username");
         int order_id = Integer.parseInt(request.getParameter("order_id"));
         JSONObject jsonObject = new JSONObject();
-        int result = goService.addGO(order_id,orderService.searchOrderByOrderId(seller_username,order_id).getItem_id());
+        int result = goService.addGO(orderService.searchOrderByOrderId(seller_username,order_id).getItem_id(),order_id);
         Order order = orderService.agreeOrderwanted(seller_username,order_id);
         if (order != null){
             message = "success";
