@@ -23,7 +23,7 @@
       width="200">
       <template slot-scope="scope">
 
-        <span><img :src="scope.row.item_img" alt=""></span>
+        <span><img :src="scope.row.goods_img" alt="" style="width:200px;height:100px"></span>
       </template>
     </el-table-column>
 
@@ -33,7 +33,7 @@
       width="200">
       <template slot-scope="scope">
         <el-popover trigger="hover" placement="top">
-          <p> {{ scope.row.item_name }}</p>
+          <p> {{ scope.row.goods_discribe }}</p>
 
         </el-popover>
       </template>
@@ -44,7 +44,7 @@
       width="150">
       <template slot-scope="scope">
         <el-popover trigger="hover" placement="top">
-          <p> {{ scope.row.item_price }}</p>
+          <p> {{ scope.row.goods_price }}</p>
 
         </el-popover>
       </template>
@@ -81,7 +81,7 @@
               v-model="visible">
           <el-button type="warning" size="medium" @click="recover">恢复</el-button>
 
-          <el-button  @click="off_shelf"  size="medium">下架</el-button>
+          <el-button  @click="off_shelf()"  size="medium">下架</el-button>
 
           </el-popover>
          </div>
@@ -98,18 +98,18 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage"
-      :page-sizes="[5]"
+      :page-sizes="[10]"
       :page-size="pagesize"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="this.List.length">
+      :total="this.gridData.length">
     </el-pagination>
   </div>
     </el-footer>
 
     <el-dialog title="买家信息" :visible.sync="dialogVisible ">
               <el-table :data="tableData">
-                <el-table-column property="buyer_name" label="买家姓名" width="150"></el-table-column>
-                <el-table-column property="buyer_tel" label="买家联系方式" width="150"></el-table-column>
+                <el-table-column property="buyer_realname" label="买家姓名" width="150"></el-table-column>
+                <el-table-column property="buyer_phonenumber" label="买家联系方式" width="150"></el-table-column>
                 <el-table-column property="buyer_address" label="买家地址"></el-table-column>
               </el-table>
             </el-dialog>
@@ -121,23 +121,23 @@
 export default {
   data() {
     return {
-      tableData: [{
-        buyer_name: 'Jennie',
-        buyer_tel: '18375289147',
-        buyer_address: '上海市普陀区金沙江路 1518 弄'
-      },],
+      tableData: [],
       gridData: [],
       dialogTableVisible: false,
       dialogVisible: false,
       visible: false,
       currentPage:1,
-      pagesize:5,
-      List:[],
+      pagesize:10,
+      itemId:'',
+      // List:[],
     }
   },
   created () {
     // this.handleGoodList()
     this.fetchData()
+    this.tableData= this.$route.query.itemIcing.order
+    console.log(this.$route.query.itemIcing.order);
+    console.log(this.tableData);
   },
   methods: {
     handleSizeChange(size) {
@@ -148,17 +148,16 @@ export default {
         this.currentPage=currentPage;
         console.log(`当前页: ${currentPage}`);
       },
-    fetchData(){
-        $http.post('/goods/searchFreezingGoods',{'username':"wxy10",'page':this.currentPage}).then(response=>{
+
+    // 加载冻结商品
+      fetchData(){
+        this.$http.post('/goods/searchFreezingGoods',{'seller_username':'admin','page':this.currentPage}).then(response=>{
               console.log(response);
               this.gridData=response.data.goods
+              console.log('123456');
               console.log(this.gridData);
         })
     },
-    // async getGoodList(){
-    //   const{data:res}=await this.$http.post('/goodssearchOffGoods')
-    //   console.log(res);
-    // },
     // 恢复
    recover() {
         this.$confirm('是否将商品恢复上架？', '提示', {
@@ -179,18 +178,33 @@ export default {
       },
     // 下架
     off_shelf() {
+
         this.$confirm('是否下架？', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
+          // this.itemId=row.item_id
+          console.log("这是商品编号！");
+          console.log(this.itemId);
+          this.$http.post('/order/finishOrder',{'seller_username':'admin','item_id':this.itemId
+          }).then(res=>{
+          // var ListData=JSON.stringify(res.data.goods);
+          // console.log(ListData);
+          //this.form=JSON.parse(ListData)
+          // console.log(this.form);
+          // this.form = res.data.goods
+          console.log("这是下架信息！");
+          console.log(this.itemId);
+          console.log(res);
+        })
           this.$message({
             type: 'success',
             message: '下架成功!'
           });
         }).catch(() => {
           this.$message({
-            type: 'info',
+            type: 'warning',
             message: '已取消'
           });
         });

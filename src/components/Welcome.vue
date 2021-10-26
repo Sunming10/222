@@ -116,15 +116,15 @@
       rules: {
               buyer_name: [
               { required: true, message: '请输入姓名', trigger: 'blur' },
-              { min: 2,max:10,message: '姓名在2~10个字之间', trigger: 'blur' }
+              { min: 0,max:5,message: '姓名在不能超过5个字', trigger: 'blur' }
                 ],
               buyer_tel: [
               { required: true, message: '请输入联系电话', trigger: 'blur' },
-              { min: 11,message: '请输入正确的电话号码', trigger: 'blur' }
+              { min: 11,max:11,message: '请输入正确的联系电话', trigger: 'blur' }
                 ],
                 buyer_address: [
               { required: true, message: '请输入收货地址', trigger: 'blur' },
-              { min: 2,max:50,message: '收货地址长度在2~50个字之间', trigger: 'blur' }
+              { min: 0,max:50,message: '收货地址不能超过50个字', trigger: 'blur' }
                 ],
       },
         dialogFormVisible: false,
@@ -160,22 +160,47 @@
         },
       submitForm(){
             if(this.form.buyer_name==''|| this.form.buyer_tel==''||this.form.buyer_address==''){
-               this.$message({
+               if(this.form.buyer_name==''&& this.form.buyer_tel==''&&this.form.buyer_address==''){
+                    this.$message({
                     type: 'error',
                     message: '个人信息不能为空!'});
+               }
+              else if(this.form.buyer_name==''){
+                this.$message({
+                    type: 'error',
+                    message: '真实姓名不能为空!'});
+              }
+               else if(this.form.buyer_tel==''){
+                this.$message({
+                    type: 'error',
+                    message: '联系电话不能为空!'});
+              }
+              else if(this.form.buyer_address==''){
+                this.$message({
+                    type: 'error',
+                    message: '收货地址不能为空!'});
+              }
             }
             else{
-            this.$http.post('/order/addToOrderWanted',{'item_id':this.item_id,'buyer_realname':this.form.buyer_name,
+              if(this.form.buyer_name.length>5||this.form.buyer_tel.length!=11||this.form.buyer_address.length>50){
+                this.$message({
+                    type: 'error',
+                    message: '请正确填写信息!'});
+              }
+              else{
+          this.$http.post('/order/addToOrderWanted',{'item_id':this.item_id,'buyer_realname':this.form.buyer_name,
             'buyer_phonenumber': this.form.buyer_tel,'buyer_address':this.form.buyer_address}).then(response=>{
               console.log(this.form.buyer_name);
               console.log(response);
-               if(response.data.message=="success"){
-                    this.$message({
-                    type: 'success',
-                    message: '个人信息保存成功!'});
-               }
+                    if(response.data.message=="success"){
+                            this.$message({
+                            type: 'success',
+                            message: '个人信息保存成功!'});
+                      }
 
             })
+              }
+
             }
       },
     resetForm(form){

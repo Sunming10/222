@@ -29,7 +29,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage"
-      :page-sizes="[5]"
+      :page-sizes="[10]"
       :page-size="pagesize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="this.List.length">
@@ -43,7 +43,7 @@ export default {
   data() {
     return {
         currentPage:1,
-        pagesize:5,
+        pagesize:10,
         List:[],
     }
   },

@@ -5,8 +5,7 @@
             <div slot="header" class="clearfix">
               <span>卖家修改密码</span>
             </div>
-            <!-- <el-row>
-  <el-col  v-for="(item, index) in itemLists" :key="item" :offset="index > 0 ? 1 : 0"> -->
+
             <div>
               <el-form :model="sellerData"
                 status-icon :rules="rules" ref="sellerData" label-width="100px" class="demo-ruleForm" >
@@ -25,8 +24,6 @@
                 </el-form-item>
               </el-form>
             </div>
-  <!-- </el-col>
-            </el-row> -->
             <div>{{info}}</div>
             <div>{{returnObject}}</div>
 
@@ -43,44 +40,22 @@ export default {
     var validatePass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入原密码'));
-        } else {
-           this.$http.post('/user/getUserInfo', {'username' :'admin'}).then(res=>{
-            var ListData = JSON.stringify(res.data.user)
-            this.user = JSON.parse(ListData)
-            // console.log(this.user);
-              if (this.sellerData.password !== this.user.password) {
-            callback(new Error('密码输入错误！'));
-          }
-          callback();
-
-          // sessionStorage.getItem('token')
-          // console.log("Token:"+'token');
-          //    if (this.sellerData.password !== this.password) {
-          //   callback(new Error('密码输入错误！'));
-          // }
-          // callback();
-           })
-          // if (this.sellerData.password !== 'root1234') {
-          //   callback(new Error('密码输入错误！'));
-          // }
-          // callback();
         }
+        else{
+          callback();
+        }
+
       };
      var validatePass1 = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入新密码'));
         } else {
-           this.$http.post('/user/getUserInfo', {'username' :'admin'}).then(res=>{
-            var ListData1 = JSON.stringify(res.data.user)
-            this.user1 = JSON.parse(ListData1)
-            console.log(this.user1);
+
         if(this.sellerData.password1 !== ''){
           if((value.length<7)||(value.length>15)){
             callback(new Error('密码长度应在7~15位之间！'));
           }
-          else if(this.sellerData.password1===this.user1.password){
-                callback(new Error('新密码与旧密码一致！'));
-        }
+
           else{
              callback();
             }
@@ -89,7 +64,7 @@ export default {
         else {
           callback();
         }
-      })
+     // })
         }
    };
       var validatePass2 = (rule, value, callback) => {
@@ -127,28 +102,57 @@ export default {
         }
   },
   methods:{
-    // getPwd(){
-    //       this.$http.post('/user/getUserInfo', {'username' :'admin'}).then(res=>{
-    //         var ListData = JSON.stringify(res.data.user)
-    //         this.user = JSON.parse(ListData)
-    //         console.log(this.user);
-    //         for(var i=0;i<this.user.length;i++){
-    //           this.password = this.user[i].password;
-    //           console.log(this.password);
-    //        }
-    //       })
-    // },
       onSubmit(){
         if(this.sellerData.password==''||this.sellerData.password1==''||this.sellerData.password2==''){
+           if(this.sellerData.password==''&&this.sellerData.password1==''&&this.sellerData.password2==''){
+              this.$message({
+                    type: 'error',
+                    message: '原密码与新密码不能为空!'});
+           }
+         else if(this.sellerData.password==''){
            this.$message({
                     type: 'error',
-                    message: '密码不能为空!'});
+                    message: '原密码不能为空!'});
+         }
+          else if(this.sellerData.password1==''){
+           this.$message({
+                    type: 'error',
+                    message: '新密码不能为空!'});
+         }
+          else if(this.sellerData.password2==''){
+           this.$message({
+                    type: 'error',
+                    message: '确认密码不能为空!'});
+         }
         }
         else{
-           this.$http.post('/user/updatePassword',{'username':'admin','oldPassword':this.sellerData.password,
+            this.$http.post('/user/getUserInfo', {'username' :'admin'}).then(res=>{
+            var ListData = JSON.stringify(res.data.user)
+            this.user = JSON.parse(ListData)
+              if (this.sellerData.password != this.user.password){
+                this.$message({
+                    type: 'error',
+                    message: '原密码输入错误!'});
+              }
+              else if(this.sellerData.password1.length<7||this.sellerData.password1.length>15){
+            this.$message({
+                    type: 'error',
+                    message: '请正确输入新密码!'});
+          }
+          else if(this.sellerData.password1== this.user.password){
+             this.$message({
+                    type: 'error',
+                    message: '新密码与旧密码一致!'});
+          }
+           else if(this.sellerData.password2!= this.sellerData.password1){
+             this.$message({
+                    type: 'error',
+                    message: '请确认新密码是否一致!'});
+          }
+
+          else{
+            this.$http.post('/user/updatePassword',{'username':'admin','oldPassword':this.sellerData.password,
            'newPassword':this.sellerData.password2}).then(res=>{
-              //  console.log(this.sellerData.password);
-              //  console.log(this.sellerData.password2);
                if(res.data.message=="success"){
                     this.$message({
                     type: 'success',
@@ -160,6 +164,9 @@ export default {
                     message: '密码修改失败!'});
                }
            })
+          }
+
+            })
         }
       },
      resetForm(sellerData){

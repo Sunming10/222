@@ -37,7 +37,7 @@
               <el-table-column
                 label="操作">
                 <template slot-scope="scope">
-                 <el-button type="warning" @click="agree" :disabled="scope.row.state!='5'">同意</el-button>
+                 <el-button type="warning" @click="agree(scope.row)" :disabled="scope.row.state!='5'?true:false">同意</el-button>
                 </template>
                 <!-- :disabled="scope.row.tableData1[0].status==-1" -->
                 <!-- <el-button type="warning" @click="agree" :disabled="scope.">同意</el-button> -->
@@ -176,17 +176,15 @@ export default {
        tableData1:[],
         form:{},
        item_id:'',
+       orderId:'',
+       username:''
 
     }
 
   },
   created() {
-        // this.handleGoodList();
          this.form= this.$route.query.itemDetail[0]
-        //  console.log(this.$route.query.itemDetail[0])
-        //  console.log(this.form);
           this.prospectiveBuyer()
-
         },
   methods: {
     returnBack(){
@@ -197,36 +195,41 @@ export default {
         this.$http.post('/order/searchBuyerlist', {'seller_username': 'admin','item_id':this.form.item_id 
         }).then(res=>{
           console.log(res);
-          // if(res.data.orders.state==5){
               this.tableData=res.data.orders
-          // console.log(this.tableData1[0].tableData);
           console.log(this.tableData);
-          // }else{
-          //   reutrn
-          // }
-
 
        })
     },
-    agree(){
-        // if()
+    // 同意操作
+    agree(row){///agreeOrderwanted
+        this.orderId=row.order_id
+        // this.username=row.seller_username
+        console.log(this.orderId);
+        // console.log(this.username);
+        this.$http.post('/order/agreeOrderwanted',{'seller_username': 'admin' ,'order_id':this.orderId
+        }).then(res=>{
+          // console.log("23456789uytdtyuiughi");
+          console.log(res);
+          if(res.data.message=="success"){
+            this.$message({
+                  message: '同意成功！',
+                  type: 'success'
+                });
+            this.$router.push({
+              path:'icing',
+             query:{
+             itemIcing:res.data
+            }
+            })
+            console.log();
+          }else{
+            this.$message.error('同意失败！');
+          }
+        })
     },
     revoke(){
 
     },
-    // handleGoodList(){
-
-    //     this.$http.post('/goods/searchSellingGoods', {'page': this.currentPage 
-    //     }).then(res=>{
-    //       // var ListData=JSON.stringify(res.data.goods);
-    //       // console.log(ListData);
-    //       //this.form=JSON.parse(ListData)
-    //       // console.log(this.form);
-    //       this.form = res.data.goods
-    //       console.log(res);
-    //       //console.log("res:",res.data.goods[0]);
-    //     })
-    //   },
   }
 }
 </script>
