@@ -2,6 +2,7 @@ package com.shop.controller;
 
 import com.shop.entity.Goods;
 import com.shop.entity.Order;
+import com.shop.service.GOService;
 import com.shop.service.GoodsService;
 import com.shop.service.OrderService;
 import net.minidev.json.JSONObject;
@@ -28,6 +29,9 @@ public class OrderController {
 
     @Autowired
     private GoodsService goodsService;
+
+    @Autowired
+    private GOService goService;
 
     //查看商品意向购买买家
     @RequestMapping(value = "/searchBuyerlist")
@@ -65,6 +69,7 @@ public class OrderController {
         String seller_username = request.getParameter("seller_username");
         int order_id = Integer.parseInt(request.getParameter("order_id"));
         JSONObject jsonObject = new JSONObject();
+        int result = goService.addGO(order_id,orderService.searchOrderByOrderId(seller_username,order_id).getItem_id());
         Order order = orderService.agreeOrderwanted(seller_username,order_id);
         if (order != null){
             message = "success";
@@ -98,6 +103,7 @@ public class OrderController {
         String seller_username = request.getParameter("seller_username");
         int item_id = Integer.parseInt(request.getParameter("item_id"));
         JSONObject jsonObject = new JSONObject();
+        goService.deleteGOByItemId(item_id);
         int result = orderService.cancelOrder(seller_username,item_id);
         if (result >=1){
             message = "success";

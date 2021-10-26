@@ -34,7 +34,9 @@ public class OrderService {
         goodsMapper.updateGoodsState(seller_username,item_id,3);
         return result;
     }
+    public Order searchOrderByOrderId(String seller_username,int order_id){return orderMapper.searchOrderByOrderId(seller_username,order_id);}
     public  List<Order> searchFinishOrder(String seller_username,int page){return orderMapper.searchFinishOrder(seller_username,page);}
+    public  List<Order> searchDealingOrder(String seller_username,int page){return orderMapper.searchDealingOrder(seller_username,page);}
     public int cancelOrder(String seller_username,int item_id){
         int result = orderMapper.cancelOrder(seller_username,item_id);
         goodsMapper.updateGoodsState(seller_username,item_id,1);

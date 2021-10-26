@@ -61,6 +61,13 @@ public interface OrderMapper {
     List<Order> searchFinishOrder(String seller_username,int page);
 
     /**
+     * 查询交易中订单
+     * @param seller_username
+     * @return
+     */
+    List<Order> searchDealingOrder(String seller_username,int page);
+
+    /**
      * 修改其余订单状态为关闭交易
      * @param item_id
      * @return

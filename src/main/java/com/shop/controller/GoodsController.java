@@ -1,8 +1,10 @@
 package com.shop.controller;
 
+import com.shop.entity.GO;
 import com.shop.entity.Goods;
 import com.shop.entity.Order;
 import com.shop.entity.Order_Goods;
+import com.shop.service.GOService;
 import com.shop.service.GoodsService;
 import com.shop.service.OrderService;
 import com.shop.service.UploadImageService;
@@ -33,6 +35,9 @@ public class GoodsController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private GOService goService;
 
     @Resource
     UploadImageService uploadImageService;
@@ -118,27 +123,27 @@ public class GoodsController {
     //在goods表中查询所有商品
     @RequestMapping(value = "/searchHistoryGoods")
     public Object searchHistoryGoods(HttpServletRequest request, HttpServletResponse response){
-        String username = request.getParameter("username");
+        String seller_username = request.getParameter("seller_username");
         int page = Integer.parseInt(request.getParameter("page"));
         page = (page-1)*10;
         JSONObject jsonObject = new JSONObject();
-        List<Goods> goodsList = goodsService.searchHistoryGoods(username,page);
-        List<Order> orderList = orderService.searchFinishOrder(username,page);
+        List<Goods> goodsList = goodsService.searchHistoryGoods(seller_username,page);
         List<Order_Goods> list = new ArrayList<Order_Goods>();
         for (int i=0;i < goodsList.size();i++){
-            Goods goods = (Goods) goodsList.get(i);
-            Order order = (Order) orderList.get(i);
+            Goods good = (Goods) goodsList.get(i);
+            GO go = goService.searchGOByItemId(good.getItem_id());
+            Order order = orderService.searchOrderByOrderId(seller_username, go.getOrder_id());
             Order_Goods order_goods = new Order_Goods(
                     order.getOrder_id(),
                     order.getBuyer_realname(),
                     order.getBuyer_phonenumber(),
                     order.getBuyer_address(),
                     order.getFinish_time(),
-                    goods.getItem_id(),
-                    goods.getGoods_name(),
-                    goods.getGoods_price(),
-                    goods.getGoods_img(),
-                    goods.getGoods_discribe());
+                    good.getItem_id(),
+                    good.getGoods_name(),
+                    good.getGoods_price(),
+                    good.getGoods_img(),
+                    good.getGoods_discribe());
             list.add(order_goods);
         }
         message = "success";
@@ -158,7 +163,6 @@ public class GoodsController {
         String goods_name = request.getParameter("goods_name");
         String seller_username = "admin";
         String goods_img = uploadImageService.uploadQNImg((FileInputStream) file.getInputStream(), StringUtil.getRandomImgName(file.getOriginalFilename()));
-//        String goods_img = request.getParameter("goods_img");
         String goods_discribe = request.getParameter("goods_discribe");
         float goods_price = Float.parseFloat(request.getParameter("goods_price"));
         JSONObject jsonObject = new JSONObject();
@@ -179,10 +183,27 @@ public class GoodsController {
         String seller_username = request.getParameter("seller_username");
         int page = (Integer.parseInt(request.getParameter("page"))-1)*10;
         JSONObject jsonObject = new JSONObject();
-        List<Goods> goods = goodsService.searchFreezingGoods(seller_username,page);
+        List<Goods> goodsList = goodsService.searchFreezingGoods(seller_username,page);
+        List<Order_Goods> list = new ArrayList<Order_Goods>();
+        for (int i=0;i < goodsList.size();i++){
+            Goods good = (Goods) goodsList.get(i);
+            GO go = goService.searchGOByItemId(good.getItem_id());
+            Order order = orderService.searchOrderByOrderId(seller_username, go.getOrder_id());
+            Order_Goods order_goods = new Order_Goods(
+                    order.getOrder_id(),
+                    order.getBuyer_realname(),
+                    order.getBuyer_phonenumber(),
+                    order.getBuyer_address(),
+                    good.getItem_id(),
+                    good.getGoods_name(),
+                    good.getGoods_price(),
+                    good.getGoods_img(),
+                    good.getGoods_discribe());
+            list.add(order_goods);
+        }
         message = "success";
         jsonObject.put("message",message);
-        jsonObject.put("goods",goods);
+        jsonObject.put("list",list);
         return jsonObject;
     }
 }

@@ -15,6 +15,18 @@ public class Order_Goods {
     public Order_Goods() {
     }
 
+    public Order_Goods(int order_id, String buyer_realname, String buyer_phonenumber, String buyer_address, int item_id, String goods_name, float goods_price, String goods_img, String goods_discribe) {
+        this.order_id = order_id;
+        this.buyer_realname = buyer_realname;
+        this.buyer_phonenumber = buyer_phonenumber;
+        this.buyer_address = buyer_address;
+        this.item_id = item_id;
+        this.goods_name = goods_name;
+        this.goods_price = goods_price;
+        this.goods_img = goods_img;
+        this.goods_discribe = goods_discribe;
+    }
+
     @Override
     public String toString() {
         return "Order_Goods{" +

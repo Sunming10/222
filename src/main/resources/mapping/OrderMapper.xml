@@ -55,6 +55,11 @@
         select * from orders where sellerUsername = #{seller_username} and state = 2 limit 10 offset #{page}
     </select>
 
+    <!--通过seller_username查询已完成订单-->
+    <select id="searchDealingOrder" resultMap="OrderResultMap">
+        select * from orders where sellerUsername = #{seller_username} and state = 1 limit 10 offset #{page}
+    </select>
+
     <!--根据item_id(商品ID)有意向的购买者下单-->
     <insert id="addToOrderWanted" parameterType="com.shop.entity.Order">
         insert into orders

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.mapper.GOMapper">
+    <resultMap id="GOResultMap" type="com.shop.entity.GO">
+        <result column="GOId" jdbcType="INTEGER" property="GO_id" />
+        <result column="itemId" jdbcType="INTEGER" property="item_id" />
+        <result column="orderId" jdbcType="INTEGER" property="order_id" />
+    </resultMap>
+    <!---->
+    <!--添加商品-->
+    <insert id="addGO" parameterType="com.shop.entity.GO">
+        insert into GO
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+
+            <if test="item_id != null">
+                itemId,
+            </if>
+            <if test="order_id != null">
+                orderId,
+            </if>
+        </trim>
+
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+
+            <if test="item_id != null" >
+                #{item_id,jdbcType=INTEGER},
+            </if>
+            <if test="order_id != null" >
+                #{order_id,jdbcType=INTEGER},
+            </if>
+        </trim>
+</insert>
+
+    <!--根据item_id查询GO-->
+    <select id="searchGOByItemId" resultMap="GOResultMap">
+        select * from GO where itemId = #{item_id}
+    </select>
+
+    <!--根据order_id查询GO-->
+    <select id="searchGOByOrderId" resultMap="GOResultMap">
+        select * from GO where orderId = #{order_id}
+    </select>
+
+    <!--根据Item_id删除GO-->
+    <delete id="deleteGOByItemId" parameterType="com.shop.entity.GO">
+        delete from GO where itemId = #{item_id}
+    </delete>
+
+    <!--根据Item_id删除GO-->
+    <delete id="deleteGOByOrderId" parameterType="com.shop.entity.GO">
+        delete from GO where orderId = #{order_id}
+    </delete>
+</mapper>
