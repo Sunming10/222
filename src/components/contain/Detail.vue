@@ -5,7 +5,7 @@
       <el-header>
         <div class="back-size">
           <span class="seller-info">买家信息</span>
-          <el-button type="warning" class="button-position" plain @click="revoke">撤销</el-button>
+          <!-- <el-button type="warning" class="button-position" plain @click="revoke">撤销</el-button> -->
         </div>
       </el-header>
         <el-main>
@@ -39,8 +39,7 @@
                 <template slot-scope="scope">
                  <el-button type="warning" @click="agree(scope.row)" :disabled="scope.row.state!='5'?true:false">同意</el-button>
                 </template>
-                <!-- :disabled="scope.row.tableData1[0].status==-1" -->
-                <!-- <el-button type="warning" @click="agree" :disabled="scope.">同意</el-button> -->
+
               </el-table-column>
             </el-table>
       </el-main>
@@ -65,8 +64,7 @@
                   <span class="font-style">{{form.goods_name}}</span>
                   <div class="word"><span class="price">￥{{form.goods_price}}</span></div>
                   <div class="bottom clearfix ">
-                    <!-- <time class="time">{{ currentDate }}</time> -->
-                    <!-- <el-button type="text" class="button" @click="change">编辑商品</el-button> -->
+
                     <span style="line-height:50px">商品描述</span>
                     <div style="padding:10px;line-height:30px">
                       {{form.goods_discribe}}
@@ -83,12 +81,9 @@
   </div>
 </template>
 <style lang="less" scoped>
-// *{
-//   margin: 0;
-//   padding: 0;
-// }
+
 .seller-info{
-  // background-color: rgb(243, 200, 118);
+
   line-height: 50px;
   font-size: 18px;
   font-weight: bold;
@@ -114,8 +109,8 @@
   margin-left: 75%;
 }
 .image1{
-  width: 300px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   // text-align: center;
   // margin-left: 20%;
 }
@@ -204,20 +199,18 @@ export default {
     agree(row){///agreeOrderwanted
         this.$http.post('/goods/searchSellingGoods', {'page': this.currentPage 
         }).then(res=>{
-          // var ListData=JSON.stringify(res.data.goods);
-          // console.log(ListData);
-          //this.form=JSON.parse(ListData)
-          // console.log(this.form);
+
           this.form = res.data.goods
           console.log(res);
-          //console.log("res:",res.data.goods[0]);
+
         })
-        // this.username=row.seller_username
+
+        this.orderId=row.order_id
         console.log(this.orderId);
-        // console.log(this.username);
+
         this.$http.post('/order/agreeOrderwanted',{'seller_username': 'admin' ,'order_id':this.orderId
         }).then(res=>{
-          // console.log("23456789uytdtyuiughi");
+
           console.log(res);
           if(res.data.message=="success"){
             this.$message({

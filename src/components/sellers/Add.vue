@@ -55,11 +55,11 @@ export default {
         disabled: false,
         itemLists:[],
         ListData:[],
-        ruleForm:[ {
+        ruleForm:{
           item_name: '',
           item_describe: '',
           item_price: '',
-        }],
+        },
         rules: {
           item_name: [
             { required: true, message: '请输入商品名称', trigger: 'blur' },
@@ -128,12 +128,16 @@ export default {
       this.files['files'] = fileList;
  },
     submitForm(){
+          console.log('123');
+          var FormData = require('form-data');
           let wfForm = new FormData();
+          console.log('123');
           let config = {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
-                };
+                }
+                console.log('12345');
           wfForm.append( 'goods_name',this.ruleForm.item_name)
           wfForm.append( 'goods_price',this.ruleForm.item_price)
           wfForm.append( 'goods_dicsribe',this.ruleForm.item_describe)
@@ -144,6 +148,7 @@ export default {
               // wfForm.append(item.name, file[0])
             })
           })
+          console.log('123');
           console.log(wfForm);
           this.$http.post('/goods/addGoods',wfForm,config).then( res => {
             console.log(res, 'res')

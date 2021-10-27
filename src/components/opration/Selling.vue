@@ -19,7 +19,7 @@
         <div class="word"><span class="price">￥{{item.goods_price}}</span></div>
         <div class="bottom clearfix ">
           <!-- <time class="time">{{ currentDate }}</time> -->
-          <el-button type="text" class="button"  @click="editItem">编辑商品</el-button>
+          <el-button type="text" class="button"  @click="editItem" disabled>编辑商品</el-button>
         </div>
       </div>
     </el-card>
