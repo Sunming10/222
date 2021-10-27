@@ -38,7 +38,7 @@ public class UploadController {
             System.out.print("七牛云返回的图片链接:" + path);
             return path;
         }
-        return "上传失败";
+        return "error";
     }
 
 }

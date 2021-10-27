@@ -17,7 +17,7 @@
     <!---->
     <!--查看order表中商品号为item_number的买家列表-->
     <select id="searchBuyerlist" resultMap="OrderResultMap" resultType="com.shop.entity.Order">
-        select * from orders where itemId = #{item_id} and sellerUsername = #{seller_username}
+        select * from orders where itemId = #{item_id} and sellerUsername = #{seller_username} and state = 5
     </select>
 
     <!--查看order表中商品号为item_number且正在交易中的的订单信息-->

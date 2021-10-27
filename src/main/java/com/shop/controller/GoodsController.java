@@ -44,12 +44,12 @@ public class GoodsController {
 
     //向Goods表中添加商品
     @RequestMapping(value = "/addGoods")
-    public Object addGoods(@RequestParam("goods_img") MultipartFile file,HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public Object addGoods(HttpServletRequest request, HttpServletResponse response) {
         String goods_name = request.getParameter("goods_name");
         String seller_username = "admin";
         int goods_stock = 1;
-        String goods_img = uploadImageService.uploadQNImg((FileInputStream) file.getInputStream(), StringUtil.getRandomImgName(file.getOriginalFilename()));
-//        String goods_img = request.getParameter("goods_img");
+//        String goods_img = uploadImageService.uploadQNImg((FileInputStream) file.getInputStream(), StringUtil.getRandomImgName(file.getOriginalFilename()));
+        String goods_img = request.getParameter("goods_img");
         String goods_discribe = request.getParameter("goods_discribe");
         float goods_price = Float.parseFloat(request.getParameter("goods_price"));
         JSONObject jsonObject = new JSONObject();
@@ -158,11 +158,12 @@ public class GoodsController {
 
     //修改商品信息
     @RequestMapping(value = "/updateGoods")
-    public Object updateGoods(@RequestParam("goods_img") MultipartFile file,HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public Object updateGoods(HttpServletRequest request, HttpServletResponse response){
         int item_id = Integer.parseInt(request.getParameter("item_id"));
         String goods_name = request.getParameter("goods_name");
         String seller_username = "admin";
-        String goods_img = uploadImageService.uploadQNImg((FileInputStream) file.getInputStream(), StringUtil.getRandomImgName(file.getOriginalFilename()));
+//        String goods_img = uploadImageService.uploadQNImg((FileInputStream) file.getInputStream(), StringUtil.getRandomImgName(file.getOriginalFilename()));
+        String goods_img = request.getParameter("goods_img");
         String goods_discribe = request.getParameter("goods_discribe");
         float goods_price = Float.parseFloat(request.getParameter("goods_price"));
         JSONObject jsonObject = new JSONObject();
