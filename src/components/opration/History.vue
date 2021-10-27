@@ -3,7 +3,7 @@
     <el-header style="height:0px">
     </el-header>
     <el-main>
-              <el-table :data="List.slice((currentPage-1)*pagesize,currentPage*pagesize)"   height="550" >
+              <el-table :data="List.slice((currentPage-1)*pagesize,currentPage*pagesize)"   height="600" >
                 <el-table-column property="item_id" label="商品编号" width="100"></el-table-column>
                 <el-table-column property="goods_name" label="商品名称" width="100"></el-table-column>
                 <el-table-column property="goods_price" label="商品价格" width="100"></el-table-column>
@@ -61,12 +61,16 @@ export default {
       },
       handleGoodList(){
 
-        this.$http.post('/goods/searchHistoryGoods', {'username':'admin','page': this.currentPage 
+        this.$http.post('/goods/searchHistoryGoods', {'seller_username':'admin','page': this.currentPage 
         }).then(res=>{
+            console.log(res);
           var ListData=JSON.stringify(res.data.list);
           console.log(ListData);
           this.List=JSON.parse(ListData)
           console.log(this.List);
+          // console.log(res);
+          // this.List=res.data.List
+          // console.log(this.List);
         })
       }
     },

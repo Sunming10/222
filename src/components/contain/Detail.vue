@@ -202,7 +202,16 @@ export default {
     },
     // 同意操作
     agree(row){///agreeOrderwanted
-        this.orderId=row.order_id
+        this.$http.post('/goods/searchSellingGoods', {'page': this.currentPage 
+        }).then(res=>{
+          // var ListData=JSON.stringify(res.data.goods);
+          // console.log(ListData);
+          //this.form=JSON.parse(ListData)
+          // console.log(this.form);
+          this.form = res.data.goods
+          console.log(res);
+          //console.log("res:",res.data.goods[0]);
+        })
         // this.username=row.seller_username
         console.log(this.orderId);
         // console.log(this.username);

@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "babel-loader": "^8.2.3",
     "echarts": "^4.1.0",
     "element-ui": "^2.9.2",
     "eslint": "^5.0.0",

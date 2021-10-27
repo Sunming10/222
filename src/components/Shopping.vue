@@ -24,7 +24,7 @@
           <div class="item_list">
               <div>
                 <span class="title1">
-                   {{itemList.name}}&nbsp;&nbsp;&nbsp;{{item.goods_name}}
+                  {{item.goods_name}}
               </span>
               </div>
              <div>
@@ -34,7 +34,6 @@
              </div>
               <div>
                 <span class="describe">
-                    {{describe.title}}
               </span>
               </div>
               <div class="contain">
@@ -94,16 +93,11 @@
         formLabelWidth: '100px',
         describe:{
           title:"商品描述",
-        //  contain:"双AI慧眼，一体式桌面设计。前置1300万智能升降摄像头和800万交互摄像头，双摄像头各司其职，辅助孩子解决学习难题。配有18W独立音箱，支持4麦克风降噪，拾音清晰，上网课更方便。"
-
         },
         itemList:{
           title:"商品列表",
-           name:"商品名字:",
-         // name:"华为双AI慧眼学习智慧屏",
-          priceTitle:"价格：￥",
-         // price:"2199.00",
-         // image:'https://iconfont.alicdn.com/t/e89430ee-42ed-4d98-8ea2-6987122dc98a.png'
+          priceTitle:"￥",
+
         }
       };
     },
@@ -218,6 +212,7 @@
   .box-card {
     width: 100%;
     background-color: rgb(247, 240, 223);
+    margin-top: 50px;
   }
   .el-card{
     box-shadow: 0 -1px 8px rgb(0 0 0 37%) !important;
@@ -226,11 +221,12 @@
     // -webkit-box-shadow: 0 -1px 8px rgb(0 0 0 / 40%) !important;
   }
   .item_title{
+    position: absolute;
     line-height: 50px;
-    font-size: 20px;
+    font-size: 25px;
     font-weight: bold;
     color: gray;
-
+    margin-top: -100px;
   }
   .item_size{
     width: 400px;
@@ -250,6 +246,7 @@
     height: 400px;
     float: left;
     text-align: left;
+    margin-top: -50px;
   }
   .title1{
     // font-family: ;
@@ -272,6 +269,7 @@
     line-height: 60px;
   }
   .contain{
+    margin-top: 20px;
     width: 300px;
     height: 200px;
     border-radius: 4px;
