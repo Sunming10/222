@@ -8,15 +8,15 @@
 
     <el-main>
       <el-row>
-  <el-col :span="6" v-for="(item) in form" :key="item" :offset="1 > 0 ? 1 : 0">
+  <el-col :span="6">
 
-      <el-card :body-style="{ padding: '0px' }" style="text-align: center;text-decoration:none" >
+      <el-card :body-style="{ padding: '0px' }" style="text-align: center;text-decoration:none,height:100px" >
 
-      <img  :src="item.goods_img" class="image" @click="toDetail">
+      <img  :src="this.form.goods_img" class="image" @click="toDetail">
 
       <div style="text-align: center;">
-        <span class="font-style">{{item.goods_name}}</span>
-        <div class="word"><span class="price">￥{{item.goods_price}}</span></div>
+        <span class="font-style">{{this.form.goods_name}}</span>
+        <div class="word"><span class="price">￥{{this.form.goods_price}}</span></div>
         <div class="bottom clearfix ">
           <el-button type="text" class="button"  @click="editItem" disabled>编辑商品</el-button>
         </div>
@@ -114,7 +114,7 @@ export default {
       currentDate: new Date(),
       dialogFormVisible: false,
       pagesize:10,
-       form:[],
+       form:{},
        itemId:[],
        itemName:[],
        itemImg:[],
@@ -148,6 +148,18 @@ export default {
           //this.form=JSON.parse(ListData)
           // console.log(this.form);
           this.form = res.data.goods
+          console.log(this.form);
+          console.log(this.form.length);
+          if(this.form.length>1){
+            this.form=res.data.goods[0]
+            // this.$message({
+            //       message: '尊敬的用户欢迎你！',
+            //       type: 'success'
+            //     });
+
+          }else{
+            this.form=res.data.goods[0]
+          }
 
           console.log(res);
           //console.log("res:",res.data.goods[0]);
@@ -283,7 +295,10 @@ export default {
   .image {
     width: 70%;
     display: block;
-    margin-left: 15%;
+    margin-left: 14%;
+    height: 200px;
+    padding: 10px;
+    border-radius: 4px;
   }
   .font-style{
     font-size: 16px;

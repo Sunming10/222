@@ -160,7 +160,7 @@
 
             })
               }
-
+                this.dialogFormVisible=false
             }
       },
     resetForm(form){

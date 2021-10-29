@@ -92,8 +92,26 @@ export default {
   // },
   methods: {
     logout() {
-      window.sessionStorage.clear()
-      this.$router.push('/login')
+     this.$confirm('确定要退出登录吗?', '提示', {
+                   confirmButtonText: '确定',
+                   cancelButtonText: '取消',
+                   type: 'warning'
+                  }).then(() => {
+                    this.$message({
+                       type: 'success',
+                       message: '退出成功!'
+                     });
+                     //确认退出，清除token
+                     window.sessionStorage.removeItem('token')
+                     //跳转登录页面(编程式导航)
+                     this.$router.push('login')
+
+                }).catch(() => {
+              this.$message({
+               type: 'info',
+               message: '已取消退出'
+          });
+        });
     },
     gotoAdd(){
       this.$router.push('add')

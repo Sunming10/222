@@ -30,8 +30,9 @@
           </el-form-item>
       </el-form>
       </div>
-      <el-header>
-         <el-button @click="submit" warning>提交</el-button>
+      <el-header class="btnPosition">
+         <el-button @click="submit" type=warning>提交</el-button>
+         <el-button @click="reset">重置</el-button>
       </el-header>
    </el-main>
   </el-container>
@@ -40,22 +41,29 @@
 <script>
 export default {
   data(){
-    var checkPrice = (rule, value, callback) => {
-        if (!value) {
-          return callback(new Error('商品价格不能为空！'));
-        }
-        setTimeout(() => {
-          if (!Number.isDouble(value)) {
-            callback(new Error('请输入数字值！'));
-          } else {
-            if (value < 0) {
-              callback(new Error('请输入正确的价格！'));
-            } else {
-              callback();
-            }
-          }
-        }, 1000);
-      };
+    // var checkPrice = (rule, value, callback) => {
+    //     if (!value) {
+    //       return callback(this.$message({
+    //                 type: 'error',
+    //                 message: '商品价格不能为空!'})
+    //                 );
+    //     }
+    //     setTimeout(() => {
+    //       if (!Number.isDouble(value)) {
+    //         callback(this.$message({
+    //                 type: 'error',
+    //                 message: '非法输入，请输入数值!'}));
+    //       } else {
+    //         if (value < 0) {
+    //           callback(this.$message({
+    //                 type: 'error',
+    //                 message: '价格不能为负数，请重新输入!'}));
+    //         } else {
+    //           callback();
+    //         }
+    //       }
+    //     }, 1000);
+    //   };
     return{
         files: {},
         photo: '',
@@ -79,7 +87,8 @@ export default {
             { min:2, max:20, message: '商品名称长度在2~20个字之间', trigger: 'blur' }
           ],
           goods_price: [
-            { validator: checkPrice,required: true,type:'double', trigger: 'blur'  },
+            { required: true,message: '请输入商品价格', trigger: 'blur'  },
+            // { type:'number',message: '价格必须为数字', trigger: 'blur'  },
 
           ],
           goods_discribe: [
@@ -97,6 +106,9 @@ methods: {
     this.imageUrl=res
     console.log(this.imageUrl);
   },
+  reset(){
+      this.$refs.ruleForm.resetFields()
+  },
        handlePreview(res) {
         console.log(res);
       },
@@ -104,37 +116,20 @@ methods: {
         return this.$confirm(`确定移除 ${ file.name }？`);
       },
       beforeAvatarUpload(file) {
-      var testmsg = file.name.substring(file.name.lastIndexOf(".") + 1);
-      const extension =
-        testmsg === "jpg" ||
-        testmsg === "JPG" ||
-        testmsg === "png" ||
-        testmsg === "PNG" ||
-        testmsg === "bpm" ||
-        testmsg === "BPM";
       const isLt50M = file.size / 1024 / 1024 < 0.5;
-      if (!extension) {
-        this.$message({
-          message: "上传图片只能是jpg / png / bpm格式!",
-          type: "error"
-        });
-        return false; //必须加上return false; 才能阻止
-      }
-      console.log(file);
       if (!isLt50M) {
         this.$message({
           message: "上传文件大小不能超过500KB!",
           type: "error"
         });
-        return false;
       }
-      return extension || isLt50M;
+      return isLt50M;
     },
       submit(){
         this.ruleForm.goods_img=this.imageUrl
         // console.log("上传图片");
         console.log(this.ruleForm.goods_img);
-        // console.log("start");
+        console.log("start");
         if(this.ruleForm.goods_name!=''&&this.ruleForm.goods_price!=''&&this.ruleForm.goods_discribe!=''&&this.ruleForm.goods_img!=''){
           this.$http.post('/goods/addGoods',{'goods_name':this.ruleForm.goods_name,'goods_price':this.ruleForm.goods_price,
               'goods_discribe':this.ruleForm.goods_discribe,'goods_img':this.ruleForm.goods_img})
@@ -145,6 +140,7 @@ methods: {
              this.$message({
                     type: 'success',
                     message: '商品添加成功!'});
+                    this.$router.push('selling')
 
           }else if(res.data.message=='error'){
              this.$message({
@@ -157,8 +153,9 @@ methods: {
                     type: 'error',
                     message: '请完善信息!'});
           }
+          console.log("end");
         }
-        // console.log("end");
+
       },
 
 }
@@ -193,5 +190,8 @@ methods: {
     width: 178px;
     height: 178px;
     display: block;
+  }
+  .btnPosition{
+    margin-left: 20%;
   }
 </style>

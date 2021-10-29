@@ -36,7 +36,7 @@
       </el-row>
 
        <el-row>
-  <el-col  v-for="(item, index) in itemLists" :key="item" :offset="index > 0 ? 1 : 0">
+  <el-col>
       <el-card class="box-card" >
         <div     class="text item">
           <div>
@@ -46,21 +46,21 @@
           </div>
           <div class="item_size">
             <div>
-            <img :src="item.goods_img" class="img_size">
+            <img :src="this.itemLists.goods_img" class="img_size">
             </div>
             <div>
-            <el-button type="warning" @click="item.item_id;dialogFormVisible = true;" icon="el-icon-shopping-cart-1">提交购买信息</el-button>
+            <el-button type="warning" @click="dialogFormVisible = true;" icon="el-icon-shopping-cart-1">提交购买信息</el-button>
             </div>
           </div>
           <div  class="item_list">
               <div>
                 <span class="title1">
-               {{item.goods_name}}
+               {{this.itemLists.goods_name}}
               </span>
               </div>
              <div>
                 <span class="price">
-                  {{itemList.priceTitle}}{{item.goods_price}}
+                  {{itemList.priceTitle}}{{this.itemLists.goods_price}}
               </span>
              </div>
               <div>
@@ -68,7 +68,7 @@
               </span>
               </div>
               <div class="contain">
-                  {{item.goods_discribe}}
+                  {{this.itemLists.goods_discribe}}
               </div>
         </div>
 
@@ -92,7 +92,7 @@
           <el-input v-model="form.buyer_address" autocomplete="off" type="textarea"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="warning" @click="submitForm()">确定</el-button>
+          <el-button type="warning" @click="submitForm">确定</el-button>
                       <el-button @click="resetForm('form')">重置</el-button>
         </el-form-item>
       </el-form>
@@ -103,7 +103,7 @@
   export default {
     data() {
       return {
-      itemLists:[],
+      itemLists:{},
       ListData:[],
       buyerData:[],
       form: {
@@ -111,6 +111,7 @@
           buyer_tel:'',
           buyer_address:'',
         },
+      goodId:'',
 
       rules: {
               buyer_name: [
@@ -145,13 +146,8 @@
       methods: {
         getGoods(){
           this.$http.post('/goods/searchWelcomeGoods',this.itemLists).then(res=>{
-            var ListData=JSON.stringify(res.data.goods);
-            console.log(ListData);
-            this.itemLists=JSON.parse(ListData);
-            console.log(this.itemLists);
-             for(var i=0; i< this.itemLists.length;i++){
-              this.item_id = this.itemLists[i].item_id;
-            }
+            this.itemLists=res.data.goods[0]
+            this.goodId=res.data.goods[0].item_id
           })
         },
       submitForm(){
@@ -184,20 +180,29 @@
                     message: '请正确填写信息!'});
               }
               else{
-          this.$http.post('/order/addToOrderWanted',{'item_id':this.item_id,'buyer_realname':this.form.buyer_name,
-            'buyer_phonenumber': this.form.buyer_tel,'buyer_address':this.form.buyer_address}).then(response=>{
-              console.log(this.form.buyer_name);
-              console.log(response);
+                this.$http.post('/order/addToOrderWanted',{'item_id':this.goodId,'buyer_realname':this.form.buyer_name,
+                  'buyer_phonenumber': this.form.buyer_tel,'buyer_address':this.form.buyer_address}).then(response=>{
+                    console.log(this.form.buyer_name);
+                    console.log(response);
                     if(response.data.message=="success"){
+
                             this.$message({
                             type: 'success',
                             message: '个人信息保存成功!'});
+
+
+                      }else if(response.data.message=="error"){
+                             this.$message({
+                            type: 'error',
+                            message: '个人信息保存失败!'});
                       }
+
 
             })
               }
-
+                this.dialogFormVisible=false
             }
+
       },
     resetForm(form){
         this.$refs[form].resetFields();
