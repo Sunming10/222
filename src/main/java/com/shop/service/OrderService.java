@@ -47,9 +47,9 @@ public class OrderService {
         goodsMapper.updateGoodsState(seller_username,order.getItem_id(),2);
         return order;
     }
-    public List<String> searchSellingGoodsBuyerRealname(int item_id){
+    public List<String> searchSellingGoodsBuyerRealname(){
         List<String> Strings = new ArrayList<>();
-        List<Order> orderList = orderMapper.searchSellingGoodsBuyerRealname(item_id);
+        List<Order> orderList = orderMapper.searchSellingGoodsBuyerRealname();
         String str;
         for (int i=0;i<orderList.size();i++){
             str = hideCardNo(orderList.get(i).getBuyer_realname());

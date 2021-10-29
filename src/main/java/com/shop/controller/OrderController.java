@@ -51,7 +51,7 @@ public class OrderController {
     public Object searchSellingGoodsBuyerRealname(HttpServletRequest request, HttpServletResponse response){
         int item_id = Integer.parseInt(request.getParameter("item_id"));
         JSONObject jsonObject = new JSONObject();
-        List<String> stringList =  orderService.searchSellingGoodsBuyerRealname(item_id);
+        List<String> stringList =  orderService.searchSellingGoodsBuyerRealname();
         message = "success";
         jsonObject.put("stringList",stringList);
         jsonObject.put("message",message);

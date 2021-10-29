@@ -27,10 +27,10 @@ public interface OrderMapper {
 
     /**
      * 查看order表中商品意向买家名
-     * @param item_id
+     * @param
      * @return
      */
-    List<Order> searchSellingGoodsBuyerRealname(int item_id);
+    List<Order> searchSellingGoodsBuyerRealname();
 
     /**
      * 同意意向买家
