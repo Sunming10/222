@@ -30,6 +30,11 @@
         select * from orders where itemId = #{item_id,jdbcType=INTEGER} and state = 4 and sellerUsername = #{seller_username}
     </select>
 
+    <!--查看order表中商品号为item_number且正在交易中的的订单信息-->
+    <select id="searchSellingGoodsBuyerRealname" resultMap="OrderResultMap">
+        select * from orders where itemId = #{item_id,jdbcType=INTEGER} and state = 5
+    </select>
+
     <!--同意意向买家-->
     <update id="agreeOrderwanted" parameterType="com.shop.entity.Order">
         update orders set state = 1 where orderId = #{order_id} and sellerUsername = #{seller_username}
@@ -42,7 +47,7 @@
 
     <!--交易成功(下架)-->
     <update id="finishOrder" parameterType="com.shop.entity.Order">
-        update orders set state = 2 where itemId = #{item_id} and state = 1 and sellerUsername = #{seller_username}
+        update orders set state = 2 , finishTime = #{finish_time} where itemId = #{item_id} and state = 1 and sellerUsername = #{seller_username}
     </update>
 
     <!--交易失败(恢复)-->

@@ -26,6 +26,13 @@ public interface OrderMapper {
     Order searchFreezeGoodsBuyer(String seller_username,int item_id);
 
     /**
+     * 查看order表中商品意向买家名
+     * @param item_id
+     * @return
+     */
+    List<Order> searchSellingGoodsBuyerRealname(int item_id);
+
+    /**
      * 同意意向买家
      * @param order_id
      * @return
@@ -37,7 +44,7 @@ public interface OrderMapper {
      * @param item_id
      * @return
      */
-    int finishOrder(String seller_username,int item_id);
+    int finishOrder(String seller_username,int item_id,String finish_time);
 
     /**
      * 取消交易(恢复)

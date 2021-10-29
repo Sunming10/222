@@ -1,9 +1,6 @@
 package com.shop.controller;
 
-import com.shop.entity.GO;
-import com.shop.entity.Goods;
-import com.shop.entity.Order;
-import com.shop.entity.Order_Goods;
+import com.shop.entity.*;
 import com.shop.service.GOService;
 import com.shop.service.GoodsService;
 import com.shop.service.OrderService;
@@ -115,8 +112,25 @@ public class GoodsController {
     public Object searchWelcomeGoods(){
         JSONObject jsonObject = new JSONObject();
         List<Goods> goods = goodsService.searchWelcomeGoods();
+        List<Goods_buyerRealname> list = new ArrayList<>();
+        for (int i =0;i<goods.size();i++){
+            Goods good = (Goods) goods.get(i);
+            List<String> stringList = orderService.searchSellingGoodsBuyerRealname(good.getItem_id());
+            Goods_buyerRealname goods_buyerRealname = new Goods_buyerRealname(
+                    good.getItem_id(),
+                    good.getGoods_name(),
+                    good.getSeller_username(),
+                    good.getGoods_stock(),
+                    good.getGoods_img(),
+                    good.getGoods_discribe(),
+                    good.getGoods_price(),
+                    good.getGoods_state(),
+                    stringList
+            );
+            list.add(goods_buyerRealname);
+        }
         message = "success";
-        jsonObject.put("goods",goods);
+        jsonObject.put("list",list);
         jsonObject.put("message",message);
         return jsonObject;
     }

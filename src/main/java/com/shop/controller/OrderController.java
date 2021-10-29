@@ -35,13 +35,25 @@ public class OrderController {
 
     //查看商品意向购买买家
     @RequestMapping(value = "/searchBuyerlist")
-    public Object earchBuyerlist(HttpServletRequest request, HttpServletResponse response){
+    public Object searchBuyerlist(HttpServletRequest request, HttpServletResponse response){
         String seller_username = request.getParameter("seller_username");
         int item_id = Integer.parseInt(request.getParameter("item_id"));
         JSONObject jsonObject = new JSONObject();
         List<Order> orderList = orderService.searchBuyerlist(seller_username,item_id);
         message = "success";
         jsonObject.put("orders",orderList);
+        jsonObject.put("message",message);
+        return jsonObject;
+    }
+
+    //查看商品意向购买买家名
+    @RequestMapping(value = "/searchSellingGoodsBuyerRealname")
+    public Object searchSellingGoodsBuyerRealname(HttpServletRequest request, HttpServletResponse response){
+        int item_id = Integer.parseInt(request.getParameter("item_id"));
+        JSONObject jsonObject = new JSONObject();
+        List<String> stringList =  orderService.searchSellingGoodsBuyerRealname(item_id);
+        message = "success";
+        jsonObject.put("stringList",stringList);
         jsonObject.put("message",message);
         return jsonObject;
     }
@@ -100,7 +112,8 @@ public class OrderController {
         String seller_username = request.getParameter("seller_username");
         int item_id = Integer.parseInt(request.getParameter("item_id"));
         JSONObject jsonObject = new JSONObject();
-        int result = orderService.finishOrder(seller_username,item_id);
+        String finish_time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        int result = orderService.finishOrder(seller_username,item_id,finish_time);
         if (result >=1){
             message = "success";
         }else {
