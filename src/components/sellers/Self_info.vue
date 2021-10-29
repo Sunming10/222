@@ -157,6 +157,7 @@ export default {
                     this.$message({
                     type: 'success',
                     message: '密码修改成功!'});
+                    this.$router.push('home');
                }
                else if(res.data.message=="error"){
                   this.$message({

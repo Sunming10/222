@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-header>
-      <el-button type="warning" style="margin-left:80%" @click="goto" disabled>添加商品</el-button>
+      <el-button type="warning" style="margin-left:80%" @click="goto" :disabled="this.btnState=false">添加商品</el-button>
     </el-header>
     <el-main class="weizhi">
       <el-table
@@ -119,7 +119,7 @@
               >
           <el-button type="warning" size="medium" @click="recover(scope.row)">恢复</el-button>
 
-          <el-button  @click="offShelf(scope.row)"  size="medium">下架</el-button>
+          <el-button  @click="offShelf(scope.row)"  size="medium">完成交易</el-button>
 
           </el-popover>
          </div>
@@ -167,6 +167,7 @@ export default {
       currentPage:1,
       pagesize:10,
       itemId:'',
+      btnState:true,
       // List:[],
     }
   },
@@ -217,6 +218,7 @@ export default {
           console.log("这是恢复信息！");
           // console.log(this.itemId);
           console.log(res);
+          this.$router.push('selling');
         })
           this.$message({
             type: 'success',
@@ -251,6 +253,8 @@ export default {
           console.log("这是下架信息！");
           // console.log(this.itemId);
           console.log(res);
+          this.$router.push('history');
+
         })
           this.$message({
             type: 'success',
@@ -288,7 +292,17 @@ export default {
         console.log(`当前页: ${val}`);
       },
       goto(){
-        this.$router.push('add')
+        if(this.gridData.length==0){
+          this.$router.push('add')
+
+        }else{
+            btnState=false
+            this.$message({
+            type: 'error',
+            message: '您暂时不能添加商品!'
+          });
+        }
+
       },
     },
   }

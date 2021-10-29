@@ -30,7 +30,7 @@
                   <el-menu-item index="1-1"><router-link to='selling'  class="line">出售商品</router-link></el-menu-item>
                   <el-menu-item index="1-2" ><router-link to="icing" class="line">冻结商品</router-link></el-menu-item>
                   <el-menu-item index="1-3" ><router-link to="history" class="line">历史商品</router-link></el-menu-item>
-                  <el-menu-item index="1-4" ><router-link to="add" class="line">增加商品</router-link></el-menu-item>
+                  <!-- <el-menu-item index="1-4" @click="gotoAdd"><span class="line">增加商品</span></el-menu-item> -->
                 </el-menu-item-group>
 
               </el-submenu>
@@ -95,22 +95,9 @@ export default {
       window.sessionStorage.clear()
       this.$router.push('/login')
     },
-    // 获取所有的菜单
-    // async getMenuList() {
-    //   const { data: res } = await this.$http.get('menus')
-    //   if (res.meta.status !== 200) return this.$message.error(res.meta.msg)
-    //   this.menulist = res.data
-    //   console.log(res)
-    // },
-    // 点击按钮，切换菜单的折叠与展开
-    // toggleCollapse() {
-    //   this.isCollapse = !this.isCollapse
-    // },
-    // 保存链接的激活状态
-    // saveNavState(activePath) {
-    //   window.sessionStorage.setItem('activePath', activePath)
-    //   this.activePath = activePath
-    // }
+    gotoAdd(){
+      this.$router.push('add')
+    }
   }
 }
 </script>

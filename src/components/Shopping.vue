@@ -18,7 +18,7 @@
             <img :src="item.goods_img" class="img_size">
             </div>
             <div>
-            <el-button type="warning" @click="item.item_id;dialogFormVisible = true" icon="el-icon-shopping-cart-1">加入购物车</el-button>
+            <el-button type="warning" @click="item.item_id;dialogFormVisible = true" icon="el-icon-shopping-cart-1">提交购买信息</el-button>
             </div>
           </div>
           <div class="item_list">
@@ -154,6 +154,8 @@
                     this.$message({
                     type: 'success',
                     message: '个人信息保存成功!'});
+                    // dialogFormVisible=false
+
                }
 
             })

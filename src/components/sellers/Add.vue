@@ -1,180 +1,197 @@
 <template>
   <el-container>
-    <template>
-      <div class="position">
-                      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-                <el-form-item label="商品名称" prop="item_name">
-                  <el-input v-model="ruleForm.item_name" type="text"></el-input>
-                </el-form-item>
-                <el-form-item label="商品描述" prop="item_describe">
-                  <el-input type="textarea" v-model="ruleForm.item_describe"></el-input>
-                </el-form-item>
-                 <el-form-item label="商品价格" prop="item_price">
-                  <el-input v-model="ruleForm.item_price" type="text"></el-input>
-                </el-form-item>
+   <el-main>
 
-                <el-form-item prop="goods_img" label="商品图片">
-          <el-upload
-            ref="uploadImage"
-            :action="imgUrl"
-            :beforeUpload="beforeUploadPicture"
-            :on-change="imageChange"
-            list-type="picture-card"
-            name="files"
-            :limit="1"
-            multiple
-            :auto-upload="false"
-            :on-preview="handlePictureCardPreview"
-            :on-remove="handleRemovePicture">
-            <i class="el-icon-plus"></i>
-          </el-upload>
-          <el-dialog :visible.sync="dialogVisible">
-            <img width="100%" :src="dialogImageUrl" alt="">
-          </el-dialog>
-        </el-form-item>
-
-
-                <el-form-item class="btn-position">
-                  <el-button type="warning" @click="submitForm()" >保存</el-button>
-                  <el-button type="warning" @click="resetForm('ruleForm')" >重置</el-button>
-                  <!-- <el-button type="warning" round>取消</el-button> -->
-                </el-form-item>
-              </el-form>
+      <div style="width:700px">
+        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm" enctype="multipart/form-data" >
+          <el-form-item label="商品名称" prop="goods_name">
+            <el-input v-model="ruleForm.goods_name"></el-input>
+          </el-form-item>
+          <el-form-item label="商品价格" prop="goods_price">
+            <el-input v-model="ruleForm.goods_price"></el-input>
+          </el-form-item>
+          <el-form-item label="商品描述" prop="goods_discribe">
+            <el-input v-model="ruleForm.goods_discribe" type="textarea"></el-input>
+          </el-form-item>
+          <el-form-item label="商品图片" prop="goods_img">
+            <el-upload class="avatar-uploader showUploader"
+                accept=".gif,.jpg,.jpeg,.png,.GIF,.JPG,.PNG"
+                ref="businessLicense"
+                :action='imgUrl'
+                :on-success="handleSuccess"
+                :before-upload="beforeAvatarUpload"
+                :limit="1">
+              <img v-if="imageUrl" :src="imageUrl" class="avatar">
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              <!-- <el-dialog :visible.sync="dialogVisible">
+              <img width="100%" :src="this.imageUrl" alt="">
+            </el-dialog> -->
+            </el-upload>
+          </el-form-item>
+      </el-form>
       </div>
-    </template>
-
+      <el-header>
+         <el-button @click="submit" warning>提交</el-button>
+      </el-header>
+   </el-main>
   </el-container>
 </template>
 
 <script>
 export default {
-     data() {
-      return {
-       dialogImageUrl: '',
-        dialogVisible: false,
-        disabled: false,
-        itemLists:[],
-        ListData:[],
-        ruleForm:{
-          item_name: '',
-          item_describe: '',
-          item_price: '',
-        },
-        rules: {
-          item_name: [
-            { required: true, message: '请输入商品名称', trigger: 'blur' },
-            { min:2, max: 20, message: '长度在 2 到 20个字符', trigger: 'blur' }
-          ],
-          item_describe: [
-            { required: true, message: '请输入商品描述', trigger: 'blur' }
-          ],
-          item_price: [
-            { required: true, message: '请输入商品价格', trigger: 'blur' }
-          ],
-           item_img: [
-            { required: true, message: '请上传图片', trigger: 'blur' }
-          ]
-        },
-      images: {},
-      files: [],
-      imgUrl:'http://localhost:8082'+'/qiniu/image',
-      dialogImageUrl: '',
-      dialogVisible: false
-      };
-    },
-    created () {
-      // this.getGoods();
-    },
-    methods: {
-      beforeUploadPicture(file){
-     const isImage = file.type == 'image/png' || file.type == 'image/jpg' ||  file.type == 'image/jpeg' || file.type == 'image/bmp' || file.type == 'image/gif' || file.type == 'image/webp';
-      const isLt2M = file.size <  1024 * 1024 * 2;
-      if (!isImage) {
-        this.$message.error('上传只能是png,jpg,jpeg,bmp,gif,webp格式!');
-      }
-      if (!isLt2M) {
-        this.$message.error('上传图片大小不能超过 2MB!');
-      }
-      return isImage && isLt2M;
-    },
-    handlePictureCardPreview(file) {
-      this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
-    },
-    handleRemovePicture(file, fileList) {
-      console.log(file, fileList);
-    },
-    imageChange(file, fileList, name) {
-      console.log(file, fileList);
-      this.imageList = fileList;
-      this.images['images'] = fileList;
-    },
-
-    handleRemoveFile(file, fileList) {
-      console.log(file, fileList);
-    },
-    handlePreviewFile(file) {
-      console.log(file);
-    },
-    handleExceedFile(files, fileList) {
-      this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
-    },
-    beforeRemoveFile(file, fileList) {
-      return this.$confirm(`确定移除 ${ file.name }？`);
-    },
-    fileChange(file,fileList) {
-      console.log(file, fileList);
-      this.fileList = fileList;
-      this.files['files'] = fileList;
- },
-    submitForm(){
-          console.log('123');
-          var FormData = require('form-data');
-          let wfForm = new FormData();
-          console.log('123');
-          let config = {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                }
-                console.log('12345');
-          wfForm.append( 'goods_name',this.ruleForm.item_name)
-          wfForm.append( 'goods_price',this.ruleForm.item_price)
-          wfForm.append( 'goods_dicsribe',this.ruleForm.item_describe)
-          Object.entries(this.images).forEach(file => {
-            file.forEach(item => {
-              // 下面的“images”，对应后端需要接收的name，这样对图片和文件做一个区分，name为images为图片
-              wfForm.append('goods_img', item.raw)
-              // wfForm.append(item.name, file[0])
-            })
-          })
-          console.log('123');
-          console.log(wfForm);
-          this.$http.post('/goods/addGoods',wfForm,config).then( res => {
-            console.log(res, 'res')
-            if(res.message === "success"){
-              this.$message.success( '添加商品成功！' );
-              this.handleClose()
-            }else{
-                  this.$message.error( '添加商品失败！' );
+  data(){
+    var checkPrice = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('商品价格不能为空！'));
+        }
+        setTimeout(() => {
+          if (!Number.isDouble(value)) {
+            callback(new Error('请输入数字值！'));
+          } else {
+            if (value < 0) {
+              callback(new Error('请输入正确的价格！'));
+            } else {
+              callback();
             }
-          })
-    }
+          }
+        }, 1000);
+      };
+    return{
+        files: {},
+        photo: '',
+        photoObj: '',
+        imgUrl:'http://localhost:8082/qiniu/image',
+        imageUrl:'',
+        loge:'',
+        dialogVisible:false,
+        myHeaders: {
 
+        },
+        ruleForm:{
+          goods_name:'',
+          goods_price:'',
+          goods_discribe:'',
+          goods_img:''
+        },
+        rules:{
+            goods_name: [
+            { required: true, message: '请输入商品名称', trigger: 'blur' },
+            { min:2, max:20, message: '商品名称长度在2~20个字之间', trigger: 'blur' }
+          ],
+          goods_price: [
+            { validator: checkPrice,required: true,type:'double', trigger: 'blur'  },
+
+          ],
+          goods_discribe: [
+            { required: true, message: '请输入商品描述', trigger: 'blur' },
+            { min:2, max:100, message: '字数控制在100字以内', trigger: 'blur' }
+          ],
+          goods_img: [
+            { required: true, message: '请上传图片', trigger: 'blur' },
+          ],
+        }
     }
-  }
+},
+methods: {
+  handleSuccess(res) {
+    this.imageUrl=res
+    console.log(this.imageUrl);
+  },
+       handlePreview(res) {
+        console.log(res);
+      },
+      beforeRemove(file, fileList) {
+        return this.$confirm(`确定移除 ${ file.name }？`);
+      },
+      beforeAvatarUpload(file) {
+      var testmsg = file.name.substring(file.name.lastIndexOf(".") + 1);
+      const extension =
+        testmsg === "jpg" ||
+        testmsg === "JPG" ||
+        testmsg === "png" ||
+        testmsg === "PNG" ||
+        testmsg === "bpm" ||
+        testmsg === "BPM";
+      const isLt50M = file.size / 1024 / 1024 < 0.5;
+      if (!extension) {
+        this.$message({
+          message: "上传图片只能是jpg / png / bpm格式!",
+          type: "error"
+        });
+        return false; //必须加上return false; 才能阻止
+      }
+      console.log(file);
+      if (!isLt50M) {
+        this.$message({
+          message: "上传文件大小不能超过500KB!",
+          type: "error"
+        });
+        return false;
+      }
+      return extension || isLt50M;
+    },
+      submit(){
+        this.ruleForm.goods_img=this.imageUrl
+        // console.log("上传图片");
+        console.log(this.ruleForm.goods_img);
+        // console.log("start");
+        if(this.ruleForm.goods_name!=''&&this.ruleForm.goods_price!=''&&this.ruleForm.goods_discribe!=''&&this.ruleForm.goods_img!=''){
+          this.$http.post('/goods/addGoods',{'goods_name':this.ruleForm.goods_name,'goods_price':this.ruleForm.goods_price,
+              'goods_discribe':this.ruleForm.goods_discribe,'goods_img':this.ruleForm.goods_img})
+        .then(res=>{
+          console.log(res);
+          // console.log(res.data);
+          if(res.data.message=='success'){
+             this.$message({
+                    type: 'success',
+                    message: '商品添加成功!'});
+
+          }else if(res.data.message=='error'){
+             this.$message({
+                    type: 'error',
+                    message: '商品添加失败!'});
+          }
+        })
+        }else{
+           this.$message({
+                    type: 'error',
+                    message: '请完善信息!'});
+          }
+        }
+        // console.log("end");
+      },
+
+}
 
 </script>
-
 <style lang="less" scoped>
-.btn-position{
-  text-align: center;
-}
-.position{
-  // text-align: center;
-  margin-left: 18%;
-  margin-top: 20px;
-  width: 700px;
-
-}
+.avatar-uploader /deep/ .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    background-color: #fff;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    width: 180px;
+    height: 180px;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .showUploader /deep/ .el-upload-list{
+    display: none;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
 </style>

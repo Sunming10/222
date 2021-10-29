@@ -8,7 +8,7 @@
 
     <el-main>
       <el-row>
-  <el-col :span="6" v-for="(item,index) in form" :key="item" :offset="index > 0 ? 1 : 0">
+  <el-col :span="6" v-for="(item) in form" :key="item" :offset="1 > 0 ? 1 : 0">
 
       <el-card :body-style="{ padding: '0px' }" style="text-align: center;text-decoration:none" >
 
@@ -18,7 +18,6 @@
         <span class="font-style">{{item.goods_name}}</span>
         <div class="word"><span class="price">￥{{item.goods_price}}</span></div>
         <div class="bottom clearfix ">
-          <!-- <time class="time">{{ currentDate }}</time> -->
           <el-button type="text" class="button"  @click="editItem" disabled>编辑商品</el-button>
         </div>
       </div>
@@ -50,7 +49,6 @@
       <el-input v-model="itemDiscribe" type="textarea" autocomplete="off"></el-input>
     </el-form-item>
     <el-form-item label="商品图片" :label-width="formLabelWidth">
-      <!-- <el-input v-model="form.name" autocomplete="off"></el-input> -->
 
       <el-upload
         action="#"
@@ -150,6 +148,7 @@ export default {
           //this.form=JSON.parse(ListData)
           // console.log(this.form);
           this.form = res.data.goods
+
           console.log(res);
           //console.log("res:",res.data.goods[0]);
         })

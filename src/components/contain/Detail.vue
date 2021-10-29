@@ -111,6 +111,8 @@
 .image1{
   width: 200px;
   height: 200px;
+  //  border-radius: 50%;
+
   // text-align: center;
   // margin-left: 20%;
 }
