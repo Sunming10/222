@@ -7,7 +7,7 @@
         <!-- <span>网上商城</span> -->
       </div>
       <!-- <i class="iconfont">&#xe634;</i> -->
-      <el-button type="warning" round @click="logout" icon="el-icon-user"><router-link to='welcome' class="font-line" >退出登陆</router-link></el-button>
+      <el-button type="warning"  @click="logout" icon="el-icon-user" class="font-line">退出登陆</el-button>
     </el-header>
     <!-- 页面主体区域 -->
     <el-container>
