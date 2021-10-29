@@ -25,6 +25,11 @@
         select * from orders where itemId = #{item_id,jdbcType=INTEGER} and state = 2 and sellerUsername = #{seller_username}
     </select>
 
+    <!--查看order表中商品号为item_number且正在交易中的的订单信息-->
+    <select id="searchFreezeGoodsBuyer" resultMap="OrderResultMap">
+        select * from orders where itemId = #{item_id,jdbcType=INTEGER} and state = 4 and sellerUsername = #{seller_username}
+    </select>
+
     <!--同意意向买家-->
     <update id="agreeOrderwanted" parameterType="com.shop.entity.Order">
         update orders set state = 1 where orderId = #{order_id} and sellerUsername = #{seller_username}

@@ -70,6 +70,7 @@ public class GoodsController {
         int item_id = Integer.parseInt(request.getParameter("item_id"));
         JSONObject jsonObject = new JSONObject();
         Goods good = goodsService.searchGoods(item_id);
+        System.out.println(good.getGoods_price());
         if (good != null){
             message = "success";
             jsonObject.put("good",good);

@@ -23,6 +23,7 @@ public interface GoodsMapper {
 
     /**
      * 根据item_id(商品ID),newstate(商品状态)向Goods表中更新商品状态信息
+     * @param seller_username
      * @param item_id
      * @param newstate
      * @return
@@ -44,6 +45,8 @@ public interface GoodsMapper {
 
     /**
      * 在Goods表中查找所有商品
+     * @param seller_username
+     * @param page
      * @return
      */
     List<Goods> searchHistoryGoods(String seller_username,int page);
@@ -56,7 +59,6 @@ public interface GoodsMapper {
 
     /**
      * 在goods表中修改商品信息
-     * @param
      * @param newgoods
      * @return
      */
@@ -64,8 +66,8 @@ public interface GoodsMapper {
 
     /**
      * 查询冻结商品
-     * @param
      * @param seller_username
+     * @param page
      * @return
      */
 

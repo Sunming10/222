@@ -29,6 +29,9 @@ public class OrderService {
         goodsMapper.updateGoodsState(seller_username,order.getItem_id(),2);
         return order;
     }
+    public List<Order> searchHistoryGoodsUnFinishedOrder(String seller_username,int item_id){
+        return orderMapper.searchHistoryGoodsUnFinishedOrder(seller_username,item_id);
+    }
     public int finishOrder(String seller_username,int item_id){
         int result = orderMapper.finishOrder(seller_username,item_id);
         goodsMapper.updateGoodsState(seller_username,item_id,3);

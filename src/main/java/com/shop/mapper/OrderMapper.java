@@ -48,6 +48,7 @@ public interface OrderMapper {
 
     /**
      * 通过订单id查询订单
+     * @param seller_username
      * @param order_id
      * @return
      */
@@ -56,19 +57,30 @@ public interface OrderMapper {
     /**
      * 查询完成订单
      * @param seller_username
+     * @param page
      * @return
      */
     List<Order> searchFinishOrder(String seller_username,int page);
 
     /**
+     * 在Order表中查找已完成交易商品的历史意向买家
+     * @param seller_username
+     * @param item_id
+     * @return
+     */
+    List<Order> searchHistoryGoodsUnFinishedOrder(String seller_username, int item_id);
+
+    /**
      * 查询交易中订单
      * @param seller_username
+     * @param page
      * @return
      */
     List<Order> searchDealingOrder(String seller_username,int page);
 
     /**
      * 修改其余订单状态为关闭交易
+     * @param seller_username
      * @param item_id
      * @return
      */

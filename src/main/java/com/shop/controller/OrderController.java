@@ -63,6 +63,19 @@ public class OrderController {
         return jsonObject;
     }
 
+    //查看已完成交易商品的历史意向买家
+    @RequestMapping(value = "/searchHistoryGoodsUnFinishedOrder")
+    public Object searchHistoryGoodsUnFinishedOrder(HttpServletRequest request, HttpServletResponse response){
+        String seller_username = request.getParameter("seller_username");
+        int item_id = Integer.parseInt(request.getParameter("item_id"));
+        JSONObject jsonObject = new JSONObject();
+        List<Order> orderList = orderService.searchHistoryGoodsUnFinishedOrder(seller_username,item_id);
+        message = "success";
+        jsonObject.put("message",message);
+        jsonObject.put("orderList",orderList);
+        return jsonObject;
+    }
+
     //同意意向买家
     @RequestMapping(value = "/agreeOrderwanted")
     public Object agreeOrderwanted(HttpServletRequest request, HttpServletResponse response) {
