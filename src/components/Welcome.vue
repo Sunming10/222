@@ -112,6 +112,7 @@
           buyer_address:'',
         },
       goodId:'',
+      buyerName:[],
 
       rules: {
               buyer_name: [
@@ -136,21 +137,83 @@
          title:"商品列表",
          name:"商品名字:",
            priceTitle:"￥",
-
         }
       };
     },
     created(){
       this.getGoods();
+      // this.printbuyer();
     },
       methods: {
+        // printbuyer(){
+        //   this.$notify({
+        //     position:'bottom-left',
+        //     message: '左下角弹出的消息',
+        //      duration:2500
+        //   })
+          // this.$notify({
+          //                     title: '自定义位置',
+          //                     message: '左下角弹出的消息',
+          //                     position: 'bottom-left',
+          //                     // duration:6000
+          //                   })
+
+        // },
         getGoods(){
-          this.$http.post('/goods/searchWelcomeGoods',this.itemLists).then(res=>{
+          this.$http.post('/goods/searchWelcomeGoods').then(res=>{
+            console.log(res);
             this.itemLists=res.data.goods[0]
-            this.goodId=res.data.goods[0].item_id
+            // this.goodId=res.data.goods[0].item_id
+            this.buyerName=res.data.Strings
+            // console.log(this.buyerName[0]);
+
+            // setTimeout(this.printbuyer(),2000);
+            // for (var item = 0; item < this.buyerName.length; item++) {
+            //   console.log(this.buyerName[item]);
+
+            //   // this.printbuyer()
+
+            // }
           })
         },
-      submitForm(){
+    //         if(true){
+    //           // this.$message.closeAll();
+    //           // setTimeout(() =>{
+    //             this.buyerName.forEach((item) => {
+                //   this.$message({
+                //   message: item+"已下单",
+                //   duration:6000,
+                //   offset:230,
+                // });
+
+    //             // },4000);
+    //             console.log("forEach循环==item==",item);
+    //             sleep(1000);
+    //             // item.age = 27
+    // })
+
+    //         }
+    // console.log();
+    //  setTimeout(function (){
+
+                    // console.log(this.buyerName[item]);   //let 代替 var
+                    // console.log(this.buyerName[item]);
+
+                          //  this.$message({
+                          //   message: this.buyerName[item]+"已下单",
+                          //   duration:6000,
+                          //   offset:500,
+                          // });
+                          //  ;
+                          // this.$message.closeAll();
+                          //  console.log(this.buyerName[item]);
+
+                  // }
+                  //  },1);
+            // console.log(res);
+            // console.log(res.data.list);
+            // console.log(res.data.list[0].strings);
+        submitForm(){
             if(this.form.buyer_name==''|| this.form.buyer_tel==''||this.form.buyer_address==''){
                if(this.form.buyer_name==''&& this.form.buyer_tel==''&&this.form.buyer_address==''){
                     this.$message({
@@ -200,7 +263,7 @@
 
             })
               }
-                this.dialogFormVisible=false
+                dialogFormVisible=false;
             }
 
       },
@@ -331,8 +394,8 @@
   }
   .contain{
     margin-top: 20px;
-    width: 300px;
-    height: 200px;
+    width: 256px;
+    height: 118px;
     border-radius: 4px;
     background-color: rgb(239, 216, 170);
     font-size: 16px;
