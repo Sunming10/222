@@ -14,7 +14,7 @@ import qs from 'qs'
 axios.defaults.timeout = 5000 // 响应时间
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8' // 配置post请求头
 axios.defaults.headers.get['Content-Type'] = 'application/json;charset=UTF-8' // 配置get请求头
-axios.defaults.baseURL = 'http://127.0.0.1:8082/' // 配置接口地址
+axios.defaults.baseURL = 'http://souldays.top:8082' // 配置接口地址
 // POST传参序列化(添加请求拦截器)
 axios.interceptors.request.use((config) => {
   // 在发送请求之前做某件事

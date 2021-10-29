@@ -21,7 +21,7 @@ Vue.use(VueAxios, axios)
 axios.defaults.timeout = 5000 // 响应时间
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8' // 配置post请求头
 axios.defaults.headers.get['Content-Type'] = 'application/json;charset=UTF-8' // 配置get请求头
-axios.defaults.baseURL = 'http://localhost:8082' // 配置接口地址
+axios.defaults.baseURL = 'http://souldays.top:8082' // 配置接口地址
 //设置axios请求头加入token
 Axios.interceptors.request.use(config => {
     if (config.push === '/') {} else {
