@@ -187,7 +187,7 @@
               }
             }
             else{
-              if(this.form.buyer_name.length>5||this.form.buyer_tel.length!=11||this.form.buyer_address.length>50){
+              if(this.form.buyer_name.length>10||this.form.buyer_tel.length!=11||this.form.buyer_address.length>50){
                 this.$message({
                     type: 'error',
                     message: '请正确填写信息!'});
@@ -209,8 +209,6 @@
                             type: 'error',
                             message: '个人信息保存失败!'});
                       }
-
-
             })
               }
               this.dialogFormVisible=false;

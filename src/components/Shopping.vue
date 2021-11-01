@@ -79,7 +79,7 @@
       rules: {
               buyer_name: [
               { required: true, message: '请输入姓名', trigger: 'blur' },
-              { min: 0,max:5,message: '姓名在不能超过5个字', trigger: 'blur' }
+              { min:0,max:10,message: '姓名在不能超过10个字', trigger: 'blur' }
                 ],
               buyer_tel: [
               { required: true, message: '请输入联系电话', trigger: 'blur' },
@@ -148,7 +148,7 @@
               }
             }
             else{
-               if(this.form.buyer_name.length>5||this.form.buyer_tel.length!=11||this.form.buyer_address.length>50){
+               if(this.form.buyer_name.length>10||this.form.buyer_tel.length!=11||this.form.buyer_address.length>50){
                 this.$message({
                     type: 'error',
                     message: '请正确填写信息!'});

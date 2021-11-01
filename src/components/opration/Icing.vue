@@ -118,9 +118,6 @@ export default {
         this.$http.post('/goods/searchFreezingGoods',{'seller_username':'admin','page':this.currentPage}).then(response=>{
               console.log(response);
               this.gridData=response.data.list
-              // console.log(response.data.list[0]);
-              // console.log('123456');
-              // console.log(this.gridData[0].item_id);
         })
     },
     // 恢复
@@ -128,37 +125,26 @@ export default {
 
          console.log(row);
           this.itemId=row.item_id
-          console.log("这是商品编号！");
-          console.log( this.itemId);
           this.$http.post('/order/cancelOrder',{'seller_username':'admin','item_id': this.itemId
           }).then(res=>{
-          // console.log("这是恢复信息！");
-          // console.log(this.itemId);
-          // console.log(res);
           this.$router.push('selling');
         })
           this.$message({
             type: 'success',
-            message: '恢复成功!'
+            message: '恢复商品成功!'
           });
       },
     // 下架
     offShelf(row) {
-          console.log(row);
           this.itemId=row.item_id
-          console.log("这是商品编号！");
-          console.log( this.itemId);
           this.$http.post('/order/finishOrder',{'seller_username':'admin','item_id': this.itemId
           }).then(res=>{
-          // console.log("这是下架信息！");
-          // // console.log(this.itemId);
-          // console.log(res);
           this.$router.push('history');
 
         })
           this.$message({
             type: 'success',
-            message: '下架成功!'
+            message: '恭喜你成功完成交易!'
           });
       },
     // 取消
@@ -179,12 +165,6 @@ export default {
         })
       })
     },
-     handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
-      },
-      handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
-      },
     },
   }
 
