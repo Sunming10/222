@@ -5,7 +5,6 @@
             <div slot="header" class="clearfix">
               <span>卖家修改密码</span>
             </div>
-
             <div>
               <el-form :model="sellerData"
                 status-icon :rules="rules" ref="sellerData" label-width="100px" class="demo-ruleForm" >
@@ -26,11 +25,8 @@
             </div>
             <div>{{info}}</div>
             <div>{{returnObject}}</div>
-
           </el-card>
-
         </div>
-
 </template>
 
 <script>
@@ -64,7 +60,6 @@ export default {
         else {
           callback();
         }
-     // })
         }
    };
       var validatePass2 = (rule, value, callback) => {
@@ -82,7 +77,6 @@ export default {
            ListData:[],
            user1:[],
            ListData1:[],
-          //  password : '',
             sellerData:{
               password:'',
               password1:'',
@@ -157,7 +151,10 @@ export default {
                     this.$message({
                     type: 'success',
                     message: '密码修改成功!'});
-                    this.$router.push('home');
+                    window.sessionStorage.removeItem('token')
+
+                    this.$router.push('login')
+
                }
                else if(res.data.message=="error"){
                   this.$message({

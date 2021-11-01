@@ -3,7 +3,7 @@
   <el-container>
     <el-header>
       <span style="font-size:18px;color:gray;font-weight:bold;">商品列表</span>
-
+        <el-button type="warning" style="margin-left:80%" @click="goto" :disabled="this.btnState=false">添加商品</el-button>
 </el-header>
 
     <el-main>
@@ -17,9 +17,6 @@
       <div style="text-align: center;">
         <span class="font-style">{{this.form.goods_name}}</span>
         <div class="word"><span class="price">￥{{this.form.goods_price}}</span></div>
-        <div class="bottom clearfix ">
-          <el-button type="text" class="button"  @click="editItem" disabled>编辑商品</el-button>
-        </div>
       </div>
     </el-card>
 
@@ -113,22 +110,23 @@ export default {
       currentPage: 1,
       currentDate: new Date(),
       dialogFormVisible: false,
+       btnState:true,
       pagesize:10,
        form:{},
        itemId:[],
        itemName:[],
        itemImg:[],
        itemDiscribe:[],
-       itemGoods:[]
+       itemGoods:[],
+       formdata:[],
+       query:''
 
     };
 
   },
    created() {
         this.handleGoodList();
-        console.log(this.$route)
-        // this.form=this.$route.query.form,
-        // this.form.item_id=this.$route.query.form.item_id
+        // console.log(this.$route)
     },
   methods: {
       handleSizeChange(size) {
@@ -143,26 +141,15 @@ export default {
 
         this.$http.post('/goods/searchSellingGoods', {'page': this.currentPage 
         }).then(res=>{
-          // var ListData=JSON.stringify(res.data.goods);
-          // console.log(ListData);
-          //this.form=JSON.parse(ListData)
+          this.formdata = res.data.goods
           // console.log(this.form);
-          this.form = res.data.goods
-          console.log(this.form);
-          console.log(this.form.length);
+          // console.log(this.form.length);
           if(this.form.length>1){
             this.form=res.data.goods[0]
-            // this.$message({
-            //       message: '尊敬的用户欢迎你！',
-            //       type: 'success'
-            //     });
-
           }else{
             this.form=res.data.goods[0]
           }
-
-          console.log(res);
-          //console.log("res:",res.data.goods[0]);
+          // console.log(res);
         })
       },
 
@@ -171,11 +158,7 @@ export default {
       toDetail(){
          this.$http.post('/goods/searchSellingGoods', {'page': this.currentPage 
         }).then(res=>{
-
-          // var ListData=JSON.stringify(res.data.goods);
-          // console.log(ListData);
           this.form=res.data.goods
-          // console.log(this.form);
           this.$router.push({
 
             path: 'detail',
@@ -203,58 +186,27 @@ export default {
       beforeRemove(file, fileList) {
         return this.$confirm(`确定移除 ${ file.name }？`);
       },
-      editItem(){
-         this.dialogFormVisible = true;
-
-        this.form.forEach((item)=>{
-          this.itemId=item.item_id
-            console.log("id:"+this.itemId);
-
-            this.itemName=item.goods_name
-          console.log("name:"+this.itemName);
-
-            this.itemImg.push({name: "",url: item.goods_img})
-          console.log("img:"+this.itemImg.url);
-
-            this.itemDiscribe=item.goods_discribe
-          console.log("discribe:"+this.itemDiscribe);
-
-            this.itemPrice=item.goods_price
-
-          console.log("price:"+this.itemPrice);
-
+      goto(){
+        this.$http.post('/goods/searchFreezingGoods',{'seller_username':'admin','page':this.currentPage}).then(response=>{
+              this.query=response.data.list.length
+              console.log(response);
+              console.log(this.query);
         })
-        let goods_name=this.itemName
-        let goods_img=this.itemImg
-        let goods_discribe=this.itemDiscribe
-        let goods_price=this.itemPrice
 
-        if(this.itemName==''||this.itemImg==''||this.itemDiscribe==''||this.itemPrice==''){
-          this.$message.error("修改内容不能为空！")
-        }else{
-          this.$http.post('/goods/updateGoods', {'item_id': this.itemId ,'goods_name':this.itemName,'goods_img':this.itemImg,'goods_discribe':this.itemDiscribe,'goods_price':this.itemPrice
-        }).then(res=>{
-          console.log("res:"+res);
-          // var ListData=JSON.stringify(res.data.goods);
-          // console.log(ListData);
-          // this.form=JSON.parse(ListData)
-          // console.log(this.form);
-          // this.$router.push({
+        if(this.formdata.length==0&&this.query=='0'){
+          this.$router.push('add')
+          // console.log("1234");
+        }else if(this.query!='0'&&this.formdata.length!=0){
 
-          //   path: 'detail',
-          //   query:{
-          //     item_id:this.form.item_id,
-          //    itemDetail:this.form
-          //   }
-        //  });
-        })
+            this.$message({
+            type: 'error',
+            message: '您暂时不能添加商品!'
+            });
+            btnState=false
 
         }
 
-
-
-
-      }
+      },
     }
 }
 </script>
@@ -273,17 +225,10 @@ export default {
 
   .button {
     width: 100%;
-    /* padding: 0; */
-    /* float: right; */
     text-align: center;
     font-size: 20px;
     color: rgb(255, 255, 255);
     height: 50px;
-    /* border-radius: 4px; */
-
-
-
-
   }
   .el-input{
     width: 88%;
@@ -303,17 +248,13 @@ export default {
   .font-style{
     font-size: 16px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    /* text-decoration: none; */
   }
   .price{
     font-size: 16px;
     color: red;
-    /* padding: 5px 0; */
-    /* text-decoration: none; */
   }
   .word{
     margin: 5px 0;
-    /* text-decoration: none; */
   }
 
   .clearfix:before,
@@ -329,6 +270,5 @@ export default {
     color: #ffffff;
     border-color: transparent;
     background-color: transparent;
-    /* font-w; */
 }
 </style>

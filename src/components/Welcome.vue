@@ -46,21 +46,21 @@
           </div>
           <div class="item_size">
             <div>
-            <img :src="this.itemLists.goods_img" class="img_size">
+            <img :src="this.itemLists1.goods_img" class="img_size">
             </div>
             <div>
-            <el-button type="warning" @click="dialogFormVisible = true;" icon="el-icon-shopping-cart-1">提交购买信息</el-button>
+            <el-button type="warning" @click="submit" icon="el-icon-shopping-cart-1">提交购买信息</el-button>
             </div>
           </div>
           <div  class="item_list">
               <div>
                 <span class="title1">
-               {{this.itemLists.goods_name}}
+               {{this.itemLists1.goods_name}}
               </span>
               </div>
              <div>
                 <span class="price">
-                  {{itemList.priceTitle}}{{this.itemLists.goods_price}}
+                  {{itemList.priceTitle}}{{this.itemLists1.goods_price}}
               </span>
              </div>
               <div>
@@ -68,7 +68,7 @@
               </span>
               </div>
               <div class="contain">
-                  {{this.itemLists.goods_discribe}}
+                  {{this.itemLists1.goods_discribe}}
               </div>
         </div>
 
@@ -103,7 +103,8 @@
   export default {
     data() {
       return {
-      itemLists:{},
+      itemLists:[],
+      itemLists1:{},
       ListData:[],
       buyerData:[],
       form: {
@@ -112,12 +113,11 @@
           buyer_address:'',
         },
       goodId:'',
-      buyerName:[],
 
       rules: {
               buyer_name: [
               { required: true, message: '请输入姓名', trigger: 'blur' },
-              { min: 0,max:5,message: '姓名不能超过5个字', trigger: 'blur' }
+              { min: 0,max:10,message: '姓名不能超过10个字', trigger: 'blur' }
                 ],
               buyer_tel: [
               { required: true, message: '请输入联系电话', trigger: 'blur' },
@@ -137,83 +137,33 @@
          title:"商品列表",
          name:"商品名字:",
            priceTitle:"￥",
+
         }
       };
     },
     created(){
       this.getGoods();
-      // this.printbuyer();
     },
       methods: {
-        // printbuyer(){
-        //   this.$notify({
-        //     position:'bottom-left',
-        //     message: '左下角弹出的消息',
-        //      duration:2500
-        //   })
-          // this.$notify({
-          //                     title: '自定义位置',
-          //                     message: '左下角弹出的消息',
-          //                     position: 'bottom-left',
-          //                     // duration:6000
-          //                   })
-
-        // },
         getGoods(){
-          this.$http.post('/goods/searchWelcomeGoods').then(res=>{
-            console.log(res);
-            this.itemLists=res.data.goods[0]
-            // this.goodId=res.data.goods[0].item_id
-            this.buyerName=res.data.Strings
-            // console.log(this.buyerName[0]);
-
-            // setTimeout(this.printbuyer(),2000);
-            // for (var item = 0; item < this.buyerName.length; item++) {
-            //   console.log(this.buyerName[item]);
-
-            //   // this.printbuyer()
-
-            // }
+          this.$http.post('/goods/searchWelcomeGoods',this.itemLists).then(res=>{
+            this.itemLists=res.data.goods
+            this.itemLists1=res.data.goods[0]
+            this.goodId=res.data.goods[0].item_id
           })
         },
-    //         if(true){
-    //           // this.$message.closeAll();
-    //           // setTimeout(() =>{
-    //             this.buyerName.forEach((item) => {
-                //   this.$message({
-                //   message: item+"已下单",
-                //   duration:6000,
-                //   offset:230,
-                // });
+        submit(){
+          console.log(this.itemLists.length);
+             if(this.itemLists.length==0){
+                   this.$message({
+                            type: 'error',
+                            message: '暂无商品!'});
 
-    //             // },4000);
-    //             console.log("forEach循环==item==",item);
-    //             sleep(1000);
-    //             // item.age = 27
-    // })
-
-    //         }
-    // console.log();
-    //  setTimeout(function (){
-
-                    // console.log(this.buyerName[item]);   //let 代替 var
-                    // console.log(this.buyerName[item]);
-
-                          //  this.$message({
-                          //   message: this.buyerName[item]+"已下单",
-                          //   duration:6000,
-                          //   offset:500,
-                          // });
-                          //  ;
-                          // this.$message.closeAll();
-                          //  console.log(this.buyerName[item]);
-
-                  // }
-                  //  },1);
-            // console.log(res);
-            // console.log(res.data.list);
-            // console.log(res.data.list[0].strings);
-        submitForm(){
+                }else{
+                  this.dialogFormVisible=true
+                }
+        },
+      submitForm(){
             if(this.form.buyer_name==''|| this.form.buyer_tel==''||this.form.buyer_address==''){
                if(this.form.buyer_name==''&& this.form.buyer_tel==''&&this.form.buyer_address==''){
                     this.$message({
@@ -243,10 +193,10 @@
                     message: '请正确填写信息!'});
               }
               else{
-                this.$http.post('/order/addToOrderWanted',{'item_id':this.goodId,'buyer_realname':this.form.buyer_name,
-                  'buyer_phonenumber': this.form.buyer_tel,'buyer_address':this.form.buyer_address}).then(response=>{
-                    console.log(this.form.buyer_name);
-                    console.log(response);
+          this.$http.post('/order/addToOrderWanted',{'item_id':this.goodId,'buyer_realname':this.form.buyer_name,
+            'buyer_phonenumber': this.form.buyer_tel,'buyer_address':this.form.buyer_address}).then(response=>{
+              console.log(this.form.buyer_name);
+              console.log(response);
                     if(response.data.message=="success"){
 
                             this.$message({
@@ -263,9 +213,9 @@
 
             })
               }
-                dialogFormVisible=false;
-            }
+              this.dialogFormVisible=false;
 
+            }
       },
     resetForm(form){
         this.$refs[form].resetFields();
@@ -342,8 +292,6 @@
   .el-card{
     box-shadow: 0 -1px 8px rgb(0 0 0 37%) !important;
     height: 600px;
-    // float: right;
-    // -webkit-box-shadow: 0 -1px 8px rgb(0 0 0 / 40%) !important;
   }
   .item_title{
     line-height: 50px;
@@ -356,7 +304,6 @@
     width: 400px;
     height:400px;
     text-align: center;
-    // background-color: aqua;
     float: left;
 
   }
@@ -365,7 +312,6 @@
     height: 300px;
   }
   .item_list{
-    // background-color: aliceblue;
     width: 400px;
     height: 400px;
     float: left;
@@ -394,8 +340,8 @@
   }
   .contain{
     margin-top: 20px;
-    width: 256px;
-    height: 118px;
+    width: 300px;
+    height: 200px;
     border-radius: 4px;
     background-color: rgb(239, 216, 170);
     font-size: 16px;

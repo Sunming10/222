@@ -1,7 +1,6 @@
 <template>
   <el-container>
    <el-main>
-
       <div style="width:700px">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm" enctype="multipart/form-data" >
           <el-form-item label="商品名称" prop="goods_name">
@@ -23,9 +22,6 @@
                 :limit="1">
               <img v-if="imageUrl" :src="imageUrl" class="avatar">
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-              <!-- <el-dialog :visible.sync="dialogVisible">
-              <img width="100%" :src="this.imageUrl" alt="">
-            </el-dialog> -->
             </el-upload>
           </el-form-item>
       </el-form>
@@ -41,34 +37,11 @@
 <script>
 export default {
   data(){
-    // var checkPrice = (rule, value, callback) => {
-    //     if (!value) {
-    //       return callback(this.$message({
-    //                 type: 'error',
-    //                 message: '商品价格不能为空!'})
-    //                 );
-    //     }
-    //     setTimeout(() => {
-    //       if (!Number.isDouble(value)) {
-    //         callback(this.$message({
-    //                 type: 'error',
-    //                 message: '非法输入，请输入数值!'}));
-    //       } else {
-    //         if (value < 0) {
-    //           callback(this.$message({
-    //                 type: 'error',
-    //                 message: '价格不能为负数，请重新输入!'}));
-    //         } else {
-    //           callback();
-    //         }
-    //       }
-    //     }, 1000);
-    //   };
     return{
         files: {},
         photo: '',
         photoObj: '',
-        imgUrl:'http://localhost:8082/qiniu/image',
+        imgUrl:'http://souldays.top:8082/qiniu/image',
         imageUrl:'',
         loge:'',
         dialogVisible:false,
@@ -88,8 +61,6 @@ export default {
           ],
           goods_price: [
             { required: true,message: '请输入商品价格', trigger: 'blur'  },
-            // { type:'number',message: '价格必须为数字', trigger: 'blur'  },
-
           ],
           goods_discribe: [
             { required: true, message: '请输入商品描述', trigger: 'blur' },
@@ -103,7 +74,9 @@ export default {
 },
 methods: {
   handleSuccess(res) {
+    console.log("这是图片链接："+res);
     this.imageUrl=res
+    console.log("图片链接在哪里？");
     console.log(this.imageUrl);
   },
   reset(){
@@ -127,14 +100,13 @@ methods: {
     },
       submit(){
         this.ruleForm.goods_img=this.imageUrl
-        // console.log("上传图片");
-        console.log(this.ruleForm.goods_img);
-        console.log("start");
+        // console.log(this.ruleForm.goods_img);
+        // console.log("start");
         if(this.ruleForm.goods_name!=''&&this.ruleForm.goods_price!=''&&this.ruleForm.goods_discribe!=''&&this.ruleForm.goods_img!=''){
           this.$http.post('/goods/addGoods',{'goods_name':this.ruleForm.goods_name,'goods_price':this.ruleForm.goods_price,
               'goods_discribe':this.ruleForm.goods_discribe,'goods_img':this.ruleForm.goods_img})
         .then(res=>{
-          console.log(res);
+          // console.log(res);
           // console.log(res.data);
           if(res.data.message=='success'){
              this.$message({

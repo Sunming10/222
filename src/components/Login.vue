@@ -38,8 +38,8 @@ export default {
     return {
       // 这是登录表单的数据绑定对象
       loginForm: {
-        username: 'admin',
-        password: 'root1234'
+        username: '',
+        password: ''
       },
 
       // 这是表单的验证规则对象
@@ -75,8 +75,8 @@ export default {
                 var authorization=response.headers['authorization'];
                 window.sessionStorage.setItem('authorization',authorization);
 
-                console.log("token:"+response.data.token);
-                console.log(response);
+                // console.log("token:"+response.data.token);
+                // console.log(response);
                 this.$message({
                   message: '尊敬的用户欢迎你！',
                   type: 'success'
@@ -84,7 +84,7 @@ export default {
                 this.$router.push('home');
               }else if(response.data.message=="error"){
 
-                     this.$message.error('用户名或密码错误，请重新登录！');
+                this.$message.error('用户名或密码错误，请重新登录！');
               }
             }else{
                this.$message.error('用户名和密码不能为空，请重新登录！');

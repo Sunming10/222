@@ -23,11 +23,7 @@
                    <el-table-column label="操作" width="200">
                     <template  slot-scope="scope">
                       <div>
-                        <el-popover
-                          trigger="click"
-                          v-model="visible">
-                        <el-button type="text" size="medium" @click="historyBuyer(scope.row)">查看历史意向买家</el-button>
-                      </el-popover>
+                        <el-button type="warning" size="medium" @click="historyBuyer(scope.row)">查看历史意向买家</el-button>
                     </div>
                     </template>
                 </el-table-column>
@@ -41,7 +37,6 @@
             </el-dialog>
       </el-main>
      <el-footer>
- <!-- <div class="block"> -->
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
@@ -51,7 +46,6 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="this.List.length">
     </el-pagination>
-  <!-- </div> -->
   </el-footer>
   </el-container>
 </template>

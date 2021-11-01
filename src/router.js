@@ -22,6 +22,8 @@ Vue.use(Router)
 Vue.prototype.$message = Message
 
 const router = new Router({
+  mode: 'hash',
+  // base: process.env.BASE_URL,
   routes: [{
       path: '/',
       redirect: '/welcome'

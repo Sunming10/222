@@ -5,7 +5,7 @@
     </el-header>
     <el-main>
       <el-row>
-  <el-col  v-for="(item, index) in itemLists" :key="item" :offset="index > 0 ? 1 : 0">
+  <el-col>
        <el-card class="box-card">
         <div class="text item">
           <div>
@@ -15,21 +15,21 @@
           </div>
           <div class="item_size">
             <div>
-            <img :src="item.goods_img" class="img_size">
+            <img :src="this.itemLists1.goods_img" class="img_size">
             </div>
             <div>
-            <el-button type="warning" @click="item.item_id;dialogFormVisible = true" icon="el-icon-shopping-cart-1">提交购买信息</el-button>
+            <el-button type="warning" @click="submit" icon="el-icon-shopping-cart-1">提交购买信息</el-button>
             </div>
           </div>
           <div class="item_list">
               <div>
                 <span class="title1">
-                  {{item.goods_name}}
+                  {{this.itemLists1.goods_name}}
               </span>
               </div>
              <div>
                 <span class="price">
-                  {{itemList.priceTitle}}{{item.goods_price}}
+                  {{itemList.priceTitle}}{{this.itemLists1.goods_price}}
               </span>
              </div>
               <div>
@@ -37,7 +37,7 @@
               </span>
               </div>
               <div class="contain">
-                  {{item.goods_discribe}}
+                  {{this.itemLists1.goods_discribe}}
               </div>
         </div>
         </div>
@@ -70,6 +70,7 @@
       return {
         itemLists:[],
         ListData:[],
+        itemLists1:{},
       form: {
           buyer_name:'',
           buyer_tel:'',
@@ -107,14 +108,21 @@
       methods: {
          getGoods(){
           this.$http.post('/goods/searchWelcomeGoods',this.itemLists).then(res=>{
-            var ListData=JSON.stringify(res.data.goods);
-            console.log(ListData);
-            this.itemLists=JSON.parse(ListData);
-            console.log(this.itemLists);
-             for(var i=0; i< this.itemLists.length;i++){
-              this.item_id = this.itemLists[i].item_id;
-            }
+            this.itemLists=res.data.goods
+            this.itemLists1=res.data.goods[0]
+            this.goodId=res.data.goods[0].item_id
           })
+        },
+        submit(){
+          console.log(this.itemLists.length);
+             if(this.itemLists.length==0){
+                   this.$message({
+                            type: 'error',
+                            message: '暂无商品!'});
+
+                }else{
+                  this.dialogFormVisible=true
+                }
         },
      submitForm(){
             if(this.form.buyer_name==''|| this.form.buyer_tel==''||this.form.buyer_address==''){

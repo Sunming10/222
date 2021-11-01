@@ -6,7 +6,6 @@
         <img src="https://iconfont.alicdn.com/t/be0fa091-076f-47da-8d04-9cf81d8252ad.png" alt="网上商城">
         <!-- <span>网上商城</span> -->
       </div>
-      <!-- <i class="iconfont">&#xe634;</i> -->
       <el-button type="warning"  @click="logout" icon="el-icon-user" class="font-line">退出登陆</el-button>
     </el-header>
     <!-- 页面主体区域 -->
@@ -18,44 +17,34 @@
               background-color="rgba(255, 186, 51, 1)"
               text-color="#333333"
               active-text-color="#ffffff">
-
               <el-submenu index="1">
-                <template slot="title">
+                 <template slot="title">
                   <i class="iconfont">&#xe626;</i>
-                  <span slot="title"><router-link to="selling" class="line">商品操作 </router-link></span>
-
+                  <router-link to="selling" style="text-decoration: none;color:#fff;"><span class="line" >商品操作</span> </router-link>
                 </template>
                 <el-menu-item-group>
                   <template slot="title"></template>
-                  <el-menu-item index="1-1"><router-link to='selling'  class="line">出售商品</router-link></el-menu-item>
-                  <el-menu-item index="1-2" ><router-link to="icing" class="line">冻结商品</router-link></el-menu-item>
-                  <el-menu-item index="1-3" ><router-link to="history" class="line">历史商品</router-link></el-menu-item>
-                  <!-- <el-menu-item index="1-4" @click="gotoAdd"><span class="line">增加商品</span></el-menu-item> -->
+                  <router-link to='selling' style=" text-decoration: none;"><el-menu-item index="1-1"><span  class="line">出售商品</span></el-menu-item></router-link>
+                  <router-link to="icing" style=" text-decoration: none;"><el-menu-item index="1-2" ><span class="line">冻结商品</span></el-menu-item></router-link>
+                  <router-link to="history" style=" text-decoration: none;"><el-menu-item index="1-3" ><span class="line">历史商品</span></el-menu-item></router-link>
                 </el-menu-item-group>
-
               </el-submenu>
                <el-submenu index="2">
                 <template slot="title">
                   <i class="iconfont">&#xe613;</i>
-                  <span slot="title"><router-link to="self_info" class="line">信息修改</router-link> </span>
+                  <router-link to="self_info" style="text-decoration: none;color:#fff;"><span class="line" >信息修改</span> </router-link>
                 </template>
                 <el-menu-item-group>
-                  <!-- <el-submenu index="2-1">
-                    <template slot="title">
-                        <span slot="title"><router-link  to="modify" class="line">商品信息修改</router-link></span>
-                    </template>
-                    <el-menu-item index="2-1-1"><router-link to="add" class="line">增加商品</router-link></el-menu-item>
-                  <el-menu-item index="2-1-2"><router-link to="modify" class="line">修改商品信息</router-link></el-menu-item> -->
-
-                  <!-- </el-submenu> -->
-                  <el-submenu index="2-1">
-                    <template slot="title">
-                        <span slot="title"><router-link to="self_info" class="line">个人信息修改</router-link></span>
-                    </template>
-                    <el-menu-item index="2-1-1"><router-link to="self_info" class="line">修改密码</router-link></el-menu-item>
-
-                  </el-submenu>
+                   <template slot="title"></template>
+                    <router-link to="self_info"  style="text-decoration: none;color:#fff;">
+                      <el-menu-item index="1-1">
+                        <span  class="line">
+                        修改密码
+                        </span>
+                      </el-menu-item>
+                    </router-link>
                 </el-menu-item-group>
+
               </el-submenu>
             </el-menu>
           </el-col>
@@ -92,10 +81,6 @@ export default {
       activePath: ''
     }
   },
-  // created() {
-  //   this.getMenuList()
-  //   this.activePath = window.sessionStorage.getItem('activePath')
-  // },
   methods: {
     logout() {
      this.$confirm('确定要退出登录吗?', '提示', {

@@ -5,7 +5,6 @@
       <el-header>
         <div class="back-size">
           <span class="seller-info">买家信息</span>
-          <!-- <el-button type="warning" class="button-position" plain @click="revoke">撤销</el-button> -->
         </div>
       </el-header>
         <el-main>
@@ -111,10 +110,6 @@
 .image1{
   width: 200px;
   height: 200px;
-  //  border-radius: 50%;
-
-  // text-align: center;
-  // margin-left: 20%;
 }
 .position{
   margin-top:10px;
