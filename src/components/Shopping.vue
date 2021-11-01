@@ -6,8 +6,8 @@
     <el-main>
       <el-row>
   <el-col>
-       <el-card class="box-card">
-        <div class="text item">
+      <el-card class="box-card" >
+        <div     class="text item">
           <div>
             <span class="item_title">
               {{itemList.title}}
@@ -21,10 +21,10 @@
             <el-button type="warning" @click="submit" icon="el-icon-shopping-cart-1">提交购买信息</el-button>
             </div>
           </div>
-          <div class="item_list">
+          <div  class="item_list">
               <div>
                 <span class="title1">
-                  {{this.itemLists1.goods_name}}
+               {{this.itemLists1.goods_name}}
               </span>
               </div>
              <div>
@@ -40,11 +40,15 @@
                   {{this.itemLists1.goods_discribe}}
               </div>
         </div>
+
+
         </div>
+
       </el-card>
-  </el-col>
+      </el-col>
       </el-row>
     </el-main>
+
     <el-dialog title="个人信息填写" :visible.sync="dialogFormVisible">
         <el-form :model="form"  :rules="rules" ref="form" label-width="100px" class="demo-ruleForm">
         <el-form-item label="真实姓名" :label-width="formLabelWidth" prop="buyer_name">
@@ -57,7 +61,7 @@
           <el-input v-model="form.buyer_address" autocomplete="off" type="textarea"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="warning" @click="submitForm()">确定</el-button>
+          <el-button type="warning" @click="submitForm">确定</el-button>
                       <el-button @click="resetForm('form')">重置</el-button>
         </el-form-item>
       </el-form>
@@ -65,25 +69,29 @@
   </el-container>
 </template>
 <script>
- export default {
+  export default {
     data() {
       return {
-        itemLists:[],
-        ListData:[],
-        itemLists1:{},
+      itemLists:[],
+      itemLists1:{},
+      ListData:[],
+      buyerData:[],
       form: {
           buyer_name:'',
           buyer_tel:'',
           buyer_address:'',
         },
+      goodId:'',
+
       rules: {
               buyer_name: [
               { required: true, message: '请输入姓名', trigger: 'blur' },
-              { min:0,max:10,message: '姓名在不能超过10个字', trigger: 'blur' }
+              { min: 0,max:10,message: '姓名不能超过10个字', trigger: 'blur' }
                 ],
               buyer_tel: [
               { required: true, message: '请输入联系电话', trigger: 'blur' },
               { min: 11,max:11,message: '请输入正确的联系电话', trigger: 'blur' }
+
                 ],
                 buyer_address: [
               { required: true, message: '请输入收货地址', trigger: 'blur' },
@@ -92,12 +100,13 @@
       },
         dialogFormVisible: false,
         formLabelWidth: '100px',
-        describe:{
+         describe:{
           title:"商品描述",
-        },
-        itemList:{
-          title:"商品列表",
-          priceTitle:"￥",
+             },
+         itemList:{
+         title:"商品列表",
+         name:"商品名字:",
+           priceTitle:"￥",
 
         }
       };
@@ -106,7 +115,7 @@
       this.getGoods();
     },
       methods: {
-         getGoods(){
+        getGoods(){
           this.$http.post('/goods/searchWelcomeGoods',this.itemLists).then(res=>{
             this.itemLists=res.data.goods
             this.itemLists1=res.data.goods[0]
@@ -124,7 +133,7 @@
                   this.dialogFormVisible=true
                 }
         },
-     submitForm(){
+      submitForm(){
             if(this.form.buyer_name==''|| this.form.buyer_tel==''||this.form.buyer_address==''){
                if(this.form.buyer_name==''&& this.form.buyer_tel==''&&this.form.buyer_address==''){
                     this.$message({
@@ -149,25 +158,31 @@
             }
             else{
               let reg = /^1[0-9]{10}$/
-               if(this.form.buyer_name.length>10||this.form.buyer_tel.length!=11||!reg.test(this.form.buyer_tel)||this.form.buyer_address.length>50){
+              if(this.form.buyer_name.length>10||this.form.buyer_tel.length!=11|| !reg.test(this.form.buyer_tel)||this.form.buyer_address.length>50){
                 this.$message({
                     type: 'error',
                     message: '请正确填写信息!'});
               }
               else{
-              this.$http.post('/order/addToOrderWanted',{'item_id':this.item_id,'buyer_realname':this.form.buyer_name,
+          this.$http.post('/order/addToOrderWanted',{'item_id':this.goodId,'buyer_realname':this.form.buyer_name,
             'buyer_phonenumber': this.form.buyer_tel,'buyer_address':this.form.buyer_address}).then(response=>{
               console.log(this.form.buyer_name);
               console.log(response);
-               if(response.data.message=="success"){
-                    this.$message({
-                    type: 'success',
-                    message: '个人信息保存成功!'});
-                   this.dialogFormVisible=false
-               }
+                    if(response.data.message=="success"){
 
+                            this.$message({
+                            type: 'success',
+                            message: '个人信息保存成功!'});
+                              this.dialogFormVisible=false;
+
+                      }else if(response.data.message=="error"){
+                             this.$message({
+                            type: 'error',
+                            message: '个人信息保存失败!'});
+                      }
             })
               }
+
 
             }
       },
@@ -199,7 +214,27 @@
   // margin-top: 9px;
   margin: 9px 50px 0 0;
 }
- .title{
+.el-row {
+    margin-bottom: 20px;
+    // margin-left: 9%;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  .el-col {
+    border-radius: 4px;
+  }
+
+  .grid-content {
+    border-radius: 4px;
+    min-height: 300px;
+    text-align: center;
+  }
+  .row-bg {
+    padding: 10px 0;
+    // background-color: #f9fafc;
+  }
+  .title{
     line-height: 400px;
     color: #99a9bf;
     font-size: 48px;
@@ -222,27 +257,22 @@
   .box-card {
     width: 100%;
     background-color: rgb(247, 240, 223);
-    margin-top: 50px;
   }
   .el-card{
     box-shadow: 0 -1px 8px rgb(0 0 0 37%) !important;
     height: 600px;
-    // float: right;
-    // -webkit-box-shadow: 0 -1px 8px rgb(0 0 0 / 40%) !important;
   }
   .item_title{
-    position: absolute;
     line-height: 50px;
     font-size: 25px;
     font-weight: bold;
     color: gray;
-    margin-top: -100px;
+
   }
   .item_size{
     width: 400px;
     height:400px;
     text-align: center;
-    // background-color: aqua;
     float: left;
 
   }
@@ -251,7 +281,6 @@
     height: 300px;
   }
   .item_list{
-    // background-color: aliceblue;
     width: 400px;
     height: 400px;
     float: left;
