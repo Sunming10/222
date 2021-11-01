@@ -103,7 +103,7 @@ export default {
               this.query=response.data.list.length
         })
         // console.log(this.formdata.length);
-        if(this.query!=0){//this.query
+        if(this.query==0){//this.query
           if(this.formdata.length==0){
             this.$router.push('add')
           }else{

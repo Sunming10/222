@@ -57,7 +57,7 @@
           <el-input v-model="form.buyer_address" autocomplete="off" type="textarea"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="warning" @click="submitForm('form')">确定</el-button>
+          <el-button type="warning" @click="submitForm()">确定</el-button>
                       <el-button @click="resetForm('form')">重置</el-button>
         </el-form-item>
       </el-form>
@@ -148,7 +148,8 @@
               }
             }
             else{
-               if(this.form.buyer_name.length>10||this.form.buyer_tel.length!=11||this.form.buyer_address.length>50){
+              let reg = /^1[0-9]{10}$/
+               if(this.form.buyer_name.length>10||this.form.buyer_tel.length!=11||!reg.test(this.form.buyer_tel)||this.form.buyer_address.length>50){
                 this.$message({
                     type: 'error',
                     message: '请正确填写信息!'});
@@ -162,13 +163,12 @@
                     this.$message({
                     type: 'success',
                     message: '个人信息保存成功!'});
-                    // dialogFormVisible=false
-
+                   this.dialogFormVisible=false
                }
 
             })
               }
-                this.dialogFormVisible=false
+
             }
       },
     resetForm(form){
