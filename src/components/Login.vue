@@ -74,9 +74,6 @@ export default {
                 window.sessionStorage.setItem('token', response.data.token)
                 var authorization=response.headers['authorization'];
                 window.sessionStorage.setItem('authorization',authorization);
-
-                // console.log("token:"+response.data.token);
-                // console.log(response);
                 this.$message({
                   message: '尊敬的用户欢迎你！',
                   type: 'success'

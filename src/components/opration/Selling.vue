@@ -7,8 +7,8 @@
     </el-header>
 
 <el-main>
-    <el-row>
-      <el-col :span="6">
+    <el-row v-if="this.formdata.length!=0">
+      <el-col :span="6" >
           <el-card :body-style="{ padding: '0px' }" style="text-align: center;text-decoration:none,height:100px" >
           <img  :src="this.form.goods_img" class="image" @click="toDetail">
           <div style="text-align: center;">
@@ -18,6 +18,16 @@
         </el-card>
       </el-col>
     </el-row>
+    <el-row  v-else-if="this.formdata.length==0">
+      <el-col :span="6">
+        <el-card :body-style="{ padding: '0px' }" style="text-align: center;text-decoration:none;height:200px">
+          <!-- <el-empty description="暂无商品"></el-empty> -->
+          <img src="https://iconfont.alicdn.com/t/f3ef7360-0b5f-411c-9b60-a3a14e66a632.png" alt="">
+          <p>暂无商品</p>
+        </el-card>
+      </el-col>
+    </el-row>
+    <!--  -->
 </el-main>
     <el-footer style="margin-left: 57%;margin-top: 14%;">
     <el-pagination
@@ -43,7 +53,7 @@ export default {
       formLabelWidth: '100px',
       currentPage: 1,
       dialogFormVisible: false,
-       btnState:true,
+      btnState:true,
       pagesize:10,
        form:{},
        itemId:[],
@@ -52,8 +62,8 @@ export default {
        itemDiscribe:[],
        itemGoods:[],
        formdata:[],
-       form1:{}
-      //  query:''
+       form1:{},
+       query:''
 
     };
 

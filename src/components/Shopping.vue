@@ -4,10 +4,23 @@
       <el-button type="warning" class="position"> <router-link to="login" class="line">登&nbsp;录</router-link></el-button>
     </el-header>
     <el-main>
-      <el-row>
+      <!-- `<el-row>
+          <el-col :span="8">
+            <div class="grid-content bg-purple img_position">
+              <img src="https://iconfont.alicdn.com/t/4fe848e1-4785-46ad-93c5-8296efd2484f.png" class="img_size">
+            </div>
+            </el-col>
+          <el-col :span="8">
+            <div class="grid-content bg-purple-light img_position">
+              <img src="https://iconfont.alicdn.com/t/93d0a257-e045-4e98-90e0-cea8e01deac9.png" class="img_size">
+            </div>
+              </el-col>
+      </el-row>` -->
+
+       <el-row v-if="this.itemLists.length!=0">
   <el-col>
       <el-card class="box-card" >
-        <div     class="text item">
+        <div class="text item">
           <div>
             <span class="item_title">
               {{itemList.title}}
@@ -40,13 +53,28 @@
                   {{this.itemLists1.goods_discribe}}
               </div>
         </div>
-
-
         </div>
-
       </el-card>
       </el-col>
       </el-row>
+
+      <el-row v-else-if="this.itemLists.length==0">
+      <el-col>
+      <el-card >
+         <span class="item_title">
+              {{itemList.title}}
+            </span>
+          <!-- <img src="https://iconfont.alicdn.com/t/f3ef7360-0b5f-411c-9b60-a3a14e66a632.png" alt="">
+          <p>暂无商品</p> -->
+          <div class="img-position">
+            <img src="https://iconfont.alicdn.com/t/3f7b2367-2d1e-4898-b631-85f574562460.png" alt="">
+               <p class="item_title">暂无商品</p>
+          </div>
+      </el-card>
+      </el-col>
+      </el-row>
+
+
     </el-main>
 
     <el-dialog title="个人信息填写" :visible.sync="dialogFormVisible">
@@ -107,7 +135,6 @@
          title:"商品列表",
          name:"商品名字:",
            priceTitle:"￥",
-
         }
       };
     },
@@ -244,6 +271,17 @@
   .img_position{
     margin-left: 45%;
   }
+  .img-position{
+    width: 600px;
+    height: 600px;
+    vertical-align: middle;
+    text-align: center;
+    margin-left: 29%;
+  }
+  .img-position>img{
+    width: 520px;
+    height: 520px;
+  }
   .text {
     font-size: 14px;
   }
@@ -260,7 +298,7 @@
   }
   .el-card{
     box-shadow: 0 -1px 8px rgb(0 0 0 37%) !important;
-    height: 600px;
+    height: 700px;
   }
   .item_title{
     line-height: 50px;

@@ -35,10 +35,10 @@
               </el-col>
       </el-row>
 
-       <el-row>
+       <el-row v-if="this.itemLists.length!=0">
   <el-col>
       <el-card class="box-card" >
-        <div     class="text item">
+        <div class="text item">
           <div>
             <span class="item_title">
               {{itemList.title}}
@@ -71,9 +71,24 @@
                   {{this.itemLists1.goods_discribe}}
               </div>
         </div>
-
-
         </div>
+      </el-card>
+      </el-col>
+      </el-row>
+
+      <el-row v-else-if="this.itemLists.length==0">
+      <el-col>
+      <el-card >
+         <span class="item_title">
+              {{itemList.title}}
+            </span>
+          <!-- <img src="https://iconfont.alicdn.com/t/f3ef7360-0b5f-411c-9b60-a3a14e66a632.png" alt="">
+          <p>暂无商品</p> -->
+          <div class="img-position">
+            <img src="https://iconfont.alicdn.com/t/3f7b2367-2d1e-4898-b631-85f574562460.png" alt="">
+               <p class="item_title">暂无商品</p>
+          </div>
+
 
       </el-card>
       </el-col>
@@ -93,7 +108,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="warning" @click="submitForm">确定</el-button>
-                      <el-button @click="resetForm('form')">重置</el-button>
+              <el-button @click="resetForm('form')">重置</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -275,6 +290,19 @@
   .img_position{
     margin-left: 45%;
   }
+  .img-position{
+    width: 600px;
+    height: 600px;
+    // background-color: aquamarine;
+    // display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    margin-left: 29%;
+  }
+  .img-position>img{
+    width: 520px;
+    height: 520px;
+  }
   .text {
     font-size: 14px;
   }
@@ -291,10 +319,10 @@
   }
   .el-card{
     box-shadow: 0 -1px 8px rgb(0 0 0 37%) !important;
-    height: 600px;
+    height: 700px;
   }
   .item_title{
-    line-height: 50px;
+    line-height: 40px;
     font-size: 25px;
     font-weight: bold;
     color: gray;
