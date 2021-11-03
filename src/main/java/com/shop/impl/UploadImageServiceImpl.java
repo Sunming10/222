@@ -36,6 +36,7 @@ public class UploadImageServiceImpl extends UploadImageService {
     @Override
     public String uploadQNImg(FileInputStream file, String key) {
         try{
+            token = auth.uploadToken(config.getQiniuBucketName());
             // 上传图片文件
             Response res = uploadManager.put(file, key, token, null, null);
             if (!res.isOK()) {
@@ -50,6 +51,6 @@ public class UploadImageServiceImpl extends UploadImageService {
         }catch (QiniuException e){
             e.printStackTrace();
         }
-        return "";
+        return "try error";
     }
 }
