@@ -60,7 +60,8 @@ export default {
             { min:2, max:20, message: '商品名称长度在2~20个字之间', trigger: 'blur' }
           ],
           goods_price: [
-            { required: true,message: '请输入商品价格', trigger: 'blur'  },
+            { required: true,message: '请输入正确商品价格', trigger: 'blur'  },
+            { pattern:/^(([1-9]{1}\d*)|(0{1}))(\.\d{2})$/,required: true,message: '请正确输入价格(保留两位小数)'}
           ],
           goods_discribe: [
             { required: true, message: '请输入商品描述', trigger: 'blur' },

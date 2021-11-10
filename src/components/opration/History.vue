@@ -41,7 +41,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage"
-      :page-sizes="[10]"
+      :page-sizes="[10,20,30]"
       :page-size="pagesize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="this.List.length">
@@ -79,6 +79,7 @@ export default {
         }).then(res=>{
 
           this.List=res.data.list
+
           console.log(this.List);
           this.goodId=this.List.item_id
 
